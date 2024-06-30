@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAuth } from "@/hooks/useAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
@@ -31,7 +32,7 @@ type FormData = z.infer<typeof formSchema>;
 
 const LoginPage = () => {
     const router = useRouter();
-    //   const { setUser } = useContext(UserContext);
+    const { user, setUser, userLoading } = useAuth();
 
     const {
         register,
@@ -53,7 +54,7 @@ const LoginPage = () => {
                     "userData",
                     JSON.stringify(response.data.loggedInUser)
                 );
-                // setUser(response.data.loggedInUser);
+                setUser(response.data.loggedInUser);
                 router.push("/");
             }
         },
@@ -105,7 +106,7 @@ const LoginPage = () => {
                                     placeholder="Enter your email"
                                     {...register("email")}
                                     type="text"
-                                    className="focus:border-primary h-11"
+                                    className="focus-visible:ring-primary h-11"
                                 />
                             </div>
                             {errors.email && (
@@ -134,7 +135,7 @@ const LoginPage = () => {
                                     placeholder="Enter your password"
                                     {...register("password")}
                                     type="password"
-                                    className="focus:border-primary h-11"
+                                    className="focus-visible:ring-primary h-11"
                                 />
                             </div>
                             {errors.password && (
@@ -145,7 +146,7 @@ const LoginPage = () => {
                         </div>
 
                         <Button
-                            className="w-full bg-[#00B307] gap-2 justify-center font-bold text-white"
+                            className="w-full bg-primary hover:bg-accent gap-2 justify-center font-bold text-white"
                             type="submit"
                             disabled={isPending}
                         >
@@ -158,7 +159,7 @@ const LoginPage = () => {
                             )}
                         </Button>
                         <Button
-                            className="flex items-center gap-2 w-full"
+                            className="flex items-center hover:bg-transparent gap-2 w-full"
                             variant="outline"
                         >
                             Login with Google
@@ -167,7 +168,7 @@ const LoginPage = () => {
                             <div className="text-sm text-gray-500 dark:text-white">
                                 Don&apos;t have an account?
                                 <Link
-                                    className="font-medium underline"
+                                    className="font-medium underline text-primary"
                                     href="/signup"
                                 >
                                     {""} Sign up

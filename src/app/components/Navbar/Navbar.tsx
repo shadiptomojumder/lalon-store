@@ -170,23 +170,23 @@ const handleHover = (event: any) => {
 
 const Navbar = () => {
     return (
-        <nav className="bg-[#F2F2F2] py-2">
+        <nav className="bg-[#3da641] py-2">
             <main className="container">
                 <section className="flex items-center gap-5 justify-center">
                     {CategoryList.map((category) => {
                         return (
                             <div
                                 key={category.id}
-                                onMouseOver={(e) => handleHover(e)}
+                                
                                 className="group relative"
                             >
                                 <div className="flex items-center gap-1">
-                                    <h2 className="text-lg font-semibold text-primary text-nowrap">
+                                    <h2 className="text-lg font-semibold text-[#040D12] text-nowrap">
                                         {category.categoryName}
                                     </h2>
                                     <ChevronDown
                                         size={25}
-                                        className="group-hover:rotate-180 transition-all duration-300"
+                                        className="group-hover:rotate-180 text-[#040D12] transition-all duration-300"
                                     />
                                 </div>
 

@@ -89,7 +89,7 @@ const Signup = () => {
                                 id="fullname"
                                 name="fullname"
                                 placeholder="Enter your full name"
-                                className="focus:border-primary h-11"
+                                className="focus-visible:ring-primary h-11"
                             />
                         </div>
                         {errors.fullname && (
@@ -110,7 +110,7 @@ const Signup = () => {
                                 name="email"
                                 placeholder="Enter your email address"
                                 type="email"
-                                className="focus:border-primary h-11"
+                                className="focus-visible:ring-primary h-11"
                             />
                         </div>
                         {errors.email && (
@@ -131,7 +131,7 @@ const Signup = () => {
                                 name="password"
                                 placeholder="Enter your password"
                                 type="password"
-                                className="focus:border-primary h-11"
+                                className="focus-visible:ring-primary h-11"
                             />
                         </div>
                         {errors.password && (
@@ -142,7 +142,7 @@ const Signup = () => {
                     </div>
 
                     <Button
-                        className="w-full bg-[#00B307] gap-2 justify-center text-white font-bold"
+                        className="w-full bg-primary hover:bg-accent gap-2 justify-center text-white font-bold"
                         type="submit"
                         disabled={isPending}
                     >
@@ -155,7 +155,7 @@ const Signup = () => {
                         )}
                     </Button>
                     <Button
-                        className="flex items-center gap-2 w-full"
+                        className="flex items-center hover:bg-transparent gap-2 w-full"
                         variant="outline"
                     >
                         Sign up with Google
@@ -164,7 +164,7 @@ const Signup = () => {
                         <div className="text-sm text-gray-500 dark:text-white">
                             Already have an account?
                             <Link
-                                className="font-medium underline"
+                                className="font-medium underline text-primary"
                                 href="/login"
                             >
                                 {""} Login

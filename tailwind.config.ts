@@ -25,8 +25,8 @@ const config = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "hsl(122, 100%, 35%)",
+          foreground: "hsl(122, 100%, 35%)",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -42,7 +42,7 @@ const config = {
         },
         accent: {
           DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+          foreground: "hsl(122, 84%, 25%)",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
