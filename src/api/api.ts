@@ -10,4 +10,4 @@ export const api = axios.create({
 // https://dentist-backend-phee.onrender.com
 // https://dentist-backend-one.vercel.app
 // http://localhost:5000
-// https://dentist-backend-production.up.railway.app
+// https://lalon-store-backend-production.up.railway.app

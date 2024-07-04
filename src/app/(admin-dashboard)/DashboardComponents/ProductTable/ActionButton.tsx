@@ -13,28 +13,31 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import ViewCustomerModal from "./ViewCustomerModal";
 import { useState } from "react";
+import { ProductDataType } from "./columns"
+import DeleteProducts from "@/api/product/deleteProducts";
+import { useRouter } from "next/navigation";
 
-interface AppointmentData {
-  // Define the structure of your appointmentData prop here
-  _id: string;
-  name: string;
-  phone: string;
-  address: string;
-  service: string;
-  appointmentDate: string;
-  appointmentTime: string;
-  message: string;
-  status: string;
-  createdBy: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-}
+// interface AppointmentData {
+//   // Define the structure of your appointmentData prop here
+//   _id: string;
+//   name: string;
+//   phone: string;
+//   address: string;
+//   service: string;
+//   appointmentDate: string;
+//   appointmentTime: string;
+//   message: string;
+//   status: string;
+//   createdBy: string;
+//   createdAt: string;
+//   updatedAt: string;
+//   __v: number;
+// }
 
-const ActionButton = ({ apoointment }: { apoointment: AppointmentData }) => {
-  // console.log("apoointment", apoointment);
+const ActionButton = ({ product }: { product: ProductDataType }) => {
   const queryClient = useQueryClient();
   const [menuOpen,setMenuOpen] = useState<boolean>(false);
+  const router = useRouter()
 
   const handleModalClose = () => {
     setMenuOpen(false);
@@ -42,13 +45,13 @@ const ActionButton = ({ apoointment }: { apoointment: AppointmentData }) => {
 
   const { mutate, isPending } = useMutation({
     mutationKey: [],
-    mutationFn: DeleteAppointment,
+    mutationFn: DeleteProducts,
     onSuccess: (response) => {
       console.log("the res is ", response);
 
       if (response.statusCode === 200) {
         toast.success("Status successfully Update");
-        queryClient.invalidateQueries({ queryKey: ["appointments"] });
+        queryClient.invalidateQueries({ queryKey: ["productlist"] });
       }
     },
     onError: (error: any) => {
@@ -68,11 +71,17 @@ const ActionButton = ({ apoointment }: { apoointment: AppointmentData }) => {
   });
 
   const handleDelete = async () => {
-    console.log("Delete Appointments", apoointment);
+    console.log("Delete Appointments", product);
     console.log("Delete button clicked");
-    const appointmentId = apoointment._id;
-    await mutate({ appointmentId });
+    const productIds = [`${product._id}`];
+    await mutate({ productIds });
   };
+
+  const handleEditProduct = () => {
+    console.log("Edit Product clicked", product?.productName);
+    router.push(`/admin-dashboard/update-product/${product?._id}`)
+    
+  } 
 
   return (
     <>
@@ -89,20 +98,20 @@ const ActionButton = ({ apoointment }: { apoointment: AppointmentData }) => {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem
-            onClick={() => navigator.clipboard.writeText(apoointment._id)}
+            onClick={() => navigator.clipboard.writeText(product._id)}
           >
             Copy payment ID
           </DropdownMenuItem>
           {/* <DropdownMenuItem onSelect={(e) => e.preventDefault()}><StatusChangeOption appointmentData={apoointment}/></DropdownMenuItem> */}
           <DropdownMenuSeparator />
           <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-            <ViewCustomerModal  onModalClose={handleModalClose} appointmentData={apoointment} />
+            <ViewCustomerModal  onModalClose={handleModalClose} productData={product} />
           </DropdownMenuItem>
-          <DropdownMenuItem>View payment details</DropdownMenuItem>
+          <DropdownMenuItem onClick={handleEditProduct}>Edit product details</DropdownMenuItem>
           <DropdownMenuItem
             onClick={handleDelete}
             onSelect={(e) => e.preventDefault()}
-            className="text-gray-200 bg-[#6a1c1d] focus:bg-[#782c2c] mt-1"
+            className="text-white focus:text-white bg-[#6a1c1d] focus:bg-[#782c2c] mt-1"
           >
             Delete
           </DropdownMenuItem>

@@ -30,6 +30,7 @@ import { Table } from "@tanstack/react-table";
 import { toast } from "sonner";
 import { useState } from "react";
 import Spinner from "@/app/components/Spinner/Spinner";
+import DeleteProducts from "@/api/product/deleteProducts";
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;
@@ -41,16 +42,16 @@ export function DataTablePagination<TData>({
   const selectedRows = table.getFilteredSelectedRowModel().rows;
   // console.log("selected rows: ", selectedRows);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
-  const selectedAppointmentIds = selectedRows.map((appointment: any) => {
-    const appointmentId = appointment?.original._id;
-    return appointmentId;
+  const productIds = selectedRows.map((product: any) => {
+    const productId = product?.original._id;
+    return productId;
   });
 
   // console.log("selectedAppointmentIds", selectedAppointmentIds);
   const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
     mutationKey: [],
-    mutationFn: DeleteMultipleAppointment,
+    mutationFn: DeleteProducts,
     onSuccess: (response) => {
       console.log("the res is ", response);
 
@@ -58,8 +59,8 @@ export function DataTablePagination<TData>({
         selectedRows.forEach((row) => {
           table.toggleAllRowsSelected(false);
         });
-        toast.success("Two appointment successfully deleted");
-        queryClient.invalidateQueries({ queryKey: ["appointments"] });
+        toast.success("Selected products are deleted");
+        queryClient.invalidateQueries({ queryKey: ["productlist"] });
         setIsDeleteDialogOpen(false)
       }
     },
@@ -78,7 +79,7 @@ export function DataTablePagination<TData>({
   });
 
   const handleMultipleDelete = async () => {
-    await mutate({ selectedAppointmentIds });
+    await mutate({ productIds });
     // Deselect the selected items without using resetSelectedRows()
     
   };
@@ -89,7 +90,7 @@ export function DataTablePagination<TData>({
         <section className="flex items-center gap-3">
           <div className="flex-1 text-sm text-muted-foreground">
             {table.getFilteredSelectedRowModel().rows.length} of{" "}
-            {table.getFilteredRowModel().rows.length} row's selected.
+            {table.getFilteredRowModel().rows.length} row&apos;s selected.
           </div>
 
           {/* {table.getFilteredSelectedRowModel().rows.length > 0 && (

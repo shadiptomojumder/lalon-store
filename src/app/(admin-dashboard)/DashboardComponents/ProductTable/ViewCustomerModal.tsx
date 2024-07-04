@@ -17,29 +17,32 @@ import StatusChangeOption from "./StatusChangeOption";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import UpdateAppointment from "@/api/appointment/updateAppointment";
 import { toast } from "sonner";
+import { ProductDataType } from "./columns"
+import { format } from "date-fns";
+import Image from "next/image";
 
-interface AppointmentData {
-  // Define the structure of your appointmentData prop here
-  _id: string;
-  name: string;
-  phone: string;
-  address: string;
-  service: string;
-  appointmentDate: string;
-  appointmentTime: string;
-  message: string;
-  status: string;
-  createdBy: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-}
+// interface AppointmentData {
+//   // Define the structure of your appointmentData prop here
+//   _id: string;
+//   name: string;
+//   phone: string;
+//   address: string;
+//   service: string;
+//   appointmentDate: string;
+//   appointmentTime: string;
+//   message: string;
+//   status: string;
+//   createdBy: string;
+//   createdAt: string;
+//   updatedAt: string;
+//   __v: number;
+// }
 
 const ViewCustomerModal = ({
-  appointmentData,
+  productData,
   onModalClose,
 }: {
-  appointmentData: AppointmentData;
+  productData: ProductDataType;
   onModalClose: () => void;
 }) => {
 
@@ -79,7 +82,7 @@ const ViewCustomerModal = ({
     });
 
   const handleChanges = async () =>{
-    const appointmentId = appointmentData?._id;
+    const appointmentId = productData?._id;
 
     await mutate({ data: { status: status }, appointmentId });
   }
@@ -93,39 +96,37 @@ const ViewCustomerModal = ({
   return (
     <Dialog>
       <DialogTrigger asChild className="w-full">
-        <h2>View patient details</h2>
+        <h2>View product details</h2>
       </DialogTrigger>
       <DialogContent className="lg:max-w-[600px] md:max-w-[550px] max-w-[90dvw] rounded-lg">
         <DialogHeader>
-          <DialogTitle className="">Patient Details</DialogTitle>
+          <DialogTitle className="">Product Details</DialogTitle>
           <Separator className="bg-primary" />
           <DialogDescription>
             <section className="grid grid-cols-10 gap-3 sm:items-center items-start my-2">      
-                <Label className="text-base font-semibold sm:col-span-4 col-span-6 flex items-center justify-between">Name<span>:</span></Label>
-                <h2 className="sm:col-span-6 col-span-4 text-gray-300 font-medium text-base text-start">{appointmentData?.name}</h2>
+                <Label className="text-base font-semibold sm:col-span-4 col-span-6 flex items-center justify-between">Product Name<span>:</span></Label>
+                <h2 className="sm:col-span-6 col-span-4 text-gray-900 font-medium text-base text-start">{productData?.productName}</h2>
 
-                <Label className="text-base font-semibold sm:col-span-4 col-span-6 flex items-center justify-between">Phone number<span>:</span></Label>
-                <h2 className="sm:col-span-6 col-span-4 text-gray-300 font-medium text-base text-start">{appointmentData?.phone}</h2>
+                <Label className="text-base font-semibold sm:col-span-4 col-span-6 flex items-center justify-between">Product Price<span>:</span></Label>
+                <h2 className="sm:col-span-6 col-span-4 text-gray-900 font-medium text-base text-start">{productData?.productPrice}</h2>
 
-                <Label className="text-base font-semibold sm:col-span-4 col-span-6 flex items-center justify-between">Service<span>:</span></Label>
-                <h2 className="sm:col-span-6 col-span-4 text-gray-300 font-medium text-base text-start">{appointmentData?.service}</h2>
+                <Label className="text-base font-semibold sm:col-span-4 col-span-6 flex items-center justify-between">Product Quantity<span>:</span></Label>
+                <h2 className="sm:col-span-6 col-span-4 text-gray-900 font-medium text-base text-start">{productData?.productQuantity}</h2>
 
-                <Label className="text-base font-semibold sm:col-span-4 col-span-6 flex items-center justify-between">Appointment Time<span>:</span></Label>
-                <h2 className="sm:col-span-6 col-span-4 text-gray-300 font-medium text-base text-start">{appointmentData?.appointmentTime}</h2>
+                <Label className="text-base font-semibold sm:col-span-4 col-span-6 flex items-center justify-between">Product Category<span>:</span></Label>
+                <h2 className="sm:col-span-6 col-span-4 text-gray-900 font-medium text-base text-start">{productData?.productCategory}</h2>
 
-                <Label className="text-base font-semibold sm:col-span-4 col-span-6 flex items-center justify-between">Appointment Date<span>:</span></Label>
-                <h2 className="sm:col-span-6 col-span-4 text-gray-300 font-medium text-base text-start">{appointmentData?.appointmentDate}</h2>
-
-                <Label className="text-base font-semibold sm:col-span-4 col-span-6 flex items-center justify-between">Status<span>:</span></Label>
-                <div className="sm:col-span-6 col-span-4 text-gray-300 font-medium text-base text-start">
-                  <StatusChangeOption appointmentData={appointmentData} status={status} setStatus={setStatus}/>
-                </div>
+                <Label className="text-base font-semibold sm:col-span-4 col-span-6 flex items-center justify-between">Product Description<span>:</span></Label>
+                <h2 className="sm:col-span-6 col-span-4 text-gray-900 font-medium text-base text-start">{productData?.productDescription}</h2>
 
                 <Label className="text-base font-semibold sm:col-span-4 col-span-6 flex items-center justify-between">Address<span>:</span></Label>
-                <h2 className="sm:col-span-6 col-span-4 text-gray-300 font-medium text-base text-start">{appointmentData?.address}</h2>
+                <h2 className="sm:col-span-6 col-span-4 text-gray-900 font-medium text-base text-start">{format(productData?.createdAt, "dd MMMM yyyy")}
+                </h2>
 
-                <Label className="text-base font-semibold sm:col-span-4 col-span-6 flex items-center justify-between">Message<span>:</span></Label>
-                <h2 className="sm:col-span-6 col-span-4 text-gray-300 font-medium text-base text-start">{appointmentData?.message}</h2>
+                <Label className="text-base font-semibold sm:col-span-4 col-span-6 flex items-center justify-between">Product Images<span>:</span></Label>
+                {
+                  productData?.productImage && <div className=""><Image src={productData?.productImage} width={100} height={100} className="min-w-[100px] w-[100px] h-[100px] p-1 rounded-md border border-primary object-cover object-center" alt="Product Image"/></div>
+                }
               
             </section>
           </DialogDescription>
@@ -136,7 +137,7 @@ const ViewCustomerModal = ({
               Close
             </Button>
           </DialogClose>
-          <Button type="submit" onClick={handleChanges} disabled={appointmentData?.status === status} className="hover:bg-primary">Save changes</Button>
+          {/* <Button type="submit" onClick={handleChanges} disabled={appointmentData?.status === status} className="hover:bg-primary">Save changes</Button> */}
         </DialogFooter>
       </DialogContent>
     </Dialog>

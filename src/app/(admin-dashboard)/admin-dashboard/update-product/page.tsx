@@ -8,7 +8,6 @@ import { Label } from "@/components/ui/label";
 import {
     Select,
     SelectContent,
-    SelectGroup,
     SelectItem,
     SelectTrigger,
     SelectValue,
@@ -29,8 +28,6 @@ import {
 } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import CategorySelection from "../../DashboardComponents/CategorySelection/CategorySelection";
-import CustomSelection from "../../DashboardComponents/CustomSelection/CustomSelection";
 
 const formSchema = z.object({
     productName: z.string().min(2, {
@@ -170,7 +167,7 @@ const CreateProductPage = () => {
         },
         onError: (error: any) => {
             if (error?.response?.status == 409) {
-                toast.warning("Product already created!!");
+                toast.warning("Username or Email already registered !!");
             } else if (error.request) {
                 toast.error("No response received from the server!!");
             } else {
@@ -565,7 +562,7 @@ const CreateProductPage = () => {
                                                         }
                                                         key={category.id}
                                                     >
-                                                        {category.categoryTitle}
+                                                        {category.categoryName}
                                                     </SelectItem>
                                                 );
                                             })}
@@ -579,9 +576,6 @@ const CreateProductPage = () => {
                             </span>
                         )}
                     </div>
-
-                    <CategorySelection></CategorySelection>
-                    <CustomSelection></CustomSelection>
 
                     <div>
                         <div className="space-y-2">

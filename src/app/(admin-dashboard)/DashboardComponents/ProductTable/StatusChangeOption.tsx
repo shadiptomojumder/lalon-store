@@ -13,30 +13,31 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { ProductDataType } from "./columns"
 
-interface AppointmentData {
-  // Define the structure of your appointmentData prop here
-  _id: string;
-  name: string;
-  phone: string;
-  address: string;
-  service: string;
-  appointmentDate: string;
-  appointmentTime: string;
-  message: string;
-  status: string;
-  createdBy: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-}
+// interface AppointmentData {
+//   // Define the structure of your appointmentData prop here
+//   _id: string;
+//   name: string;
+//   phone: string;
+//   address: string;
+//   service: string;
+//   appointmentDate: string;
+//   appointmentTime: string;
+//   message: string;
+//   status: string;
+//   createdBy: string;
+//   createdAt: string;
+//   updatedAt: string;
+//   __v: number;
+// }
 
 const StatusChangeOption = ({
   appointmentData,
   status,
   setStatus
 }: {
-  appointmentData: AppointmentData,
+  appointmentData: ProductDataType,
   status:string,
   setStatus: (status:string) => void
 }) => {

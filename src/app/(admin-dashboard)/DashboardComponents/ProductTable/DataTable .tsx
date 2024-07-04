@@ -72,12 +72,12 @@ export function DataTable<TData, TValue>({
 
     return (
         <div className="w-full space-y-5">
-            <div className="px-5"> 
-            <DataTableToolbar
-                table={table}
-                setFiltering={setFiltering}
-                filtering={filtering}
-            />
+            <div className="px-5">
+                <DataTableToolbar
+                    table={table}
+                    setFiltering={setFiltering}
+                    filtering={filtering}
+                />
             </div>
             <div className="border-t-2 px-5">
                 <Table>
@@ -133,7 +133,7 @@ export function DataTable<TData, TValue>({
                 </Table>
             </div>
             <div className="px-5">
-            <DataTablePagination table={table} />
+                <DataTablePagination table={table} />
             </div>
         </div>
     );

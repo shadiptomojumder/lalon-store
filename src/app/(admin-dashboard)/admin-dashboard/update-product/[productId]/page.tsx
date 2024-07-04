@@ -1,6 +1,7 @@
 "use client";
-import CreateCategory from "@/api/category/createCategory";
 import CreateProduct from "@/api/product/createProduct";
+import GetSingleProduct from "@/api/product/getSingleProduct";
+import UpdateProduct from "@/api/product/updateProduct";
 import Spinner from "@/app/components/Spinner/Spinner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,7 +9,6 @@ import { Label } from "@/components/ui/label";
 import {
     Select,
     SelectContent,
-    SelectGroup,
     SelectItem,
     SelectTrigger,
     SelectValue,
@@ -20,7 +20,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ImageUp } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Controller,
     FieldError,
@@ -29,8 +29,6 @@ import {
 } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import CategorySelection from "../../DashboardComponents/CategorySelection/CategorySelection";
-import CustomSelection from "../../DashboardComponents/CustomSelection/CustomSelection";
 
 const formSchema = z.object({
     productName: z.string().min(2, {
@@ -48,9 +46,7 @@ const formSchema = z.object({
     productDescription: z.string().min(2, {
         message: "Please provide a short description",
     }),
-    productImage: z.any().refine((files) => files?.length >= 1, {
-        message: "Please select an image",
-    }),
+    productImage: z.any().optional(),
     // productImageOne: z.any().refine((files) => files?.length >= 1, {
     //     message: "Please select an image",
     // }),
@@ -60,7 +56,18 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
-const CreateProductPage = () => {
+const UpdateProductPage = ({ params }: { params: { productId: string } }) => {
+    const { productId } = params;
+    // console.log("The parameters is:", params);
+    // console.log("The productId is:", productId);
+    const [isTouched, setIsTouched] = useState<boolean>(false);
+
+    const { data: product } = useQuery({
+        queryKey: ["product", productId],
+        queryFn: GetSingleProduct,
+    });
+    console.log("the product is:", product);
+
     const router = useRouter();
     const [showModal, setShowModal] = useState<boolean>(false);
     const [productImagePreview, setProductImagePreview] = useState<
@@ -95,6 +102,7 @@ const CreateProductPage = () => {
             if (e.target) {
                 setProductImageBase64(reader.result as string);
                 setProductImagePreview(e.target.result as string);
+                setIsTouched(true);
             }
         };
         reader.readAsDataURL(file);
@@ -155,7 +163,7 @@ const CreateProductPage = () => {
     } = useForm<FormData>({ resolver: zodResolver(formSchema) });
     const queryClient = useQueryClient();
     const { mutate, isPending } = useMutation({
-        mutationFn: CreateProduct,
+        mutationFn: UpdateProduct,
         onSuccess: (response) => {
             if (response.statusCode === 200) {
                 toast.success("Product successfully created");
@@ -164,13 +172,14 @@ const CreateProductPage = () => {
                 setProductImageOnePreview(null);
                 setProductImageTwoPreview(null);
                 setProductImageThreePreview(null);
+                setIsTouched(false);
                 queryClient.invalidateQueries({ queryKey: ["productlist"] });
                 router.push("/admin-dashboard/products");
             }
         },
         onError: (error: any) => {
             if (error?.response?.status == 409) {
-                toast.warning("Product already created!!");
+                toast.warning("Username or Email already registered !!");
             } else if (error.request) {
                 toast.error("No response received from the server!!");
             } else {
@@ -232,13 +241,28 @@ const CreateProductPage = () => {
 
         console.log("The new data is:", newData);
 
-         await mutate(newData);
+        await mutate({ productId , data:newData });
     };
+
+    useEffect(() => {
+        if (product) {
+            setValue("productName", product?.productName);
+            setValue("productPrice", product?.productPrice);
+            setValue("productQuantity", product?.productQuantity);
+            setValue("productCategory", product?.productCategory);
+            setValue("productDescription", product?.productDescription);
+
+            if (product?.productImage) {
+                setProductImagePreview(product?.productImage as string);
+            }
+            // ... other fields
+        }
+    }, [product, setValue]);
 
     return (
         <main>
             <div className="p-5">
-                <h2 className="text-lg font-semibold">Create Product</h2>
+                <h2 className="text-lg font-semibold">Update Product</h2>
                 <p>
                     Select your image and suitable name for product and click
                     create button.
@@ -478,6 +502,7 @@ const CreateProductPage = () => {
                                 type="text"
                                 placeholder="Enter Product Name"
                                 className="focus-visible:ring-primary h-11"
+                                onChange={() => setIsTouched(true)}
                             />
                         </div>
                         {errors.productName && (
@@ -503,6 +528,7 @@ const CreateProductPage = () => {
                                 type="number"
                                 placeholder="Enter Product Price"
                                 className="focus-visible:ring-primary h-11"
+                                onChange={() => setIsTouched(true)}
                             />
                         </div>
                         {errors.productPrice && (
@@ -528,6 +554,7 @@ const CreateProductPage = () => {
                                 type="text"
                                 placeholder="Enter Product Quantity"
                                 className="focus-visible:ring-primary h-11"
+                                onChange={() => setIsTouched(true)}
                             />
                         </div>
                         {errors.productQuantity && (
@@ -545,12 +572,12 @@ const CreateProductPage = () => {
                             Product Category{" "}
                             <span className="text-red-500">*</span>
                         </Label>
+
                         <Controller
                             name="productCategory"
                             control={control}
-                            defaultValue=""
-                            render={({ field }) => (
-                                <Select onValueChange={field.onChange}>
+                            render={({ field: { ref, name, onBlur, onChange,value } }) => (
+                                <Select onValueChange={(e)=>{onChange(e);setIsTouched(true)}} value={value} defaultValue={value}>
                                     <SelectTrigger className="focus:ring-primary h-11">
                                         <SelectValue placeholder="Select Product Category" />
                                     </SelectTrigger>
@@ -560,6 +587,8 @@ const CreateProductPage = () => {
                                             CategoryList.map((category) => {
                                                 return (
                                                     <SelectItem
+                                                    onChange={()=> console.log("Product Category clicked")
+                                                    }
                                                         value={
                                                             category?.categoryName
                                                         }
@@ -580,9 +609,6 @@ const CreateProductPage = () => {
                         )}
                     </div>
 
-                    <CategorySelection></CategorySelection>
-                    <CustomSelection></CustomSelection>
-
                     <div>
                         <div className="space-y-2">
                             <Label
@@ -598,6 +624,7 @@ const CreateProductPage = () => {
                                 name="productDescription"
                                 placeholder="Enter Product Description"
                                 className="focus-visible:ring-primary h-11"
+                                onChange={() => setIsTouched(true)}
                             />
                         </div>
                         {errors.productDescription && (
@@ -610,7 +637,7 @@ const CreateProductPage = () => {
                     <Button
                         className="w-full bg-primary hover:bg-accent-foreground gap-2 justify-center text-white font-bold"
                         type="submit"
-                        disabled={isPending}
+                        disabled={isPending || !isTouched}
                     >
                         {isPending ? (
                             <>
@@ -626,4 +653,4 @@ const CreateProductPage = () => {
     );
 };
 
-export default CreateProductPage;
+export default UpdateProductPage;

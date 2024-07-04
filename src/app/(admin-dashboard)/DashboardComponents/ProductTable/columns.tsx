@@ -6,26 +6,24 @@ import { ColumnDef } from "@tanstack/react-table";
 import ActionButton from "./ActionButton";
 import { DataTableColumnHeader } from "./data-table-column-header";
 
-// You can use a Zod schema here if you want.
-export type AppointmentData = {
-    // Define the structure of your appointmentData prop here
+
+export type ProductDataType = {
     _id: string;
-    categoryName: string;
-    categoryImage: string;
-    phone: string;
-    address: string;
-    service: string;
-    appointmentDate: string;
-    appointmentTime: string;
-    message: string;
-    status: "pending" | "booked" | "done" | "failed";
-    createdBy: string;
+    productName: string;
+    productPrice: string;
+    productQuantity: string;
+    productCategory: string;
+    productDescription: string;
+    productImage: string;
+    productImageOne: string;
+    productImageTwo: string;
+    productImageThree: string;
     createdAt: string;
     updatedAt: string;
     __v: number;
 };
 
-export const columns: ColumnDef<AppointmentData>[] = [
+export const columns: ColumnDef<ProductDataType>[] = [
     {
         id: "select",
         header: ({ table }) => (
@@ -51,42 +49,64 @@ export const columns: ColumnDef<AppointmentData>[] = [
         enableHiding: false,
     },
     {
-        id: "categoryName",
-        accessorKey: "categoryName",
+        id: "productName",
+        accessorKey: "productName",
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Category Name" />
+            <DataTableColumnHeader column={column} title="Product Name" />
         ),
         cell: ({ row }) => (
-            <div className="capitalize text-nowrap">{row.getValue("categoryName")}</div>
+            <div className="capitalize text-nowrap">{row.getValue("productName")}</div>
         ),
     },
     {
-        id: "categoryImage",
-        accessorKey: "categoryImage",
+        id: "productPrice",
+        accessorKey: "productPrice",
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Category Image" />
+            <DataTableColumnHeader column={column} title="Product Price" />
         ),
         enableSorting: true,
         cell: ({ row }) => (
-            <div className="capitalize">{row.getValue("categoryImage")}</div>
+            <div className="capitalize">{row.getValue("productPrice")} taka</div>
         ),
     },
     {
-        id: "appointmentTime",
-        accessorKey: "appointmentTime",
+        id: "productQuantity",
+        accessorKey: "productQuantity",
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Appointment Time" />
+            <DataTableColumnHeader column={column} title="Product Quantity" />
         ),
         cell: ({ row }) => (
-            <div className="capitalize">{row.getValue("appointmentTime")}</div>
+            <div className="capitalize">{row.getValue("productQuantity")}</div>
         ),
     },
     {
-        id: "phone",
-        accessorKey: "phone",
-        header: "Phone",
+        id: "productCategory",
+        accessorKey: "productCategory",
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Product Category" />
+        ),
         cell: ({ row }) => (
-            <div className="capitalize">+88{row.getValue("phone")}</div>
+            <div className="capitalize">{row.getValue("productCategory")}</div>
+        ),
+    },
+    {
+        id: "productDescription",
+        accessorKey: "productDescription",
+        header: ({ column }) => (
+            <span className="text-nowrap">Product Description</span>
+        ),
+        cell: ({ row }) => (
+            <div className="capitalize line-clamp-2">{row.getValue("productDescription")}</div>
+        ),
+    },
+    {
+        id: "productCategory",
+        accessorKey: "productCategory",
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Product Stoks" />
+        ),
+        cell: ({ row }) => (
+            <div className="capitalize">{row.getValue("productCategory")}</div>
         ),
     },
     {
@@ -136,10 +156,10 @@ export const columns: ColumnDef<AppointmentData>[] = [
         id: "actions",
         enableHiding: false,
         cell: ({ row }) => {
-            const apoointment = row.original;
+            const product = row.original;
             // console.log("Apointment", apoointment);
 
-            return <ActionButton apoointment={apoointment} />;
+            return <ActionButton product={product} />;
         },
     },
 ];

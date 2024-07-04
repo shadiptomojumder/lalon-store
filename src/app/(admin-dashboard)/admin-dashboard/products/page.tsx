@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { CategoryTableLoading } from "../../DashboardComponents/CategoryTableLoading/CategoryTableLoading";
 import { DataTable } from "../../DashboardComponents/ProductTable/DataTable ";
 import { columns } from "../../DashboardComponents/ProductTable/columns";
+import GetAllProducts from "@/api/product/getAllProducts";
 
 const Categories = () => {
     const GetCategory = async () => {
@@ -77,6 +78,13 @@ const Categories = () => {
         queryKey: ["category"],
         queryFn: GetCategory,
     });
+    const { data:productlist } = useQuery({
+        queryKey: ["productlist"],
+        queryFn: GetAllProducts,
+    });
+
+    console.log("productlist is :",productlist);
+    
 
     return (
         <main>
@@ -85,7 +93,7 @@ const Categories = () => {
                 {isLoading ? (
                     <CategoryTableLoading />
                 ) : (
-                    <DataTable columns={columns} data={data || []} />
+                    <DataTable columns={columns} data={productlist || []} />
                 )}
             </section>
         </main>
