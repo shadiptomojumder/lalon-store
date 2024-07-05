@@ -17,6 +17,7 @@ import Image from "next/image";
 type CategoryType = {
     _id: number;
     categoryName: string;
+    categoryTitle: string;
     categoryImage: string;
     createdAt: string;
     updatedAt: string;
@@ -73,7 +74,7 @@ const PopularCategorieSection = () => {
                                                     />
                                                     </div>
                                                     <p className="text-base capitalize group-hover:text-[#2C742F] text-center font-semibold">
-                                                        {category.categoryName}
+                                                        {category.categoryTitle}
                                                     </p>
                                                 </section>
                                             </CardContent>

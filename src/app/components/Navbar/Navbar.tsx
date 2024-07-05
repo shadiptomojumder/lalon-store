@@ -189,53 +189,6 @@ const Navbar = () => {
                                         className="group-hover:rotate-180 text-[#040D12] transition-all duration-300"
                                     />
                                 </div>
-
-                                {category &&
-                                    category.subCategoryList &&
-                                    category.subCategoryList.length > 0 && (
-                                        <div className="bg-red-500 py-2 px-4 group/item hidden group-hover:flex flex-col gap-5 absolute top-[100%] left-1/2 -translate-x-1/2 transition-all duration-1000">
-                                            {category.subCategoryList.map(
-                                                (subCategory) => {
-                                                    return (
-                                                        <>
-                                                            <Link
-                                                                href={"#"}
-                                                                key={
-                                                                    subCategory.id
-                                                                }
-                                                            >
-                                                                {
-                                                                    subCategory.subCategoryName
-                                                                }
-                                                            </Link>
-                                                            <div className="bg-green-500 py-2 px-4 hidden group-hover/item:flex flex-col gap-5 absolute top-[100%] left-1/2 -translate-x-1/2 transition-all duration-1000">
-                                                                {subCategory && subCategory.subCategoryList && subCategory.subCategoryList.length > 0 && subCategory.subCategoryList.map(
-                                                                    (
-                                                                        subCategory
-                                                                    ) => {
-                                                                        return (
-                                                                            <Link
-                                                                                href={
-                                                                                    "#"
-                                                                                }
-                                                                                key={
-                                                                                    subCategory.id
-                                                                                }
-                                                                            >
-                                                                                {
-                                                                                    subCategory.subCategoryName
-                                                                                }
-                                                                            </Link>
-                                                                        );
-                                                                    }
-                                                                )}
-                                                            </div>
-                                                        </>
-                                                    );
-                                                }
-                                            )}
-                                        </div>
-                                    )}
                             </div>
                         );
                     })}

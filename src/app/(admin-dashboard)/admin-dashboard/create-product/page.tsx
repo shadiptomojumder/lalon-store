@@ -580,9 +580,6 @@ const CreateProductPage = () => {
                         )}
                     </div>
 
-                    <CategorySelection></CategorySelection>
-                    <CustomSelection></CustomSelection>
-
                     <div>
                         <div className="space-y-2">
                             <Label

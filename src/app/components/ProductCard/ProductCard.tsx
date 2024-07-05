@@ -2,21 +2,29 @@ import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
 
 interface ProductData {
-    _id?: string;
+    _id: string;
     productName: string;
     productPrice: string;
     productQuantity: string;
-    review?: string;
+    productCategory: string;
+    productDescription: string;
+    productImage: string;
+    productImageOne: string;
+    productImageTwo: string;
+    productImageThree: string;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
 }
 
 const ProductCard = ({ productData }: { productData: ProductData }) => {
     const { productName, productPrice, productQuantity } = productData;
     return (
-        <section className="bg-white p-4 min-w-[250px] flex flex-col justify-between border shadow hover:shadow-[#00B307] hover:border-[#20B526] rounded-md cursor-pointer">
+        <section className="bg-white p-4 min-w-[250px] flex flex-col justify-between group border shadow hover:shadow-[#00B307] hover:border-[#20B526] rounded-md cursor-pointer transition-all duration-300">
             <div>
                 <Image
                     src={
-                        "https://chaldn.com/_mpimage/green-apple-50-gm-1-kg?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D119065&q=best&v=1&m=400&webp=1"
+                        productData?.productImage
                     }
                     alt="product"
                     width={500}
@@ -25,7 +33,7 @@ const ProductCard = ({ productData }: { productData: ProductData }) => {
                 />
             </div>
             <section className="flex flex-col justify-between h-full">
-                <h2 className="text-[#1A1A1A] text-center capitalize text-base font-medium">
+                <h2 className="text-[#1A1A1A] text-center capitalize text-base font-medium group-hover:underline transition-all duration-300">
                     {productName}
                 </h2>
                 <div className="space-y-2 text-center">
@@ -35,7 +43,7 @@ const ProductCard = ({ productData }: { productData: ProductData }) => {
                     <p className="text-[#1A1A1A] text-base font-bold">
                         ৳ {productPrice}
                     </p>
-                    <button className="text-white py-1 flex items-center justify-center gap-1 rounded-full w-full bg-[#00B307]">
+                    <button className="text-white py-1 flex items-center justify-center shadow-lg gap-1 rounded-full w-full bg-[#00B307]">
                         <ShoppingCart size={20} className=" text-[#FFFFFF]" />
                         Add to cart
                     </button>

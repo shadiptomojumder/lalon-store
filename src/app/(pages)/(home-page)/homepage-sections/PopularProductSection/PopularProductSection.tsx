@@ -1,4 +1,7 @@
+"use client"
+import GetAllProducts from "@/api/product/getAllProducts";
 import ProductCard from "@/app/components/ProductCard/ProductCard";
+import { useQuery } from "@tanstack/react-query";
 import { ChevronRight, ShoppingCart } from "lucide-react";
 
 import Image from "next/image";
@@ -104,6 +107,13 @@ const ProductData = [
 ];
 
 const PopularProductSection = () => {
+
+    const { isLoading, data:productList, error } = useQuery({
+        queryKey: ["productlist", "product"],
+        queryFn: GetAllProducts,
+    });
+    console.log("productList:",productList);
+    
     return (
         <main className="mt-20 mb-10">
             <section className="flex items-center justify-between my-4">
@@ -115,7 +125,7 @@ const PopularProductSection = () => {
                     <ChevronRight className="text-[#00B307]" />
                 </div>
             </section>
-            <section className="grid grid-cols-5 gap-5">
+            <section className="grid grid-cols-5 gap-8">
                 {/* <section className="bg-white p-4 w-fit border shadow hover:shadow-[#00B307] hover:border-[#20B526] rounded-md cursor-pointer">
                     <div>
                         <Image
@@ -144,13 +154,23 @@ const PopularProductSection = () => {
                         Add to cart
                     </button>
                 </section> */}
+                {
+                    productList && productList.length > 0 && productList.map((product:any) => {
+                        return (
+                            <ProductCard
+                                key={product._id}
+                                productData={product}
+                            />
+                        );
+                    })
+                }
 
-                {ProductData.map((product) => (
+                {/* {ProductData.map((product) => (
                     <ProductCard
                         key={product.productName}
                         productData={product}
                     />
-                ))}
+                ))} */}
             </section>
         </main>
     );
