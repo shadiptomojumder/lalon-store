@@ -12,6 +12,7 @@ import { GetCategory } from "@/StaticData/CategoryData/CategoryData";
 import { useQuery } from "@tanstack/react-query";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 // Define the type of the category object
 type CategoryType = {
@@ -31,7 +32,9 @@ const PopularCategorieSection = () => {
     });
 
     const CategoryList = data;
-    console.log("data is", data);
+    // console.log("data is", data);
+
+    
     return (
         <main className="mt-20 mb-10">
             <section className="flex items-center justify-between my-4">
@@ -58,7 +61,7 @@ const PopularCategorieSection = () => {
                                     key={index}
                                     className="md:basis-1/2 lg:basis-1/6 w-full"
                                 >
-                                    <div className="p-1">
+                                    <Link href={`/${category.link}`} className="p-1">
                                         <Card className="hover:shadow-[#00B307] hover:border hover:border-[#00B307] transition-all duration-300 cursor-pointer group h-[215px] p-1">
                                             <CardContent className="flex items-center justify-center h-full">
                                                 <section className="flex flex-col justify-between h-full">
@@ -79,7 +82,7 @@ const PopularCategorieSection = () => {
                                                 </section>
                                             </CardContent>
                                         </Card>
-                                    </div>
+                                    </Link>
                                 </CarouselItem>
                             )
                         )}

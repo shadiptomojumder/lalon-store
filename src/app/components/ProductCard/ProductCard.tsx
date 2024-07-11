@@ -20,7 +20,7 @@ interface ProductData {
 const ProductCard = ({ productData }: { productData: ProductData }) => {
     const { productName, productPrice, productQuantity } = productData;
     return (
-        <section className="bg-white p-4 min-w-[250px] flex flex-col justify-between group border shadow hover:shadow-[#00B307] hover:border-[#20B526] rounded-md cursor-pointer transition-all duration-300">
+        <section className="bg-white p-3 w-full min-w-[220px] flex flex-col justify-between group border shadow hover:shadow-[#00B307] hover:border-[#20B526] rounded-md cursor-pointer transition-all duration-300">
             <div>
                 <Image
                     src={
@@ -33,7 +33,7 @@ const ProductCard = ({ productData }: { productData: ProductData }) => {
                 />
             </div>
             <section className="flex flex-col justify-between h-full">
-                <h2 className="text-[#1A1A1A] text-center capitalize text-base font-medium group-hover:underline transition-all duration-300">
+                <h2 className="text-[#1A1A1A] text-center capitalize text-sm font-medium group-hover:underline transition-all duration-300">
                     {productName}
                 </h2>
                 <div className="space-y-2 text-center">

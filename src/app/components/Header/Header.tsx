@@ -15,6 +15,7 @@ import { CircleUserRound, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 import { toast } from "sonner";
 
 const Header = () => {
@@ -34,6 +35,7 @@ const Header = () => {
                 toast.success("User successfully Logout");
                 localStorage.removeItem("userData");
                 setUser(null);
+                document.cookie = "";
                 router.push("/");
                 router.refresh();
             }
@@ -41,6 +43,21 @@ const Header = () => {
             console.log("The Error in Logout is:", error);
         }
     };
+
+    const [searchText,setSearchText] = useState("");
+
+    const handleSearch = (searchValue:string) => {
+        
+        setSearchText(searchValue);
+        console.log("Search Text is:", searchText);
+        router.push(`/search?q=${searchText}`);
+        
+    }
+
+
+
+
+
     return (
         <header className="bg-white py-2">
             <section className="container flex items-center justify-between">
@@ -54,6 +71,7 @@ const Header = () => {
                         type="text"
                         placeholder="Search any item"
                         className="p-2 focus-visible:ring-primary h-10"
+                        onChange={(e) => handleSearch(e.target.value)}
                     />
                 </div>
                 <div className="flex items-center gap-2">
@@ -73,7 +91,7 @@ const Header = () => {
                                                     alt="Uploades Image"
                                                     height={50}
                                                     width={50}
-                                                    className="min-w-[50px] h-[50px] rounded-full object-cover object-center"
+                                                    className="min-w-[40px] w-[40px] h-[40px] rounded-full object-cover object-center"
                                                 />
                                             </div>
                                         ) : (

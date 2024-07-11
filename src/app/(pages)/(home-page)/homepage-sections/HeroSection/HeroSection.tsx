@@ -7,8 +7,8 @@ const HeroSection = () => {
     return (
         <main className="py-5">
             <section className="flex items-center justify-between h-[500px]">
-                <div className="w-[65%] h-full bg-gray-300 rounded-lg">
-                    <Image src={Banner1} alt="banner" className="rounded-lg" />
+                <div className="w-[65%] h-full bg-gray-300 rounded-lg overflow-hidden">
+                    <Image src={Banner1} alt="banner" className="rounded-lg w-full" />
                 </div>
                 <section className="w-[30%] h-full flex flex-col justify-between">
                     <div className="h-[230px] bg-gray-300 rounded-lg overflow-hidden">
@@ -23,7 +23,7 @@ const HeroSection = () => {
                         <Image
                             src={Banner3}
                             alt="banner"
-                            className="rounded-lg"
+                            className="rounded-lg w-full h-full"
                         />
                     </div>
                 </section>

@@ -6,11 +6,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import { FaGoogle } from "react-icons/fa6";
+import { FcGoogle } from "react-icons/fc";
 
 const formSchema = z.object({
     fullname: z.string().min(2, {
@@ -63,6 +66,16 @@ const Signup = () => {
     const onSubmit: SubmitHandler<FormData> = async (data) => {
         await mutate(data);
     };
+    
+
+    const handleGoogleSignup = async () => {
+        // window.open("http://localhost:5000/api/auth/google","_self")
+        // HandleGoogleAuth()
+        // const response = axios.get("http://localhost:5000/api/auth/google");
+        // console.log("The response is:",response);
+        window.location.href = "http://localhost:5000/api/auth/google";
+        
+    }
 
     return (
         <div className="flex min-h-[100dvh] flex-col items-center justify-center bg-gray-100 px-4 py-12 dark:bg-gray-950">
@@ -154,12 +167,14 @@ const Signup = () => {
                             "Sign Up"
                         )}
                     </Button>
-                    <Button
-                        className="flex items-center hover:bg-transparent gap-2 w-full"
-                        variant="outline"
+                    <div
+                        onClick={handleGoogleSignup}
+                        className="flex items-center justify-center py-2 text-sm font-semibold text-black rounded-md cursor-pointer border-2 border-primary gap-2 w-full transition-all duration-200"
+                        
                     >
+                        <FcGoogle className="text-2xl"/>
                         Sign up with Google
-                    </Button>
+                    </div>
                     <div className="flex items-center justify-center">
                         <div className="text-sm text-gray-500 dark:text-white">
                             Already have an account?

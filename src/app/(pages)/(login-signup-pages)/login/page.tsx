@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import { FcGoogle } from "react-icons/fc";
 
 const formSchema = z.object({
     email: z.string().email({
@@ -78,6 +79,16 @@ const LoginPage = () => {
     const onSubmit: SubmitHandler<FormData> = async (data) => {
         await mutate(data);
     };
+
+    const handleGoogleLogin = async () => {
+        // window.open("http://localhost:5000/api/auth/google","_self")
+        // HandleGoogleAuth()
+        // const response = axios.get("http://localhost:5000/api/auth/google");
+        // console.log("The response is:",response);
+        window.location.href = "http://localhost:5000/api/auth/google";
+        
+    }
+    
 
     return (
         <div className="flex h-screen w-full items-center justify-center bg-gray-100 px-4 dark:bg-gray-950">
@@ -164,6 +175,14 @@ const LoginPage = () => {
                         >
                             Login with Google
                         </Button>
+                        <div
+                        onClick={handleGoogleLogin}
+                        className="flex items-center justify-center py-2 text-sm font-semibold text-black rounded-md cursor-pointer border-2 border-primary gap-2 w-full transition-all duration-200"
+                        
+                    >
+                        <FcGoogle className="text-2xl"/>
+                        Login with Google
+                    </div>
                         <div className="flex items-center justify-center">
                             <div className="text-sm text-gray-500 dark:text-white">
                                 Don&apos;t have an account?
