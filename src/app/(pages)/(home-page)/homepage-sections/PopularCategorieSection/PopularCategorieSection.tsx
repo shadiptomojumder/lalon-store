@@ -27,7 +27,7 @@ type CategoryType = {
 
 const PopularCategorieSection = () => {
     const { isLoading, data, error } = useQuery({
-        queryKey: ["UserAppointments"],
+        queryKey: ["categories"],
         queryFn: GetCategory,
     });
 

@@ -54,10 +54,6 @@ const Header = () => {
         
     }
 
-
-
-
-
     return (
         <header className="bg-white py-2">
             <section className="container flex items-center justify-between">
