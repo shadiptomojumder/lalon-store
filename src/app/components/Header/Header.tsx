@@ -123,7 +123,7 @@ const Header = () => {
                                             (user?.role === "admin" ||
                                                 user?.role ===
                                                     "super-admin") && (
-                                                <Link href={`/dashboard`}>
+                                                <Link href={`/admin-dashboard`}>
                                                     <DropdownMenuItem>
                                                         Admin Dashboard
                                                     </DropdownMenuItem>

@@ -125,7 +125,7 @@ const Sidebar = () => {
                 );
               })}
 
-              {user && user?.role && user?.role === "super-admin" && (
+              {/* {user && user?.role && user?.role === "super-admin" && (
                 <Link href={`/dashboard/dashboard-users`} className="block">
                   <div
                     className={
@@ -145,7 +145,7 @@ const Sidebar = () => {
                     </h2>
                   </div>
                 </Link>
-              )}
+              )} */}
             </section>
           </>
         )}

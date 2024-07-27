@@ -79,7 +79,7 @@ const Categories = () => {
         queryFn: GetCategory,
     });
     const { data:productlist } = useQuery({
-        queryKey: ["productlist"],
+        queryKey: ["productlist",""],
         queryFn: GetAllProducts,
     });
 
