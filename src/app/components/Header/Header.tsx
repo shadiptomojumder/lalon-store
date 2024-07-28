@@ -21,6 +21,7 @@ import { toast } from "sonner";
 const Header = () => {
     const { user, setUser, userLoading } = useAuth();
     console.log("The User is ", user);
+    console.log("The userLoading is ", userLoading);
     
     const pathname = usePathname();
     const router = useRouter();
