@@ -166,7 +166,7 @@ const UpdateProductPage = ({ params }: { params: { productId: string } }) => {
         mutationFn: UpdateProduct,
         onSuccess: (response) => {
             if (response.statusCode === 200) {
-                toast.success("Product successfully created");
+                toast.success("Product successfully updated");
                 reset();
                 setProductImagePreview(null);
                 setProductImageOnePreview(null);
@@ -641,10 +641,10 @@ const UpdateProductPage = ({ params }: { params: { productId: string } }) => {
                     >
                         {isPending ? (
                             <>
-                                <Spinner /> Creating
+                                <Spinner /> Updatting
                             </>
                         ) : (
-                            "Create"
+                            "Update"
                         )}
                     </Button>
                 </form>

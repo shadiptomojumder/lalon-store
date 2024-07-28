@@ -56,7 +56,7 @@ const CreateCategoryModal = () => {
     const [previewImage, setPreviewImage] = useState<string | null>(null);
 
     const { isLoading, data:CategoryList, error } = useQuery({
-        queryKey: ["UserAppointments"],
+        queryKey: ["categoryList"],
         queryFn: GetCategory,
     });
       console.log("CategoryList is:",CategoryList);

@@ -47,14 +47,14 @@ export const GetCategory = async () => {
             categoryName: "readymix",
             categoryTitle: "Ready Mix",
             categoryImage: Readymix,
-            link: "readymix",
+            link: "ready-mix",
         },
         {
             id: 6,
             categoryName: "shemai_suji",
             categoryTitle: "Shemai & Suji",
             categoryImage: shemai_suji,
-            link: "shemai_suji",
+            link: "shemai-suji",
         },
         {
             id: 7,

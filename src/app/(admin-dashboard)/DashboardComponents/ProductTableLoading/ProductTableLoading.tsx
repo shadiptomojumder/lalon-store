@@ -24,6 +24,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { DataTableColumnHeader } from "../ProductTable/data-table-column-header";
+import { DataTableToolbar } from "../ProductTable/data-table-toolbar";
 
 const data: TableData[] = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
 
@@ -45,43 +46,43 @@ export const columns: ColumnDef<TableData>[] = [
             />
         ),
         cell: ({ row }) => (
-            <Skeleton className="w-7 h-8 rounded-md bg-gray-500" />
+            <Skeleton className="w-7 h-8 rounded-md bg-gray-400" />
         ),
         enableSorting: false,
         enableHiding: false,
     },
     {
-        accessorKey: "name",
+        accessorKey: "productName",
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Name" />
+            <DataTableColumnHeader column={column} title="Product Name" />
         ),
         cell: ({ row }) => (
-            <Skeleton className="w-40 h-8 rounded-md bg-gray-500" />
+            <Skeleton className="w-40 h-8 rounded-md bg-gray-400" />
         ),
     },
     {
-        accessorKey: "appointmentDate",
+        accessorKey: "productPrice",
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Appointment Date" />
+            <DataTableColumnHeader column={column} title="Product Price" />
         ),
         cell: ({ row }) => (
-            <Skeleton className="w-40 h-8 rounded-md bg-gray-500" />
+            <Skeleton className="w-40 h-8 rounded-md bg-gray-400" />
         ),
     },
     {
-        accessorKey: "appointmentTime",
+        accessorKey: "productQuantity",
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Appointment Time" />
+            <DataTableColumnHeader column={column} title="Product Quantity" />
         ),
         cell: ({ row }) => (
-            <Skeleton className="w-40 h-8 rounded-md bg-gray-500" />
+            <Skeleton className="w-40 h-8 rounded-md bg-gray-400" />
         ),
     },
     {
-        accessorKey: "phone",
-        header: "Phone",
+        accessorKey: "productCategory",
+        header: "Product Category",
         cell: ({ row }) => (
-            <Skeleton className="w-40 h-8 rounded-md bg-gray-500" />
+            <Skeleton className="w-40 h-8 rounded-md bg-gray-400" />
         ),
     },
     {
@@ -91,19 +92,19 @@ export const columns: ColumnDef<TableData>[] = [
         ),
         cell: ({ row }) => {
             const status = row.getValue("status");
-            return <Skeleton className="w-24 h-8 rounded-md bg-gray-500" />;
+            return <Skeleton className="w-24 h-8 rounded-md bg-gray-400" />;
         },
     },
     {
         id: "actions",
         enableHiding: false,
         cell: ({ row }) => {
-            return <Skeleton className="w-7 h-8 rounded-md bg-gray-500" />;
+            return <Skeleton className="w-7 h-8 rounded-md bg-gray-400" />;
         },
     },
 ];
 
-export function CategoryTableLoading() {
+export function ProductTableLoading() {
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] =
         React.useState<ColumnFiltersState>([]);
@@ -128,20 +129,29 @@ export function CategoryTableLoading() {
             rowSelection,
         },
     });
+    const [filtering, setFiltering] = React.useState("");
+
 
     return (
         <div className="w-full space-y-5">
-            <div className="flex xl:flex-row flex-col gap-3 md:items-center items-start justify-between">
+            {/* <div className="flex xl:flex-row flex-col gap-3 md:items-center items-start justify-between">
                 <div className="flex items-center xl:justify-start justify-between gap-5 w-full">
-                    <Skeleton className="md:w-60 w-40 h-8 rounded-md bg-gray-500" />
-                    <Skeleton className="md:w-40 w-40 h-8 rounded-md bg-gray-500" />
+                    <Skeleton className="md:w-60 w-40 h-8 rounded-md bg-gray-400" />
+                    <Skeleton className="md:w-40 w-40 h-8 rounded-md bg-gray-400" />
                 </div>
-                <div className="flex items-center xl:justify-end justify-between  gap-5 w-full">
-                    <Skeleton className="md:w-60 w-40 h-8 rounded-md bg-gray-500" />
-                    <Skeleton className="md:w-40 w-40 h-8 rounded-md bg-gray-500" />
+                <div className="flex items-center xl:justify-end justify-between gap-5 w-full">
+                    <Skeleton className="md:w-60 w-40 h-8 rounded-md bg-gray-400" />
+                    <Skeleton className="md:w-40 w-40 h-8 rounded-md bg-gray-400" />
                 </div>
+            </div> */}
+            <div className="px-5">
+                <DataTableToolbar
+                    table={table}
+                    setFiltering={setFiltering}
+                    filtering={filtering}
+                />
             </div>
-            <div className="rounded-md border">
+            <div className="border-t-2 px-1">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -172,8 +182,8 @@ export function CategoryTableLoading() {
                                     }
                                     className={` ${
                                         index % 2 == 0
-                                            ? "bg-slate-400"
-                                            : "bg-slate-700"
+                                            ? "bg-slate-300"
+                                            : "bg-[#edf2ee]"
                                     }`}
                                 >
                                     {row.getVisibleCells().map((cell) => (

@@ -2,7 +2,9 @@ import ProductFilterBar from "@/app/components/ProductFilterBar/ProductFilterBar
 import ProductPageSidebar from "@/app/components/ProductPageSidebar/ProductPageSidebar";
 import type { Metadata } from "next";
 import { Noto_Sans_Bengali } from "next/font/google";
+import Image from "next/image";
 import React from "react";
+import OilBanner from "../../../../public/banners/Oil.png"
 
 const NotoBengali = Noto_Sans_Bengali({
     weight: ["400", "500", "700"],
@@ -21,11 +23,14 @@ export default function ProductPageLayout({
 }) {
     return (
         <main className={`bg-white py-10`}>
-            <section className="overflow-auto min-h-[80dvh] container bg-orange-300">
+            <div className="text-center flex justify-center py-10 container">
+                <Image src={OilBanner} alt="OilBanner"/>
+            </div>
+            <section className="overflow-auto min-h-[80dvh] container bg-white">
                 <ProductFilterBar/>
                 <div className="flex lg:gap-5">
-                    <ProductPageSidebar/>
-                    <div className="w-full bg-gray-200">
+                    {/* <ProductPageSidebar/> */}
+                    <div className="w-full">
                         {children}
                     </div>
                 </div>

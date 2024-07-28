@@ -36,9 +36,7 @@ const formSchema = z.object({
     productName: z.string().min(2, {
         message: "Product name must be at least 2 characters.",
     }),
-    productPrice: z.string().min(2, {
-        message: "Product price must be at least 2 characters.",
-    }),
+    productPrice: z.number(),
     productQuantity: z.string().min(2, {
         message: "Product quantity must be at least 2 characters.",
     }),
@@ -497,7 +495,7 @@ const CreateProductPage = () => {
                                 <span className="text-red-600">*</span>
                             </Label>
                             <Input
-                                {...register("productPrice")}
+                                {...register("productPrice", { valueAsNumber: true })}
                                 id="productPrice"
                                 name="productPrice"
                                 type="number"

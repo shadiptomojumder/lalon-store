@@ -1,19 +1,19 @@
 import { api } from "../api"
-type QueryKey = [string, string];
+type QueryKey = [string, string , string];
 
 
 const GetAllProducts = async ({queryKey}:{queryKey: QueryKey}) => {
     try {
-        console.log("queryKey",queryKey);
+        console.log("queryKey in getAllproduct API:",queryKey);
         
-        const [, query] = queryKey;
+        const [, query,sortBy] = queryKey;
 
-        console.log("query",query);
+        console.log("query",sortBy);
         
 
 
 
-        const response = await api.get(`/product?search=${query}`);
+        const response = await api.get(`/product?${query ? `search=${query}`:``}${sortBy ? `&&sortBy=${sortBy}`:``}`);
         console.log("Response from GetAllProducts API:", response.data.data);
         
         return response.data.data

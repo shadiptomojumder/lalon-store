@@ -1,8 +1,8 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import { CategoryTableLoading } from "../../DashboardComponents/CategoryTableLoading/CategoryTableLoading";
 import { DataTable } from "../../DashboardComponents/ProductTable/DataTable ";
 import { columns } from "../../DashboardComponents/ProductTable/columns";
+import { CategoryTableLoading } from "../../DashboardComponents/ProductTableLoading/ProductTableLoading";
 
 const Categories = () => {
     const GetCategory = async () => {

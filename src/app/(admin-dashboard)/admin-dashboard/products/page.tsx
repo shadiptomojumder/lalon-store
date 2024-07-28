@@ -1,9 +1,9 @@
 "use client";
+import GetAllProducts from "@/api/product/getAllProducts";
 import { useQuery } from "@tanstack/react-query";
-import { CategoryTableLoading } from "../../DashboardComponents/CategoryTableLoading/CategoryTableLoading";
 import { DataTable } from "../../DashboardComponents/ProductTable/DataTable ";
 import { columns } from "../../DashboardComponents/ProductTable/columns";
-import GetAllProducts from "@/api/product/getAllProducts";
+import { ProductTableLoading } from "../../DashboardComponents/ProductTableLoading/ProductTableLoading";
 
 const Categories = () => {
     const GetCategory = async () => {
@@ -74,26 +74,21 @@ const Categories = () => {
         return categoryList;
     };
 
-    const { isLoading, data, error } = useQuery({
-        queryKey: ["category"],
-        queryFn: GetCategory,
-    });
-    const { data:productlist } = useQuery({
-        queryKey: ["productlist",""],
+    const { isLoading, data: productlist } = useQuery({
+        queryKey: ["productlist", "",""],
         queryFn: GetAllProducts,
     });
 
-    console.log("productlist is :",productlist);
-    
+    console.log("productlist is :", productlist);
 
     return (
         <main>
             <h2 className="text-lg font-semibold p-5">Product List</h2>
             <section>
                 {isLoading ? (
-                    <CategoryTableLoading />
+                    <ProductTableLoading />
                 ) : (
-                    <DataTable columns={columns} data={productlist || []} />
+                    <DataTable columns={columns} data={productlist} />
                 )}
             </section>
         </main>

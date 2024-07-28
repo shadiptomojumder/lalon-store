@@ -109,7 +109,7 @@ const ProductData = [
 const PopularProductSection = () => {
 
     const { isLoading, data:productList, error } = useQuery({
-        queryKey: ["productlist",""],
+        queryKey: ["productlist","",""],
         queryFn: GetAllProducts,
     });
     console.log("productList:",productList);

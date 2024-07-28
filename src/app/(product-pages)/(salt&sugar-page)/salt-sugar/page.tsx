@@ -1,30 +1,40 @@
 "use client";
 import GetAllProducts from "@/api/product/getAllProducts";
 import ProductCard from "@/app/components/ProductCard/ProductCard";
+import ProductCardLoading from "@/app/components/ProductCardLoading/ProductCardLoading";
 import { useQuery } from "@tanstack/react-query";
+import { useSearchParams } from "next/navigation";
 
-const RicePage = () => {
+const SaltAndSugarPage = () => {
+    const searchPrams = useSearchParams();
+    const sortBy = searchPrams.get("sortBy") || "";
+
     const {
         isLoading,
         data: productList,
         error,
     } = useQuery({
-        queryKey: ["productlist", "product"],
+        queryKey: ["productlist", "", sortBy],
         queryFn: GetAllProducts,
     });
     console.log("productList:", productList);
 
     return (
-        <main>
-            <section className="container bg-red-500">
-                {/* <h2>This is Spices Page</h2> */}
-                <section className="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
+        <section className="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
+            {isLoading ? (
+                <>
+                    {Array.from({ length: 10 }, (_, index) => (
+                        <ProductCardLoading key={index}></ProductCardLoading>
+                    ))}
+                </>
+            ) : (
+                <>
                     {productList &&
                         productList.length > 0 &&
                         productList
                             .filter(
                                 (product: any) =>
-                                    product.productCategory === "rice"
+                                    product.productCategory === "salt_sugar"
                             )
                             .map((product: any) => (
                                 <ProductCard
@@ -32,11 +42,10 @@ const RicePage = () => {
                                     productData={product}
                                 />
                             ))}
-                </section>
-            </section>
-        </main>
+                </>
+            )}
+        </section>
     );
 };
 
-export default RicePage;
-
+export default SaltAndSugarPage;

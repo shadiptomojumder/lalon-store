@@ -69,7 +69,7 @@ export function DataTableToolbar<TData>({
             placeholder="Filter by anything..."
             value={filtering}
             onChange={(event) => setFiltering(event.target.value)}
-            className="md:min-w-[250px] w-full focus:border-primary"
+            className="md:min-w-[250px] w-full focus-visible:border-primary focus-visible:ring-0"
           />
         </div>
 
