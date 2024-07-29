@@ -20,16 +20,17 @@ import { toast } from "sonner";
 
 const Header = () => {
     const { user, setUser, userLoading } = useAuth();
-    console.log("The User is ", user);
-    console.log("The userLoading is ", userLoading);
+    // console.log("The User is ", user);
+    // console.log("The userLoading is ", userLoading);
     
     const pathname = usePathname();
     const router = useRouter();
+    const userId = user?._id
 
     // Logout Function
     const handleLogout = async () => {
         try {
-            const response = await Logout();
+            const response = await Logout({userId});
             console.log("The Logout Response is", response);
 
             if (response.statusCode === 200) {

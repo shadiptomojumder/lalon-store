@@ -1,10 +1,13 @@
 import axios from "axios";
-const BaseURL = "http://localhost:5000/api"
+const BaseURL = "http://localhost:5000/api";
 
 export const api = axios.create({
     baseURL: BaseURL,
     timeout: 10000,
-    headers: { "X-Custom-Header": "foobar" },
+    headers: {
+        "X-Custom-Header": "foobar",
+        "Content-Type": "application/json",
+    },
     withCredentials: true,
 });
 
@@ -14,69 +17,79 @@ export const api = axios.create({
 // https://lalon-store-backend-production.up.railway.app
 
 // Add a request interceptor
-// api.interceptors.request.use(
-//   function (config) {
-//     // Do something before the request is sent
-//     const token = localStorage.getItem('authToken'); // Retrieve auth token from localStorage
-//     if (token) {
-//       config.headers.Authorization = `Bearer ${token}`;
-//     }
-//     return config;
-//   },
-//   function (error) {
-//     // Handle the error
-//     return Promise.reject(error);
-//   }
-// );
+api.interceptors.request.use(
+    (request) => {
+        const accessToken = localStorage.getItem("accessToken");
+        if (accessToken) {
+            request.headers["Authorization"] = `Bearer ${accessToken}`;
+        }
+        return request;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
+const Parse = (token: any) => {
+    if (token) {
+        const tokenPayload = JSON.parse(token);
+        return tokenPayload;
+    }
+    return null;
+};
 
 // Add a response interceptor
 api.interceptors.response.use(
-    function (response) {
-        // Do something with the response data
-        console.log("Response:", response);
-        return response;
-    },
-    async function (error) {
+    (response) => response, // Directly return successful responses.
+    async (error) => {
         console.log("The error line 40 is:", error);
-
         const originalRequest = error.config;
-
-        // If the error status is 401 and there is no originalRequest._retry flag,
-        // it means the token has expired and we need to refresh it
         if (error.response.status === 401 && !originalRequest._retry) {
-            originalRequest._retry = true;
-
+            originalRequest._retry = true; // Mark the request as retried to avoid infinite loops.
             try {
-              const storedUser = localStorage.getItem('userData');
-              let parsedUser
-              if (storedUser !== null) {
-                parsedUser = JSON.parse(storedUser);
-                // Now you can use parsedUser safely
-            } else {
-                // Handle the case when userData is not found in localStorage
-            } 
-              
-                const refreshToken = parsedUser?.refreshToken;
-                console.log("Refreshing token from localestorage:", refreshToken);
-                
-                const response = await axios.post(
-                    `${BaseURL}/users/refresh-token`,{refreshToken}
+                const refreshToken = localStorage.getItem("refreshToken"); // Get the refresh token as a string
+                // let refreshToken;
+                // if (refreshTokenString !== null) {
+                //     refreshToken = JSON.parse(refreshTokenString);
+                // }
+
+                console.log(
+                    "Getting refresh token from localestorage:",
+                    refreshToken
                 );
 
-                const accessToken = response?.data?.data?.accessToken
-                console.log("The Rsponse line 56 is:",response.data.data.accessToken);
-                localStorage.setItem('accessToken', accessToken);
-                
+                // Make a request to your auth server to refresh the token.
+                const response = await axios.post(
+                    `${BaseURL}/users/refresh-token`,
+                    {
+                        refreshToken: Parse(refreshToken),
+                    },
+                    { withCredentials: true }
+                );
+                console.log("Response after Refreshing:", response);
 
-                
+                const { accessToken } = response.data.data;
 
-                // Retry the original request with the new token
-                //originalRequest.headers.Authorization = `Bearer ${token}`;
-                return axios(originalRequest);
-            } catch (error) {
-                throw error;
+                // Store the new access and refresh tokens.
+                localStorage.setItem("accessToken", accessToken);
+                console.log("New Access Token:", accessToken);
+
+                // Update the authorization header with the new access token.
+                api.defaults.headers.common["Authorization"] =
+                    `Bearer ${accessToken}`;
+
+                return api(originalRequest); // Retry the original request with the new access token.
+            } catch (refreshError) {
+                // Handle refresh token errors by clearing stored tokens and redirecting to the login page.
+                console.log("Token refresh failed:", refreshError);
+
+                //   localStorage.removeItem('accessToken');
+                //   localStorage.removeItem('refreshToken');
+                //   localStorage.removeItem("userData");
+                //window.location.href = "/admin-dashboard";
+                return Promise.reject(refreshError);
             }
         }
-        return Promise.reject(error);
+        return Promise.reject(error); // For all other errors, return the error as is.
     }
 );
