@@ -29,11 +29,12 @@ const DecodeToken = (token: string): DecodedToken | null => {
 
 // Define the shape of the user object and the context value
 interface User {
-    [x: string]: ReactNode;
-    id: string;
+    _id: string;
     fullname: string;
     email: string;
-    // Add other fields as needed
+    role?: string;
+    avatar?: string;
+    refreshToken?: string;
 }
 
 interface UserContextType {
@@ -56,6 +57,7 @@ interface AuthContextProviderProps {
 const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
     const [userLoading, setUserLoading] = useState(true);
+    console.log("The state User:", user);
 
     // Load user data from localStorage on component mount
     useEffect(() => {
@@ -77,109 +79,77 @@ const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) => {
         }
     }, []);
 
-    // const AutoLogout = () => {
-    //     const storedUser = localStorage.getItem("userData");
-    //     if (storedUser) {
-    //         try {
-    //             const parsedUser = JSON.parse(storedUser);
-    //             const TokenData: DecodedToken | null | undefined = DecodeToken(
-    //                 parsedUser?.refreshToken
-    //             );
-    //             console.log("Token data from token is:", TokenData);
+    const handleTokenExpiration = async () => {
+        const storedUser = localStorage.getItem("userData");
+        if (storedUser) {
+            try {
+                const parsedUser = JSON.parse(storedUser);
+                const userId = parsedUser?._id;
+                const tokenData: DecodedToken | null | undefined = DecodeToken(
+                    parsedUser?.refreshToken
+                );
+                console.log("Token data from token is:", tokenData);
 
-    //             const expireTimestamp = TokenData?.exp;
-    //             const now = new Date();
+                if (tokenData?.exp) {
+                    const expireTimestamp = Number(tokenData.exp);
+                    const now = new Date();
+                    const expireDate = new Date(Number(expireTimestamp) * 1000); // Convert to milliseconds
+                    const remainingTimeInMilliseconds =
+                        differenceInMilliseconds(expireDate, now);
 
-    //             if (expireTimestamp !== undefined) {
-    //                 const expireDate = new Date(Number(expireTimestamp) * 1000); // Convert to milliseconds
-    //                 const remainingTimeInMilliseconds =
-    //                     differenceInMilliseconds(expireDate, now);
+                    if (remainingTimeInMilliseconds > 0) {
+                        const formattedRemainingTime = formatDistanceToNow(
+                            expireDate,
+                            { addSuffix: true }
+                        );
 
-    //                 // Format the remaining time in a human-readable format
-    //                 const formattedRemainingTime = formatDistanceToNow(
-    //                     expireDate,
-    //                     {
-    //                         addSuffix: true,
-    //                     }
-    //                 );
+                        console.log(`Token expires ${formattedRemainingTime}`);
+                        console.log(
+                            `Remaining time: ${remainingTimeInMilliseconds} milliseconds`
+                        );
 
-    //                 console.log(remainingTimeInMilliseconds); // Remaining time in milliseconds
-    //                 console.log(formattedRemainingTime);
+                        setTimeout(async () => {
+                            const response = await Logout({ userId });
+                            console.log(
+                                "The Logout Response line 110",
+                                response
+                            );
 
-    //                 // Set a timeout to run the logout function after the remaining time
-    //                 setTimeout( async () => {
-    //                     const response = await Logout();
-    //                     console.log("The Logout Response is", response);
-
-    //                     if (response.statusCode === 200) {
-    //                         toast.success("User successfully Logout");
-    //                         localStorage.removeItem("userData");
-    //                         localStorage.removeItem("accessToken");
-    //                         localStorage.removeItem("refreshToken");
-    //                         setUser(null);
-    //                         document.cookie = "";
-    //                     }
-    //                 }, remainingTimeInMilliseconds);
-    //             }
-    //         } catch (error) {
-    //             console.error("Error parsing stored user data:", error);
-    //         }
-    //     }
-    // };
-
-    (function() {
-      const storedUser = localStorage.getItem("userData");
-      if (storedUser) {
-        try {
-          const parsedUser = JSON.parse(storedUser);
-          const userId = parsedUser?._id
-          const TokenData: DecodedToken | null | undefined = DecodeToken(
-            parsedUser?.refreshToken
-          );
-          console.log("Token data from token is:", TokenData);
-    
-          const expireTimestamp = TokenData?.exp;
-          const now = new Date();
-    
-          if (expireTimestamp !== undefined) {
-            const expireDate = new Date(Number(expireTimestamp) * 1000); // Convert to milliseconds
-            const remainingTimeInMilliseconds = differenceInMilliseconds(expireDate, now);
-    
-            // Format the remaining time in a human-readable format
-            const formattedRemainingTime = formatDistanceToNow(
-              expireDate,
-              {
-                addSuffix: true,
-              }
-            );
-    
-            console.log(remainingTimeInMilliseconds); // Remaining time in milliseconds
-            console.log(formattedRemainingTime);
-    
-            // Set a timeout to run the logout function after the remaining time
-            setTimeout(async () => {
-              const response = await Logout({userId});
-              console.log("The Logout Response is", response);
-    
-              if (response.statusCode === 200) {
-                toast.success("User successfully Logout");
-                localStorage.removeItem("userData");
-                localStorage.removeItem("accessToken");
-                localStorage.removeItem("refreshToken");
-                setUser(null);
-                document.cookie = "";
-                window.location.href = "/login";
-              }
-            }, remainingTimeInMilliseconds);
-          }
-        } catch (error) {
-          console.error("Error parsing stored user data:", error);
+                            if (response.statusCode === 200) {
+                                toast.warning(
+                                    "Session expired. Please log in again 111111."
+                                );
+                                localStorage.clear();
+                                setUser(null);
+                                document.cookie = "";
+                                window.location.href = "/login";
+                            } else {
+                                console.error("Logout failed:", response);
+                            }
+                        }, remainingTimeInMilliseconds);
+                    } else {
+                        console.warn("Token has already expired");
+                        // Handle token expiration immediately
+                        const response = await Logout({ userId });
+                        console.log("The Logout Response line 128", response);
+                        toast.error(
+                            "Session expired. Please log in again 22222."
+                        );
+                        localStorage.clear();
+                        setUser(null);
+                        document.cookie = "";
+                        window.location.href = "/admin-dashboard";
+                    }
+                }
+            } catch (error) {
+                console.error("Error parsing stored user data:", error);
+            }
         }
-      }
-    })();
+    };
 
-
-
+    if (user !== null) {
+        handleTokenExpiration();
+    }
 
     return (
         <AuthContext.Provider value={{ user, setUser, userLoading }}>

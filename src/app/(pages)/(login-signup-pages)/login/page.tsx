@@ -71,6 +71,7 @@ const LoginPage = () => {
                 document.cookie = `accessTokenByF=${accessToken}; expires=${expires.toUTCString()}; path=/; secure; samesite=strict`;
                 setUser(response.data.loggedInUser);
                 router.push("/");
+                router.refresh()
             }
         },
         onError: (error: any) => {
@@ -171,7 +172,7 @@ const LoginPage = () => {
                         </div>
 
                         <Button
-                            className="w-full bg-primary hover:bg-accent gap-2 justify-center font-bold text-white"
+                            className="w-full bg-primary hover:bg-accent-foreground gap-2 justify-center font-bold text-white"
                             type="submit"
                             disabled={isPending}
                         >
@@ -183,12 +184,7 @@ const LoginPage = () => {
                                 "Login"
                             )}
                         </Button>
-                        <Button
-                            className="flex items-center hover:bg-transparent gap-2 w-full"
-                            variant="outline"
-                        >
-                            Login with Google
-                        </Button>
+
                         <div
                         onClick={handleGoogleLogin}
                         className="flex items-center justify-center py-2 text-sm font-semibold text-black rounded-md cursor-pointer border-2 border-primary gap-2 w-full transition-all duration-200"
