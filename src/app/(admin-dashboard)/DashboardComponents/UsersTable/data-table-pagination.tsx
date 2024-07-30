@@ -89,7 +89,7 @@ export function DataTablePagination<TData>({
         <section className="flex items-center gap-3">
           <div className="flex-1 text-sm text-muted-foreground">
             {table.getFilteredSelectedRowModel().rows.length} of{" "}
-            {table.getFilteredRowModel().rows.length} row's selected.
+            {table.getFilteredRowModel().rows.length} row&apos;s selected.
           </div>
 
           {/* {table.getFilteredSelectedRowModel().rows.length > 0 && (

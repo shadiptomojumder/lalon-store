@@ -59,7 +59,7 @@ const CreateCategoryModal = () => {
         queryKey: ["categoryList"],
         queryFn: GetCategory,
     });
-      console.log("CategoryList is:",CategoryList);
+      //console.log("CategoryList is:",CategoryList);
       
     
 

@@ -38,6 +38,8 @@ export function DataTableFacetedFilter<TData, TValue>({
 }: DataTableFacetedFilterProps<TData, TValue>) {
   const facets = column?.getFacetedUniqueValues()
   const selectedValues = new Set(column?.getFilterValue() as string[]);
+  console.log("selectedValues", selectedValues);
+  
 
   const [menuOpen , setMenuOpen] = React.useState<boolean>(false)
   
@@ -45,7 +47,7 @@ export function DataTableFacetedFilter<TData, TValue>({
   return (
     <Popover onOpenChange={setMenuOpen} open={menuOpen}>
       <PopoverTrigger asChild className="w-full">
-        <Button variant="outline" size="sm" className="border bg-[#040D12] py-2 h-fit text-sm">
+        <Button variant="outline" size="sm" className="border bg-white py-2 h-fit text-sm">
           <PlusCircledIcon className="mr-2 h-4 w-4" />
           {title}
           {selectedValues?.size > 0 && (

@@ -2,6 +2,7 @@
 import Logout from "@/api/user/logout";
 import { differenceInMilliseconds, formatDistanceToNow } from "date-fns";
 import { jwtDecode } from "jwt-decode";
+import { useRouter } from "next/navigation";
 import React, {
     createContext,
     FC,
@@ -57,12 +58,12 @@ interface AuthContextProviderProps {
 const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
     const [userLoading, setUserLoading] = useState(true);
-    console.log("The state User:", user);
+    //console.log("The state User:", user);
 
     // Load user data from localStorage on component mount
     useEffect(() => {
         const storedUser = localStorage.getItem("userData");
-        console.log("The storedUser is:", storedUser);
+        //console.log("The storedUser is:", storedUser);
 
         if (storedUser) {
             try {
@@ -79,7 +80,8 @@ const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) => {
         }
     }, []);
 
-    const handleTokenExpiration = async () => {
+    const HandleTokenExpiration = async () => {
+        const router = useRouter();
         const storedUser = localStorage.getItem("userData");
         if (storedUser) {
             try {
@@ -88,7 +90,7 @@ const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) => {
                 const tokenData: DecodedToken | null | undefined = DecodeToken(
                     parsedUser?.refreshToken
                 );
-                console.log("Token data from token is:", tokenData);
+                //console.log("Token data from token is:", tokenData);
 
                 if (tokenData?.exp) {
                     const expireTimestamp = Number(tokenData.exp);
@@ -103,10 +105,10 @@ const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) => {
                             { addSuffix: true }
                         );
 
-                        console.log(`Token expires ${formattedRemainingTime}`);
-                        console.log(
-                            `Remaining time: ${remainingTimeInMilliseconds} milliseconds`
-                        );
+                        //console.log(`Token expires ${formattedRemainingTime}`);
+                        // console.log(
+                        //     `Remaining time: ${remainingTimeInMilliseconds} milliseconds`
+                        // );
 
                         setTimeout(async () => {
                             const response = await Logout({ userId });
@@ -122,7 +124,7 @@ const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) => {
                                 localStorage.clear();
                                 setUser(null);
                                 document.cookie = "";
-                                window.location.href = "/login";
+                                router.push("/login");
                             } else {
                                 console.error("Logout failed:", response);
                             }
@@ -138,7 +140,7 @@ const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) => {
                         localStorage.clear();
                         setUser(null);
                         document.cookie = "";
-                        window.location.href = "/admin-dashboard";
+                        router.push("/login");
                     }
                 }
             } catch (error) {
@@ -148,7 +150,7 @@ const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) => {
     };
 
     if (user !== null) {
-        handleTokenExpiration();
+        HandleTokenExpiration();
     }
 
     return (

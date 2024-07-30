@@ -50,15 +50,14 @@ const ActionButton = ({ product }: { product: ProductDataType }) => {
       console.log("the res is ", response);
 
       if (response.statusCode === 200) {
-        toast.success("Status successfully Update");
+        toast.success("Product deleted successfully");
         queryClient.invalidateQueries({ queryKey: ["productlist"] });
       }
     },
     onError: (error: any) => {
-      console.log("The Error Appointment is:", error);
-      if (error?.response?.status == 409) {
+      if (error?.response?.status == 400) {
         toast.warning(
-          "There is already an appointment with this name and date."
+          "Missing product Id"
         );
       } else if (error?.response?.status == 500) {
         toast.error("Something went wrong during an appointment");

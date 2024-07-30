@@ -73,15 +73,15 @@ export function DataTableToolbar<TData>({
           />
         </div>
 
-        {/* <div className="w-1/2 md:w-fit">
-          {table.getColumn("status") && (
+        <div className="w-1/2 md:w-fit">
+          {table.getColumn("productCategory") && (
             <DataTableFacetedFilter
-              column={table.getColumn("status")}
-              title="Status"
+              column={table.getColumn("productCategory")}
+              title="Categories"
               options={statuses}
             />
           )}
-        </div> */}
+        </div>
       </section>
 
       <section className="flex items-center gap-4 md:w-fit w-full">

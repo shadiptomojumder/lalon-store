@@ -11,8 +11,8 @@ export const api = axios.create({
     withCredentials: true,
 });
 
-// https://dentist-backend-phee.onrender.com
-// https://dentist-backend-one.vercel.app
+
+// https://lalon-store-backend-production.up.railway.app
 // http://localhost:5000
 // https://lalon-store-backend-production.up.railway.app
 

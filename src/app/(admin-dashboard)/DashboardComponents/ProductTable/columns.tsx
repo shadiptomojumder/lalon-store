@@ -100,16 +100,6 @@ export const columns: ColumnDef<ProductDataType>[] = [
         ),
     },
     {
-        id: "productCategory",
-        accessorKey: "productCategory",
-        header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Product Stoks" />
-        ),
-        cell: ({ row }) => (
-            <div className="capitalize">{row.getValue("productCategory")}</div>
-        ),
-    },
-    {
         id: "status",
         accessorKey: "status",
         header: ({ column }) => (
