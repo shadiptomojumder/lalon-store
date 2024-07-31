@@ -1,24 +1,12 @@
-"use client"
-import { log } from 'console';
-import React from 'react';
+
 
 const AdminDashboard = () => {
-    const refreshTokenString = window.localStorage.getItem("refreshToken");
-    console.log("Refresh token: ", refreshTokenString);
-
-
-    let refreshToken;
-                if (refreshTokenString !== null) {
-                    refreshToken = refreshTokenString
-                }
     
+
     return (
-        <main>
-            <h2 className='text-lg font-semibold p-5'>Dashboard</h2>
-            <section>
-                <h2>Refresh TokenString: {refreshTokenString}</h2>
-                </section>
-        </main>
+        <div className="h-full flex-1 flex-col space-y-2 p-8 md:flex">
+            <h2>Admin Dashboard</h2>
+        </div>
     );
 };
 

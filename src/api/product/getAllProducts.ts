@@ -13,7 +13,7 @@ const GetAllProducts = async ({queryKey}:{queryKey: QueryKey}) => {
 
 
 
-        const response = await api.get(`/product?${query ? `search=${query}`:``}${sortBy ? `&&sortBy=${sortBy}`:``}`);
+        const response = await api.get(`/product?${query ? `search=${query}&&`:``}${sortBy ? `sortBy=${sortBy}`:``}`);
         //console.log("Response from GetAllProducts API:", response.data.data);
         
         return response.data.data

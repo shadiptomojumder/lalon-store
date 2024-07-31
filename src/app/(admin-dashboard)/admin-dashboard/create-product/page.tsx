@@ -43,9 +43,7 @@ const formSchema = z.object({
     productCategory: z.string().min(2, {
         message: "Please select a product category",
     }),
-    productDescription: z.string().min(2, {
-        message: "Please provide a short description",
-    }),
+    productDescription: z.string().optional(),
     productImage: z.any().refine((files) => files?.length >= 1, {
         message: "Please select an image",
     }),
@@ -169,9 +167,12 @@ const CreateProductPage = () => {
         onError: (error: any) => {
             if (error?.response?.status == 409) {
                 toast.warning("Product already created!!");
-            } else if (error.request) {
+            } else if (error?.response?.status == 400) {
+                toast.warning("Please fill all the required fields!");
+            }else if (error.request) {
                 toast.error("No response received from the server!!");
-            } else {
+            }
+             else {
                 console.error(
                     "Error while sending the request:",
                     error.message

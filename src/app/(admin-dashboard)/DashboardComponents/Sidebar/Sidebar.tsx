@@ -20,12 +20,12 @@ const QuickLinks = [
     link: "/admin-dashboard",
     icon: <LayoutDashboard size={25}/>
   },
-  {
-    id: 2,
-    title: "Categories",
-    link: "/admin-dashboard/categories",
-    icon: <LayoutList size={25}/>
-  },
+  // {
+  //   id: 2,
+  //   title: "Categories",
+  //   link: "/admin-dashboard/categories",
+  //   icon: <LayoutList size={25}/>
+  // },
   {
     id: 3,
     title: "Create Product",

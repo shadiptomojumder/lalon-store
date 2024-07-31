@@ -26,24 +26,32 @@ import {
   
   export const statuses = [
     {
-      value: "pending",
-      label: "Pending",
-      icon: QuestionMarkCircledIcon,
+      value: "spices",
+      label: "Spices",
     },
     {
-      value: "booked",
-      label: "Booked",
-      icon: CircleIcon,
+      value: "salt_sugar",
+      label: "Salt & Sugar",
+    },
+    {
+      value: "oil",
+      label: "Oil",
     },
     {
       value: "rice",
-      label: "rice",
-      icon: CheckCircledIcon,
+      label: "Rice",
     },
     {
-      value: "failed",
-      label: "Failed",
-      icon: CrossCircledIcon,
+      value: "dal",
+      label: "Dal",
+    },
+    {
+      value: "readymix",
+      label: "Readymix",
+    },
+    {
+      value: "shemai_suji",
+      label: "Shemai & Suji",
     },
   ]
   

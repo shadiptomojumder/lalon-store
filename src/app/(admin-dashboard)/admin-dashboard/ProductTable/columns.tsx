@@ -6,7 +6,6 @@ import { ColumnDef } from "@tanstack/react-table";
 import ActionButton from "./ActionButton";
 import { DataTableColumnHeader } from "./data-table-column-header";
 
-
 export type ProductDataType = {
     _id: string;
     productName: string;
@@ -14,6 +13,7 @@ export type ProductDataType = {
     productQuantity: string;
     productCategory: string;
     productDescription: string;
+    productStock:number;
     productImage: string;
     productImageOne: string;
     productImageTwo: string;
@@ -55,7 +55,9 @@ export const columns: ColumnDef<ProductDataType>[] = [
             <DataTableColumnHeader column={column} title="Product Name" />
         ),
         cell: ({ row }) => (
-            <div className="capitalize text-nowrap">{row.getValue("productName")}</div>
+            <div className="capitalize text-nowrap">
+                {row.getValue("productName")}
+            </div>
         ),
     },
     {
@@ -66,7 +68,9 @@ export const columns: ColumnDef<ProductDataType>[] = [
         ),
         enableSorting: true,
         cell: ({ row }) => (
-            <div className="capitalize">{row.getValue("productPrice")} taka</div>
+            <div className="capitalize">
+                {row.getValue("productPrice")} taka
+            </div>
         ),
     },
     {
@@ -90,7 +94,7 @@ export const columns: ColumnDef<ProductDataType>[] = [
         ),
         filterFn: (row, id, value) => {
             return value.includes(row.getValue(id));
-          }
+        },
     },
     {
         id: "productDescription",
@@ -98,46 +102,58 @@ export const columns: ColumnDef<ProductDataType>[] = [
         header: ({ column }) => (
             <span className="text-nowrap">Product Description</span>
         ),
+        cell: ({ row }) => {
+            const productDescription = row.getValue("productDescription");
+            return (
+                <>
+                    {productDescription ? (
+                        <div className="capitalize line-clamp-2">
+                            {row.getValue("productDescription")}
+                        </div>
+                    ) : (
+                        <div className="capitalize line-clamp-2">
+                            No Description
+                        </div>
+                    )}
+                </>
+            );
+        },
+    },
+    {
+        id: "productStock",
+        accessorKey: "productStock",
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Stock" />
+        ),
         cell: ({ row }) => (
-            <div className="capitalize line-clamp-2">{row.getValue("productDescription")}</div>
+            <div className="capitalize">{row.getValue("productStock")}</div>
         ),
     },
     {
-        id: "status",
-        accessorKey: "status",
+        id: "productStock",
+        accessorKey: "productStock",
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Status" />
         ),
         cell: ({ row }) => {
-            const status = row.getValue("status");
+            const productStock = row.getValue("productStock") as number;
+            console.log("status",productStock);
+            
             return (
                 <>
-                    {status === "pending" && (
-                        <Badge
-                            variant="default"
-                            className="bg-[#FFE569] hover:bg-[#FFE569]"
-                        >
-                            {row.getValue("status")}
-                        </Badge>
-                    )}
-                    {status === "booked" && (
-                        <Badge variant="default" className="hover:bg-primary">
-                            {row.getValue("status")}
-                        </Badge>
-                    )}
-                    {status === "done" && (
-                        <Badge
-                            variant="default"
-                            className="bg-[#297c0b] hover:bg-[#297c0b] text-gray-200"
-                        >
-                            {row.getValue("status")}
-                        </Badge>
-                    )}
-                    {status === "failed" && (
-                        <Badge variant="destructive">
-                            {row.getValue("status")}
-                        </Badge>
-                    )}
+                
+                {productStock > 0 && (
+                    <Badge variant="default" className="hover:bg-green-500">
+                        In Stock
+                    </Badge>
+                )}
+
+                {productStock === 0 && (
+                    <Badge variant="default" className="bg-[#FFE569] hover:bg-[#FFE569] text-center">
+                        Out of Stock
+                    </Badge>
+                )}
+                    
                 </>
             );
         },

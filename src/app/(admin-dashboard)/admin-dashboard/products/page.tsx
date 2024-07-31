@@ -1,31 +1,31 @@
 "use client";
 import GetAllProducts from "@/api/product/getAllProducts";
 import { useQuery } from "@tanstack/react-query";
-import { DataTable } from "../../DashboardComponents/ProductTable/DataTable ";
-import { columns } from "../../DashboardComponents/ProductTable/columns";
+import { DataTable } from "../ProductTable/data-table";
+import { columns } from "../ProductTable/columns";
 import { ProductTableLoading } from "../../DashboardComponents/ProductTableLoading/ProductTableLoading";
 
 const DashboardProductsPage = () => {
 
 
     const { isLoading, data: productlist } = useQuery({
-        queryKey: ["productlist", "",""],
+        queryKey: ["productlist", "","newest"],
         queryFn: GetAllProducts,
     });
 
-    //console.log("productlist is :", productlist);
+    console.log("productlist is :", productlist);
 
     return (
-        <main>
+        <>
             <h2 className="text-lg font-semibold p-5">Product List</h2>
-            <section>
+            <section className="">
                 {isLoading ? (
                     <ProductTableLoading />
                 ) : (
-                    <DataTable columns={columns} data={productlist} />
+                    <DataTable columns={columns} data={productlist || []} />
                 )}
             </section>
-        </main>
+        </>
     );
 };
 

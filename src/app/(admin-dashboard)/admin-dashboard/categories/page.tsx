@@ -2,7 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { DataTable } from "../../DashboardComponents/ProductTable/DataTable ";
 import { columns } from "../../DashboardComponents/ProductTable/columns";
-import { CategoryTableLoading } from "../../DashboardComponents/ProductTableLoading/ProductTableLoading";
+import { ProductTableLoading } from "../../DashboardComponents/ProductTableLoading/ProductTableLoading";
 
 const Categories = () => {
     const GetCategory = async () => {
@@ -82,11 +82,7 @@ const Categories = () => {
         <main>
             <h2 className="text-lg font-semibold p-5">Category List</h2>
             <section>
-                {isLoading ? (
-                    <CategoryTableLoading />
-                ) : (
-                    <DataTable columns={columns} data={data || []} />
-                )}
+                
             </section>
         </main>
     );
