@@ -32,8 +32,8 @@ const RicePage = () => {
         queryFn: GetAllProducts,
     });
     console.log("productList:", productList);
-    console.log("productList error:", error);
-    console.log("productList isError:", isError);
+    // console.log("productList error:", error);
+    // console.log("productList isError:", isError);
 
     return (
         <section className="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
