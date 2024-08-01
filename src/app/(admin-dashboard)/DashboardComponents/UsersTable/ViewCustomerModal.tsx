@@ -1,4 +1,4 @@
-import UpdateUser from "@/api/users/updateUser";
+//import UpdateUser from "@/api/users/updateUser";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -44,36 +44,36 @@ const ViewCustomerModal = ({
   const [role, setRole] = useState<string>("");
   // console.log("changeedStatus", role);
 
-  const { mutate, isPending } = useMutation({
-    mutationKey: [],
-    mutationFn: UpdateUser,
-    onSuccess: (response) => {
-      if (response.statusCode === 200) {
-        toast.success("Status successfully Update");
-        queryClient.invalidateQueries({ queryKey: ["users"] });
-        onModalClose();
-      }
-    },
-    onError: (error: any) => {
-      console.log("The Error Appointment is:", error);
-      if (error?.response?.status == 409) {
-        toast.warning(
-          "There is already an appointment with this name and date."
-        );
-      } else if (error?.response?.status == 500) {
-        toast.error("Something went wrong during an appointment");
-      } else if (error.request) {
-        toast.error("No response received from the server!!");
-      } else {
-        console.error("Error while sending the request:", error.message);
-      }
-    },
-  });
+  // const { mutate, isPending } = useMutation({
+  //   mutationKey: [],
+  //   mutationFn: UpdateUser,
+  //   onSuccess: (response) => {
+  //     if (response.statusCode === 200) {
+  //       toast.success("Status successfully Update");
+  //       queryClient.invalidateQueries({ queryKey: ["users"] });
+  //       onModalClose();
+  //     }
+  //   },
+  //   onError: (error: any) => {
+  //     console.log("The Error Appointment is:", error);
+  //     if (error?.response?.status == 409) {
+  //       toast.warning(
+  //         "There is already an appointment with this name and date."
+  //       );
+  //     } else if (error?.response?.status == 500) {
+  //       toast.error("Something went wrong during an appointment");
+  //     } else if (error.request) {
+  //       toast.error("No response received from the server!!");
+  //     } else {
+  //       console.error("Error while sending the request:", error.message);
+  //     }
+  //   },
+  // });
 
   const handleChanges = async () => {
     const userId = usersData?._id;
 
-    await mutate({ data: { role: role }, userId });
+    // await mutate({ data: { role: role }, userId });
   };
 
   // useEffect(()=>{

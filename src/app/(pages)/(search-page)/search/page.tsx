@@ -24,7 +24,7 @@ const SearchPage = () => {
         data: productList,
         error,
     } = useQuery({
-        queryKey: ["productlist", (searchText ?? "") || (search ?? "")],
+        queryKey: ["productlist", (searchText ?? "") || (search ?? ""),""],
         queryFn: GetAllProducts,
     });
     console.log("productList:", productList);

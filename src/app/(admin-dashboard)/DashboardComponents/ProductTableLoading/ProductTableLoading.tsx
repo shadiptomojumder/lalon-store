@@ -23,8 +23,8 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { DataTableColumnHeader } from "../ProductTable/data-table-column-header";
-import { DataTableToolbar } from "../ProductTable/data-table-toolbar";
+import { DataTableColumnHeader } from "../../admin-dashboard/ProductTable/data-table-column-header";
+import { DataTableToolbar } from "../../admin-dashboard/ProductTable/data-table-toolbar";
 
 const data: TableData[] = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
 

@@ -14,7 +14,7 @@ import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import ViewCustomerModal from "./ViewCustomerModal";
-import DeleteUser from "@/api/users/deleteUser";
+//import DeleteUser from "@/api/users/deleteUser";
 import { useState } from "react";
 
 interface UsersData {
@@ -39,35 +39,35 @@ const ActionButton = ({ usersData }: { usersData: UsersData }) => {
     setMenuOpen(false);
   };
 
-  const { mutate, isPending } = useMutation({
-    mutationKey: [],
-    mutationFn: DeleteUser,
-    onSuccess: (response) => {
-      if (response.statusCode === 200) {
-        toast.success("Status successfully Update");
-        queryClient.invalidateQueries({ queryKey: ["users"] });
-        setMenuOpen(false)
-      }
-    },
-    onError: (error: any) => {
-      // console.log("The Error Appointment is:", error);
-      if (error?.response?.status == 404) {
-        toast.warning(
-          "Something went wrong during an delete"
-        );
-      } else if (error?.response?.status == 500) {
-        toast.error("Something went wrong during an appointment");
-      } else if (error.request) {
-        toast.error("No response received from the server!!");
-      } else {
-        console.error("Error while sending the request:", error.message);
-      }
-    },
-  });
+  // const { mutate, isPending } = useMutation({
+  //   mutationKey: [],
+  //   mutationFn: DeleteUser,
+  //   onSuccess: (response) => {
+  //     if (response.statusCode === 200) {
+  //       toast.success("Status successfully Update");
+  //       queryClient.invalidateQueries({ queryKey: ["users"] });
+  //       setMenuOpen(false)
+  //     }
+  //   },
+  //   onError: (error: any) => {
+  //     // console.log("The Error Appointment is:", error);
+  //     if (error?.response?.status == 404) {
+  //       toast.warning(
+  //         "Something went wrong during an delete"
+  //       );
+  //     } else if (error?.response?.status == 500) {
+  //       toast.error("Something went wrong during an appointment");
+  //     } else if (error.request) {
+  //       toast.error("No response received from the server!!");
+  //     } else {
+  //       console.error("Error while sending the request:", error.message);
+  //     }
+  //   },
+  // });
 
   const handleDelete = async () => {
     const userId = usersData._id;
-    await mutate({ userId });
+    // await mutate({ userId });
   };
 
   return (
