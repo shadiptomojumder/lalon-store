@@ -31,7 +31,7 @@ export default function RootLayout({
                             <Navbar />
                         </div>
                         {/* <NavigationMenuDemo/> */}
-                        <Suspense fallback={null}>
+                        <Suspense fallback={<div className="w-dvh h-dvh"></div>}>
                         {children}
                         </Suspense>
                         <Footer />
