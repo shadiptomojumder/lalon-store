@@ -63,9 +63,3 @@ const SpicesPage = () => {
 };
 
 export default SpicesPage;
-
-// {productList && productList.length > 0 && (
-//     productList.filter((product: any) => product.productCategory === "oil").map((product: any) => (
-//       <ProductCard key={product._id} productData={product} />
-//     ))
-//   )}

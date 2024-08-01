@@ -7,6 +7,7 @@ import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import { Toaster } from "@/components/ui/sonner"
 import "./globals.css";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,7 +31,9 @@ export default function RootLayout({
                             <Navbar />
                         </div>
                         {/* <NavigationMenuDemo/> */}
+                        <Suspense fallback={<div>Loading in root layout...</div>}>
                         {children}
+                        </Suspense>
                         <Footer />
                         <Toaster richColors/>
                     </TanstackProvider>

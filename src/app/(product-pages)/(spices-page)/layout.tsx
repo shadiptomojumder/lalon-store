@@ -2,7 +2,7 @@ import ProductFilterBar from "@/app/components/ProductFilterBar/ProductFilterBar
 import type { Metadata } from "next";
 import { Noto_Sans_Bengali } from "next/font/google";
 import Image from "next/image";
-import React, { Suspense } from "react";
+import React from "react";
 import Spices from "../../../../public/banners/Spices.png";
 
 const NotoBengali = Noto_Sans_Bengali({
@@ -29,9 +29,7 @@ export default function ProductPageLayout({
                 <ProductFilterBar />
                 <div className="flex lg:gap-5">
                     {/* <ProductPageSidebar/> */}
-                    <div className="w-full">
-                        <Suspense>{children}</Suspense>
-                    </div>
+                    <div className="w-full">{children}</div>
                 </div>
             </section>
         </main>
