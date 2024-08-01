@@ -31,7 +31,7 @@ export default function RootLayout({
                             <Navbar />
                         </div>
                         {/* <NavigationMenuDemo/> */}
-                        <Suspense fallback={<div>Loading in root layout...</div>}>
+                        <Suspense fallback={null}>
                         {children}
                         </Suspense>
                         <Footer />

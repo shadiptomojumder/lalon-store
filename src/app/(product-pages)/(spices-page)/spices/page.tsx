@@ -27,6 +27,7 @@ const SpicesPage = () => {
         isLoading,
         data: productList,
         error,
+        isError,
     } = useQuery({
         queryKey: ["productlist", "", sortBy],
         queryFn: GetAllProducts,
@@ -34,31 +35,36 @@ const SpicesPage = () => {
     console.log("productList:", productList);
 
     return (
-        <section className="grid mt-5 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
-            {isLoading ? (
-                <>
-                    {Array.from({ length: 10 }, (_, index) => (
-                        <ProductCardLoading key={index}></ProductCardLoading>
-                    ))}
-                </>
-            ) : (
-                <>
-                    {productList &&
-                        productList.length > 0 &&
-                        productList
-                            .filter(
-                                (product: any) =>
-                                    product.productCategory === "spices"
-                            )
-                            .map((product: any) => (
-                                <ProductCard
-                                    key={product._id}
-                                    productData={product}
-                                />
-                            ))}
-                </>
-            )}
-        </section>
+        <>
+            {isError && <div className="text-xl font-bold h-[10dvh] w-full flex items-center justify-center text-red-700">Something Error happen</div>}
+            <section className="grid mt-5 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
+                {isLoading ? (
+                    <>
+                        {Array.from({ length: 10 }, (_, index) => (
+                            <ProductCardLoading
+                                key={index}
+                            ></ProductCardLoading>
+                        ))}
+                    </>
+                ) : (
+                    <>
+                        {productList &&
+                            productList.length > 0 &&
+                            productList
+                                .filter(
+                                    (product: any) =>
+                                        product.productCategory === "spices"
+                                )
+                                .map((product: any) => (
+                                    <ProductCard
+                                        key={product._id}
+                                        productData={product}
+                                    />
+                                ))}
+                    </>
+                )}
+            </section>
+        </>
     );
 };
 
