@@ -48,9 +48,9 @@ const StatusChangeOption = ({
     // await mutate({ data: { status: value }, appointmentId });
   };
 
-  useEffect(() => {
-    setStatus(usersData?.role);
-  }, []);
+  // useEffect(() => {
+  //   setStatus(usersData?.role);
+  // }, []);
 
   return (
     <>
