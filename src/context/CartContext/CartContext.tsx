@@ -28,8 +28,11 @@ const CartContext = createContext<CartContextType>({
 
 const CartContextProvider: FC<CartContextProviderProps> = ({ children }) => {
     const [cartItems, setCartItems] = useState<CartItem[]>(() => {
-        const storedCart = localStorage.getItem("cartItems");
-        return storedCart ? JSON.parse(storedCart) : [];
+        if (typeof window !== 'undefined') {
+            const storedCart = localStorage.getItem('cartItems');
+            return storedCart ? JSON.parse(storedCart) : [];
+          }
+          return [];
     });
 
     useEffect(() => {
