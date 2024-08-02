@@ -11,26 +11,29 @@ import {
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/hooks/useAuth";
+import { useCart } from "@/hooks/useCart";
 import { CircleUserRound, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import { MdOutlineShoppingCartCheckout } from "react-icons/md";
 
 const Header = () => {
     const { user, setUser, userLoading } = useAuth();
     // console.log("The User is ", user);
     // console.log("The userLoading is ", userLoading);
-    
+    const { cartItems, addToCart, removeFromCart, updateCartItem, clearCart } =
+        useCart();
     const pathname = usePathname();
     const router = useRouter();
-    const userId = user?._id
+    const userId = user?._id;
 
     // Logout Function
     const handleLogout = async () => {
         try {
-            const response = await Logout({userId});
+            const response = await Logout({ userId });
             console.log("The Logout Response is", response);
 
             if (response.statusCode === 200) {
@@ -46,34 +49,42 @@ const Header = () => {
         }
     };
 
-    const [searchText,setSearchText] = useState("");
+    const [searchText, setSearchText] = useState("");
 
-    const handleSearch = (searchValue:string) => {
-        
+    const handleSearch = (searchValue: string) => {
         setSearchText(searchValue);
         console.log("Search Text is:", searchText);
         router.push(`/search?q=${searchText}`);
-        
-    }
+    };
 
     return (
         <header className="bg-white py-2">
             <section className="container flex items-center justify-between">
                 <Link href={"/"}>
-                    <h2 className="text-2xl font-extrabold dark:text-primary text-nowrap">
+                    <h2 className="md:text-2xl sm:text-xl text-lg font-extrabold dark:text-primary text-nowrap">
                         Lalon Store
                     </h2>
                 </Link>
                 <div className="w-[40%]">
                     <Input
                         type="text"
-                        placeholder="Search any item"
+                        placeholder="Search your products"
                         className="p-2 focus-visible:ring-primary h-10"
                         onChange={(e) => handleSearch(e.target.value)}
                     />
                 </div>
-                <div className="flex items-center gap-2">
-                    <ShoppingCart size={35} className="text-[#040D12]" />
+                <div className="flex items-center gap-3">
+                    <div className="relative">
+                        <MdOutlineShoppingCartCheckout
+                            size={35}
+                            className="text-[#040D12] hidden sm:block"
+                        />
+                        {cartItems && cartItems.length > 0 && (
+                            <p className="text-primary font-bold absolute -top-1 -right-2 rounded-full h-[20px] w-[20px] bg-slate-200 flex justify-center items-center">
+                                {cartItems.length}
+                            </p>
+                        )}
+                    </div>
 
                     {user && userLoading === false ? (
                         <>

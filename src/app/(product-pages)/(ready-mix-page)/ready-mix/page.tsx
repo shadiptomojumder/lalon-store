@@ -33,7 +33,7 @@ const ReadyMixPage = () => {
     console.log("productList:", productList);
 
     return (
-        <section className="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
+        <section className="grid md:mt-5 mt-1 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-3 grid-cols-2 lg:gap-5 md:gap-4 gap-3">
             {isLoading ? (
                 <>
                     {Array.from({ length: 10 }, (_, index) => (

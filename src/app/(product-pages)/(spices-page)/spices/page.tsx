@@ -36,8 +36,12 @@ const SpicesPage = () => {
 
     return (
         <>
-            {isError && <div className="text-xl font-bold h-[10dvh] w-full flex items-center justify-center text-red-700">Something Error happen</div>}
-            <section className="grid mt-5 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
+            {/* {isError && (
+                <div className="text-xl font-bold h-[10dvh] w-full flex items-center justify-center text-red-700">
+                    Something Error happen
+                </div>
+            )} */}
+            <section className="grid md:mt-5 mt-1 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-3 grid-cols-2 lg:gap-5 md:gap-4 gap-3">
                 {isLoading ? (
                     <>
                         {Array.from({ length: 10 }, (_, index) => (

@@ -21,7 +21,7 @@ const HomePage = () => {
             // Optionally, you can store the user in localStorage or context for persistent state
             localStorage.setItem("userData", JSON.stringify(user));
             setUser(user)
-            router.push("https://lalon-store.vercel.app");
+            router.push("/");
         }
     }, [router,setUser]);
     return (

@@ -1,10 +1,9 @@
-"use client"
+"use client";
 import GetAllProducts from "@/api/product/getAllProducts";
 import ProductCard from "@/app/components/ProductCard/ProductCard";
+import ProductCardLoading from "@/app/components/ProductCardLoading/ProductCardLoading";
 import { useQuery } from "@tanstack/react-query";
-import { ChevronRight, ShoppingCart } from "lucide-react";
-
-import Image from "next/image";
+import { ChevronRight } from "lucide-react";
 
 const ProductData = [
     {
@@ -107,17 +106,20 @@ const ProductData = [
 ];
 
 const PopularProductSection = () => {
-
-    const { isLoading, data:productList, error } = useQuery({
-        queryKey: ["productlist","",""],
+    const {
+        isLoading,
+        data: productList,
+        error,
+    } = useQuery({
+        queryKey: ["productlist", "", ""],
         queryFn: GetAllProducts,
     });
-    console.log("productList:",productList);
-    
+    console.log("productList:", productList);
+
     return (
         <main className="mt-20 mb-10">
             <section className="flex items-center justify-between my-4">
-                <h2 className="text-2xl text-[#1A1A1A] font-semibold">
+                <h2 className="lg:text-2xl md:text-lg text-xl text-[#1A1A1A] font-semibold">
                     Popular Products
                 </h2>
                 <div className="flex items-center gap-3">
@@ -125,52 +127,29 @@ const PopularProductSection = () => {
                     <ChevronRight className="text-[#00B307]" />
                 </div>
             </section>
-            <section className="grid grid-cols-5 gap-8">
-                {/* <section className="bg-white p-4 w-fit border shadow hover:shadow-[#00B307] hover:border-[#20B526] rounded-md cursor-pointer">
-                    <div>
-                        <Image
-                            src={
-                                "https://chaldn.com/_mpimage/green-apple-50-gm-1-kg?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D119065&q=best&v=1&m=400&webp=1"
-                            }
-                            alt="product"
-                            width={500}
-                            height={500}
-                            className="w-[150px] h-[150px]"
-                        />
-                    </div>
-                    <div className="p-2 space-y-2 text-center">
-                        <h2 className="text-[#1A1A1A] capitalize text-base font-medium">
-                            Green Apple ± 50 gm
-                        </h2>
-                        <p className="text-[#1A1A1A] text-base font-medium">
-                            1 kg
-                        </p>
-                        <p className="text-[#1A1A1A] text-base font-bold">
-                            ৳ 299
-                        </p>
-                    </div>
-                    <button className="text-white py-1 flex items-center justify-center gap-1 rounded-full w-full bg-[#00B307]">
-                        <ShoppingCart size={20} className=" text-[#FFFFFF]" />
-                        Add to cart
-                    </button>
-                </section> */}
-                {
-                    productList && productList.length > 0 && productList.map((product:any) => {
-                        return (
-                            <ProductCard
-                                key={product._id}
-                                productData={product}
-                            />
-                        );
-                    })
-                }
-
-                {/* {ProductData.map((product) => (
-                    <ProductCard
-                        key={product.productName}
-                        productData={product}
-                    />
-                ))} */}
+            <section className="grid 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-2 lg:gap-5 gap-3">
+                {isLoading ? (
+                    <>
+                        {Array.from({ length: 10 }, (_, index) => (
+                            <ProductCardLoading
+                                key={index}
+                            ></ProductCardLoading>
+                        ))}
+                    </>
+                ) : (
+                    <>
+                        {productList &&
+                            productList.length > 0 &&
+                            productList.map((product: any) => {
+                                return (
+                                    <ProductCard
+                                        key={product._id}
+                                        productData={product}
+                                    />
+                                );
+                            })}
+                    </>
+                )}
             </section>
         </main>
     );

@@ -1,5 +1,5 @@
 import axios from "axios";
-const BaseURL = "https://lalon-store-backend-production.up.railway.app/api";
+const BaseURL = "http://localhost:5000/api";
 
 export const api = axios.create({
     baseURL: BaseURL,

@@ -43,9 +43,7 @@ const formSchema = z.object({
     productCategory: z.string().min(2, {
         message: "Please select a product category",
     }),
-    productDescription: z.string().min(2, {
-        message: "Please provide a short description",
-    }),
+    productDescription: z.string().optional(),
     productImage: z.any().optional(),
     // productImageOne: z.any().refine((files) => files?.length >= 1, {
     //     message: "Please select an image",

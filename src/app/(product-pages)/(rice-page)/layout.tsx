@@ -23,8 +23,8 @@ export default function ProductPageLayout({
 }) {
     return (
         <main className={`bg-white py-10`}>
-            <div className="text-center flex justify-center py-10 container">
-                <Image src={RiceBanner} alt="RiceBanner"/>
+            <div className="text-center flex justify-center md:py-10 py-5 container">
+                <Image src={RiceBanner} alt="RiceBanner" placeholder="blur" className="object-cover object-center"/>
             </div>
             <section className="overflow-auto min-h-[80dvh] container bg-white">
                 <ProductFilterBar/>

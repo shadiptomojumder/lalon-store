@@ -9,159 +9,159 @@ const CategoryList = [
         categoryName: "Popular",
         link: "/",
     },
-    {
-        id: 2,
-        categoryName: "Food",
-        link: "/food",
-        subCategoryList: [
-            {
-                id: 1,
-                subCategoryName: "Breakfast",
-                link: "/food",
-                subCategoryList: [
-                    {
-                        id: 1,
-                        subCategoryName: "Cereal",
-                        link: "/food",
-                    },
-                    {
-                        id: 2,
-                        subCategoryName: "Bread",
-                        link: "/food",
-                    },
-                    {
-                        id: 3,
-                        subCategoryName: "Milk",
-                        link: "/food",
-                    },
-                    {
-                        id: 4,
-                        subCategoryName: "Eggs",
-                        link: "/food",
-                    },
-                    {
-                        id: 5,
-                        subCategoryName: "Yogurt",
-                        link: "/food",
-                    },
-                    {
-                        id: 6,
-                        subCategoryName: "Nuts",
-                        link: "/food",
-                    },
-                    {
-                        id: 7,
-                        subCategoryName: "Chocolate",
-                        link: "/food",
-                    },
-                    {
-                        id: 8,
-                        subCategoryName: "Bakery",
-                        link: "/food",
-                    },
-                ],
-            },
-            {
-                id: 2,
-                subCategoryName: "Lunch",
-                link: "/food",
-            },
-            {
-                id: 3,
-                subCategoryName: "Dinner",
-                link: "/food",
-            },
-            {
-                id: 4,
-                subCategoryName: "Dessert",
-                link: "/food",
-            },
-            {
-                id: 5,
-                subCategoryName: "Drinks",
-                link: "/food",
-            },
-            {
-                id: 6,
-                subCategoryName: "Snacks",
-                link: "/food",
-            },
-        ],
-    },
-    {
-        id: 3,
-        categoryName: "Personal Care",
-        link: "/personal-care",
-        subCategoryList: [
-            {
-                id: 1,
-                subCategoryName: "Shampoo",
-                link: "/personal-care",
-            },
-            {
-                id: 2,
-                subCategoryName: "Conditioner",
-                link: "/personal-care",
-            },
-            {
-                id: 3,
-                subCategoryName: "Deodorant",
-                link: "/personal-care",
-            },
-            {
-                id: 4,
-                subCategoryName: "Body Wash",
-                link: "/personal-care",
-            },
-            {
-                id: 5,
-                subCategoryName: "Face Wash",
-                link: "/personal-care",
-            },
-            {
-                id: 6,
-                subCategoryName: "Toothpaste",
-                link: "/personal-care",
-            },
-        ],
-    },
-    {
-        id: 4,
-        categoryName: "Stationery & Office",
-        link: "/stationery-office",
-        subCategoryList: [
-            {
-                id: 1,
-                subCategoryName: "Pens",
-                link: "/stationery-office",
-            },
-            {
-                id: 2,
-                subCategoryName: "Notebooks",
-                link: "/stationery-office",
-            },
-            {
-                id: 3,
-                subCategoryName: "Staplers",
-                link: "/stationery-office",
-            },
-            {
-                id: 4,
-                subCategoryName: "Pencils",
-                link: "/stationery-office",
-            },
-            {
-                id: 5,
-                subCategoryName: "Markers",
-                link: "/stationery-office",
-            },
-            {
-                id: 6,
-                subCategoryName: "Staples",
-                link: "/stationery-office",
-            },
-        ],
-    },
+    // {
+    //     id: 2,
+    //     categoryName: "Food",
+    //     link: "/food",
+    //     subCategoryList: [
+    //         {
+    //             id: 1,
+    //             subCategoryName: "Breakfast",
+    //             link: "/food",
+    //             subCategoryList: [
+    //                 {
+    //                     id: 1,
+    //                     subCategoryName: "Cereal",
+    //                     link: "/food",
+    //                 },
+    //                 {
+    //                     id: 2,
+    //                     subCategoryName: "Bread",
+    //                     link: "/food",
+    //                 },
+    //                 {
+    //                     id: 3,
+    //                     subCategoryName: "Milk",
+    //                     link: "/food",
+    //                 },
+    //                 {
+    //                     id: 4,
+    //                     subCategoryName: "Eggs",
+    //                     link: "/food",
+    //                 },
+    //                 {
+    //                     id: 5,
+    //                     subCategoryName: "Yogurt",
+    //                     link: "/food",
+    //                 },
+    //                 {
+    //                     id: 6,
+    //                     subCategoryName: "Nuts",
+    //                     link: "/food",
+    //                 },
+    //                 {
+    //                     id: 7,
+    //                     subCategoryName: "Chocolate",
+    //                     link: "/food",
+    //                 },
+    //                 {
+    //                     id: 8,
+    //                     subCategoryName: "Bakery",
+    //                     link: "/food",
+    //                 },
+    //             ],
+    //         },
+    //         {
+    //             id: 2,
+    //             subCategoryName: "Lunch",
+    //             link: "/food",
+    //         },
+    //         {
+    //             id: 3,
+    //             subCategoryName: "Dinner",
+    //             link: "/food",
+    //         },
+    //         {
+    //             id: 4,
+    //             subCategoryName: "Dessert",
+    //             link: "/food",
+    //         },
+    //         {
+    //             id: 5,
+    //             subCategoryName: "Drinks",
+    //             link: "/food",
+    //         },
+    //         {
+    //             id: 6,
+    //             subCategoryName: "Snacks",
+    //             link: "/food",
+    //         },
+    //     ],
+    // },
+    // {
+    //     id: 3,
+    //     categoryName: "Personal Care",
+    //     link: "/personal-care",
+    //     subCategoryList: [
+    //         {
+    //             id: 1,
+    //             subCategoryName: "Shampoo",
+    //             link: "/personal-care",
+    //         },
+    //         {
+    //             id: 2,
+    //             subCategoryName: "Conditioner",
+    //             link: "/personal-care",
+    //         },
+    //         {
+    //             id: 3,
+    //             subCategoryName: "Deodorant",
+    //             link: "/personal-care",
+    //         },
+    //         {
+    //             id: 4,
+    //             subCategoryName: "Body Wash",
+    //             link: "/personal-care",
+    //         },
+    //         {
+    //             id: 5,
+    //             subCategoryName: "Face Wash",
+    //             link: "/personal-care",
+    //         },
+    //         {
+    //             id: 6,
+    //             subCategoryName: "Toothpaste",
+    //             link: "/personal-care",
+    //         },
+    //     ],
+    // },
+    // {
+    //     id: 4,
+    //     categoryName: "Stationery & Office",
+    //     link: "/stationery-office",
+    //     subCategoryList: [
+    //         {
+    //             id: 1,
+    //             subCategoryName: "Pens",
+    //             link: "/stationery-office",
+    //         },
+    //         {
+    //             id: 2,
+    //             subCategoryName: "Notebooks",
+    //             link: "/stationery-office",
+    //         },
+    //         {
+    //             id: 3,
+    //             subCategoryName: "Staplers",
+    //             link: "/stationery-office",
+    //         },
+    //         {
+    //             id: 4,
+    //             subCategoryName: "Pencils",
+    //             link: "/stationery-office",
+    //         },
+    //         {
+    //             id: 5,
+    //             subCategoryName: "Markers",
+    //             link: "/stationery-office",
+    //         },
+    //         {
+    //             id: 6,
+    //             subCategoryName: "Staples",
+    //             link: "/stationery-office",
+    //         },
+    //     ],
+    // },
 ];
 
 const handleHover = (event: any) => {

@@ -5,7 +5,7 @@ import { Package } from "lucide-react";
 
 const ShocaseSection = () => {
     return (
-        <main className="p-5 bg-white rounded-lg drop-shadow-lg my-5">
+        <main className="p-5 bg-white rounded-lg drop-shadow-lg my-5 hidden lg:block">
             <section className="grid grid-cols-4">
                 <section className="flex items-center justify-center gap-3">
                     <div>
