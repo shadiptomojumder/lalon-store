@@ -74,6 +74,7 @@ const Header = () => {
                     />
                 </div>
                 <div className="flex items-center gap-3">
+                    <Link href={"/cart"}>
                     <div className="relative">
                         <MdOutlineShoppingCartCheckout
                             size={35}
@@ -85,6 +86,7 @@ const Header = () => {
                             </p>
                         )}
                     </div>
+                    </Link>
 
                     {user && userLoading === false ? (
                         <>
