@@ -38,7 +38,7 @@ console.log("cartItem",cartItem);
                 alt="product image"
             />
             <section className="w-full bg-violet-500 flex flex-col gap-1">
-                <h2 className="text-sm font-medium">
+                <h2 className="text-sm font-medium capitalize">
                     {product?.productName}
                 </h2>
                 <div className="flex items-start justify-between gap-5 w-full">
