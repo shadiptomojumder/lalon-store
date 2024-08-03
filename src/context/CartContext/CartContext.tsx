@@ -8,6 +8,7 @@ interface CartContextProviderProps {
 interface CartItem {
     id: string;
     quantity: number;
+    price?: number;
 }
 
 interface CartContextType {
@@ -61,7 +62,7 @@ const CartContextProvider: FC<CartContextProviderProps> = ({ children }) => {
     }, [cartItems, isMounted]);
 
     const addToCart = (item: CartItem) => {
-        setCartItems([...cartItems, item]);
+        setCartItems([...cartItems, { ...item, price: item.price }]);
         localStorage.setItem("cartItems", JSON.stringify(cartItems));
     };
 
@@ -70,11 +71,18 @@ const CartContextProvider: FC<CartContextProviderProps> = ({ children }) => {
         setCartItems(cartItems.filter((item) => item.id !== id));
     };
 
+    // const updateCartItem = (id: string, updatedItem: CartItem) => {
+    //     setCartItems(
+    //         cartItems.map((item) => (item.id === id ? updatedItem : item))
+    //     );
+    // };
+
     const updateCartItem = (id: string, updatedItem: CartItem) => {
+        // ... other logic
         setCartItems(
-            cartItems.map((item) => (item.id === id ? updatedItem : item))
+          cartItems.map((item) => (item.id === id ? { ...updatedItem } : item))
         );
-    };
+      };
 
     const clearCart = () => {
         setCartItems([]);

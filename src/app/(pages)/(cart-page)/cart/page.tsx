@@ -9,20 +9,29 @@ const CartPage = () => {
 
     console.log("cartItems is:", cartItems);
 
+    const calculateTotal = () => {
+        const total = cartItems.reduce((accumulator, item) => {
+            const itemTotal = item.quantity * (item?.price ?? 0);
+            return accumulator + itemTotal;
+        }, 0);
+        return total;
+    };
+
     return (
-        <main>
+        <main className="h-dvh">
             <section className="container">
                 <h2 className="text-2xl font-bold text-center py-10">
                     My Shopping Cart
                 </h2>
-                <section className="">
-                    <div className="border-2 rounded-md p-5">
+                <section className="grid grid-cols-12">
+                    <div className="border-2 rounded-md p-5 col-span-8">
                         {cartItems &&
                             cartItems.length > 0 &&
                             cartItems.map((cartItem) => {
                                 return (
                                     <ProductCartCard
                                         key={cartItem.id}
+                                        cartItems={cartItems}
                                         cartItem={cartItem}
                                         addToCart={addToCart}
                                         removeFromCart={removeFromCart}
@@ -33,13 +42,16 @@ const CartPage = () => {
                             })}
                         {/* <ProductCartCard></ProductCartCard> */}
                     </div>
-                    <div className="border-2 rounded-md p-5 space-y-4">
+                    <div className="col-span-1"></div>
+                    <div className="border-2 rounded-md p-5 space-y-4 col-span-3">
                         <h2 className="text-xl font-bold">Cart Total</h2>
                         <div className="flex items-center justify-between gap-5 py-2 border-b-2 border-slate-400">
                             <Label className="text-sm font-semibold text-slate-500">
                                 Subtotal:
                             </Label>
-                            <p className="text-sm font-bold">$ 200 taka</p>
+                            <p className="text-sm font-bold">
+                                ৳{calculateTotal()}
+                            </p>
                         </div>
                         <div className="flex items-center justify-between gap-5 py-2 border-b-2 border-slate-400">
                             <Label className="text-sm font-semibold text-slate-500">
@@ -52,7 +64,7 @@ const CartPage = () => {
                                 Total:
                             </Label>
                             <p className="text-sm font-bold capitalize">
-                                $ 200 taka
+                                ৳{calculateTotal()}
                             </p>
                         </div>
                         <button className="text-white text-sm font-semibold py-2 flex items-center justify-center shadow-lg rounded-full w-full bg-primary">

@@ -7,7 +7,7 @@ import Link from "next/link";
 interface ProductData {
     _id: string;
     productName: string;
-    productPrice: string;
+    productPrice: number;
     productQuantity: string;
     productCategory: string;
     productDescription: string;
@@ -37,13 +37,9 @@ const ProductCard = ({ productData }: { productData: ProductData }) => {
             id: productData?._id,
             // Other product details
             quantity: 1,
+            price: productData?.productPrice,
         });
     };
-
-    // const handleIncrement = () => {
-    //     // Logic to increment product quantity in cart
-    //     updateCartItem(productData._id, { ...productData, quantity: productData.quantity + 1 });
-    //   };
 
     const handleIncrement = () => {
         const cartItem = cartItems.find((item) => item.id === productData?._id);
@@ -55,11 +51,6 @@ const ProductCard = ({ productData }: { productData: ProductData }) => {
         }
     };
 
-    // const handleDecrement = () => {
-    // // Logic to decrement product quantity in cart
-    // // Handle case where quantity becomes 0 and remove product
-    // updateCartItem(productData._id, { ...productData, quantity: productData.quantity - 1 });
-    // };
     const handleDecrement = () => {
         const cartItem = cartItems.find((item) => item.id === productData._id);
         if (cartItem && cartItem.quantity > 1) {
@@ -82,6 +73,8 @@ const ProductCard = ({ productData }: { productData: ProductData }) => {
                     height={150}
                     className="md:w-[150px] md:h-[150px] w-[100px] h-[100px] mx-auto object-cover object-center"
                 />
+
+                {/* ADD TO CART BUTTON FOR MOBILE DEVICES */}
                 <div className="text-primary sm:hidden absolute bottom-0 right-3 h-[30px] w-[30px] flex justify-center items-center rounded-full bg-white shadow-2xl">
                     <Plus />
                 </div>
@@ -97,7 +90,7 @@ const ProductCard = ({ productData }: { productData: ProductData }) => {
                         {productQuantity}
                     </p>
                     <p className="text-[#1A1A1A] text-base font-bold">
-                        ৳ {productPrice}
+                        ৳{productPrice}
                     </p>
 
                     {!isProductInCart ? (

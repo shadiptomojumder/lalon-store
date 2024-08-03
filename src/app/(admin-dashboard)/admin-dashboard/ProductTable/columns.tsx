@@ -9,11 +9,11 @@ import { DataTableColumnHeader } from "./data-table-column-header";
 export type ProductDataType = {
     _id: string;
     productName: string;
-    productPrice: string;
+    productPrice: number;
     productQuantity: string;
     productCategory: string;
     productDescription: string;
-    productStock:number;
+    productStock: number;
     productImage: string;
     productImageOne: string;
     productImageTwo: string;
@@ -137,23 +137,24 @@ export const columns: ColumnDef<ProductDataType>[] = [
         ),
         cell: ({ row }) => {
             const productStock = row.getValue("productStock") as number;
-            console.log("status",productStock);
-            
+            console.log("status", productStock);
+
             return (
                 <>
-                
-                {productStock > 0 && (
-                    <Badge variant="default" className="hover:bg-green-500">
-                        In Stock
-                    </Badge>
-                )}
+                    {productStock > 0 && (
+                        <Badge variant="default" className="hover:bg-green-500">
+                            In Stock
+                        </Badge>
+                    )}
 
-                {productStock === 0 && (
-                    <Badge variant="default" className="bg-[#FFE569] hover:bg-[#FFE569] text-center">
-                        Out of Stock
-                    </Badge>
-                )}
-                    
+                    {productStock === 0 && (
+                        <Badge
+                            variant="default"
+                            className="bg-[#FFE569] hover:bg-[#FFE569] text-center"
+                        >
+                            Out of Stock
+                        </Badge>
+                    )}
                 </>
             );
         },

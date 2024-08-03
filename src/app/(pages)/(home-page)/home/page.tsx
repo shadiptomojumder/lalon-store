@@ -23,7 +23,7 @@ const HomePage = () => {
             setUser(user)
             router.push("https://lalon-store.vercel.app/");
         }
-    }, [router,setUser]);
+    }, [router]);
     return (
         <main className="bg-white">
             <section className="container">
