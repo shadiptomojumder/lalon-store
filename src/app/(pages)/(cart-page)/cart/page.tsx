@@ -18,13 +18,13 @@ const CartPage = () => {
     };
 
     return (
-        <main className="h-dvh">
+        <main className="py-10">
             <section className="container">
                 <h2 className="text-2xl font-bold text-center py-10">
                     My Shopping Cart
                 </h2>
-                <section className="grid grid-cols-12">
-                    <div className="border-2 rounded-md p-5 col-span-8">
+                <section className="grid grid-cols-12 gap-3">
+                    <div className="border-2 rounded-md md:p-5 p-2 md:col-span-8 col-span-12">
                         {cartItems &&
                             cartItems.length > 0 &&
                             cartItems.map((cartItem) => {
@@ -42,8 +42,8 @@ const CartPage = () => {
                             })}
                         {/* <ProductCartCard></ProductCartCard> */}
                     </div>
-                    <div className="col-span-1"></div>
-                    <div className="border-2 rounded-md p-5 space-y-4 col-span-3">
+                    <div className="md:col-span-1 col-span-12"></div>
+                    <div className="border-2 rounded-md p-5 md:col-span-3 col-span-12 space-y-4 h-fit">
                         <h2 className="text-xl font-bold">Cart Total</h2>
                         <div className="flex items-center justify-between gap-5 py-2 border-b-2 border-slate-400">
                             <Label className="text-sm font-semibold text-slate-500">

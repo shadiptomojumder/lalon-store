@@ -79,9 +79,9 @@ const Signup = () => {
 
     return (
         <div className="flex min-h-[100dvh] flex-col items-center justify-center bg-gray-100 px-4 py-12 dark:bg-gray-950">
-            <div className="mx-auto w-full max-w-md space-y-6 rounded-lg bg-white p-6 shadow-lg dark:bg-black">
+            <div className="mx-auto w-full max-w-md space-y-6 rounded-lg bg-white py-6 px-3 sm:px-6 shadow-lg dark:bg-black">
                 <div className="space-y-2 text-center">
-                    <h1 className="text-3xl font-bold">Sign Up</h1>
+                    <h1 className="text-2xl font-bold">Sign Up</h1>
                     <p className="text-gray-500 dark:text-gray-400">
                         Create your account to get started.
                     </p>
@@ -169,7 +169,7 @@ const Signup = () => {
                     </Button>
                     <div
                         onClick={handleGoogleSignup}
-                        className="flex items-center justify-center py-2 text-sm font-semibold text-black rounded-md cursor-pointer border-2 border-primary gap-2 w-full transition-all duration-200"
+                        className="flex items-center justify-center py-2 text-sm font-semibold text-black rounded-md cursor-pointer shadow-xl bg-slate-100 gap-2 w-full"
                         
                     >
                         <FcGoogle className="text-2xl"/>

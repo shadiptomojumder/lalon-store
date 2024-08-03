@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { useCart } from "@/hooks/useCart";
-import { Minus, Plus, ShoppingCart } from "lucide-react";
+import { CirclePlus, Minus, Plus, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -75,11 +75,40 @@ const ProductCard = ({ productData }: { productData: ProductData }) => {
                 />
 
                 {/* ADD TO CART BUTTON FOR MOBILE DEVICES */}
-                <div className="text-primary sm:hidden absolute bottom-0 right-3 h-[30px] w-[30px] flex justify-center items-center rounded-full bg-white shadow-2xl">
-                    <Plus />
-                </div>
+
+                {!isProductInCart ? (
+                    <div
+                        onClick={handleAddToCart}
+                        className="text-primary min-[424px]:hidden absolute bottom-0 right-3 h-[30px] w-[30px] flex justify-center items-center rounded-full bg-white shadow-2xl"
+                    >
+                        <Plus />
+                    </div>
+                ) : (
+                    <div className="text-white min-[424px]:hidden absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center justify-around shadow-lg gap-1 rounded-full w-[90%] bg-yellow-500 scale-75">
+                        <button
+                            onClick={handleDecrement}
+                            className="p-[1px] text-gray-800"
+                        >
+                            <Minus />
+                        </button>
+                        <p className="text-base text-gray-900 font-semibold">
+                            {
+                                cartItems.find(
+                                    (item) => item.id === productData._id
+                                )?.quantity
+                            }
+                        </p>
+                        <button
+                            onClick={handleIncrement}
+                            className="p-[1px] text-gray-800"
+                        >
+                            <Plus />
+                            {/* <CirclePlus/> */}
+                        </button>
+                    </div>
+                )}
             </div>
-            <section className="flex flex-col justify-between h-full mt-1">
+            <section className="flex flex-col justify-between h-full min-[424px]:mt-1 mt-3">
                 <Link href="#">
                     <h2 className="text-[#1A1A1A] text-center capitalize md:text-sm text-xs line-clamp-2 font-medium hover:underline transition-all duration-300 text-ellipsis">
                         {productName}
@@ -95,7 +124,7 @@ const ProductCard = ({ productData }: { productData: ProductData }) => {
 
                     {!isProductInCart ? (
                         <button
-                            className="text-white hidden py-1 sm:flex items-center justify-center shadow-lg gap-1 rounded-full w-full bg-[#00B307]"
+                            className="text-white hidden py-1 min-[424px]:flex items-center justify-center shadow-lg gap-1 rounded-full w-full bg-[#00B307]"
                             onClick={handleAddToCart}
                         >
                             <ShoppingCart
@@ -105,7 +134,7 @@ const ProductCard = ({ productData }: { productData: ProductData }) => {
                             Add to cart
                         </button>
                     ) : (
-                        <div className="text-white flex items-center justify-around shadow-lg gap-1 rounded-full w-full bg-yellow-500 min-h-[32px]">
+                        <div className="text-white hidden min-[424px]:flex items-center justify-around shadow-lg gap-1 rounded-full w-full bg-yellow-500 min-h-[32px]">
                             <button
                                 onClick={handleDecrement}
                                 className="p-[1px] h-[32px] text-gray-800 border-r-2 pr-4 border-gray-600"
@@ -135,7 +164,7 @@ const ProductCard = ({ productData }: { productData: ProductData }) => {
                     className={`w-full h-full bg-white bg-opacity-[0.6] absolute left-0 top-0 rounded-md`}
                 >
                     {productData?.productStock === 0 ? (
-                        <Badge className="bg-yellow-400 absolute top-2 left-2">
+                        <Badge className="bg-yellow-400 hover:bg-yellow-400 absolute top-2 left-2">
                             Out of stocks
                         </Badge>
                     ) : (

@@ -59,7 +59,7 @@ const ProductCartCard: React.FC<ProductCartCardProps> = ({
     };
 
     return (
-        <div className="bg-white flex items-start border-b-2 border-slate-400 py-2">
+        <div className="bg-white flex items-start border-b-2 border-slate-400 first:border-b-2 last:border-0 py-2">
             <Image
                 src={product?.productImage}
                 width={70}
@@ -70,7 +70,7 @@ const ProductCartCard: React.FC<ProductCartCardProps> = ({
                 <h2 className="text-sm font-medium capitalize">
                     {product?.productName}
                 </h2>
-                <div className="flex items-start justify-between gap-5 w-full">
+                <div className="flex flex-col min-[375px]:flex-row items-start justify-between sm:gap-5 gap-2 w-full">
                     <div className="flex items-center gap-2">
                         <p className="text-sm font-bold text-nowrap">
                             ৳

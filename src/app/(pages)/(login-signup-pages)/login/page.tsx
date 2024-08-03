@@ -108,7 +108,7 @@ const LoginPage = () => {
     return (
         <div className="flex h-screen w-full items-center justify-center bg-gray-100 px-4 dark:bg-gray-950">
             <Card className="w-full max-w-md dark:bg-black">
-                <CardHeader className="space-y-1">
+                <CardHeader className="space-y-1 py-6 px-3 sm:px-6">
                     <CardTitle className="text-2xl font-bold text-center">
                         Login
                     </CardTitle>
@@ -116,7 +116,7 @@ const LoginPage = () => {
                         Enter your email and password to access your account.
                     </CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="py-6 px-3 sm:px-6">
                     <form
                         className="space-y-4"
                         onSubmit={handleSubmit(onSubmit)}
@@ -187,7 +187,7 @@ const LoginPage = () => {
 
                         <div
                         onClick={handleGoogleLogin}
-                        className="flex items-center justify-center py-2 text-sm font-semibold text-black rounded-md cursor-pointer border-2 border-primary gap-2 w-full transition-all duration-200"
+                        className="flex items-center justify-center py-2 text-sm font-semibold text-black rounded-md cursor-pointer shadow-xl bg-slate-100 gap-2 w-full"
                         
                     >
                         <FcGoogle className="text-2xl"/>

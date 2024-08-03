@@ -75,10 +75,10 @@ const Header = () => {
                 </div>
                 <div className="flex items-center gap-3">
                     <Link href={"/cart"}>
-                    <div className="relative">
+                    <div className="relative hidden sm:block">
                         <MdOutlineShoppingCartCheckout
                             size={35}
-                            className="text-[#040D12] hidden sm:block"
+                            className="text-[#040D12]"
                         />
                         {cartItems && cartItems.length > 0 && (
                             <p className="text-primary font-bold absolute -top-1 -right-2 rounded-full h-[20px] w-[20px] bg-slate-200 flex justify-center items-center">
