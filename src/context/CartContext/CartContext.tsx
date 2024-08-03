@@ -27,26 +27,42 @@ const CartContext = createContext<CartContextType>({
 });
 
 const CartContextProvider: FC<CartContextProviderProps> = ({ children }) => {
-    const [cartItems, setCartItems] = useState<CartItem[]>(() => {
-        if (typeof window !== 'undefined') {
-            const storedCart = localStorage.getItem('cartItems');
-            return storedCart ? JSON.parse(storedCart) : [];
-          }
-          return [];
-    });
+    // const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    //     if (typeof window !== 'undefined') {
+    //         const storedCart = localStorage.getItem('cartItems');
+    //         return storedCart ? JSON.parse(storedCart) : [];
+    //       }
+    //       return [];
+    // });
+
+    // useEffect(() => {
+    //     //console.log("Saving cart items to localStorage:", cartItems);
+    //     localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    // }, [cartItems]);
+
+
+    const [cartItems, setCartItems] = useState<CartItem[]>([]);
+    const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
-        //console.log("Saving cart items to localStorage:", cartItems);
-        localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    }, [cartItems]);
+        setIsMounted(true);
+        if (typeof window !== 'undefined') {
+            const storedCart = localStorage.getItem('cartItems');
+            if (storedCart) {
+                setCartItems(JSON.parse(storedCart));
+            }
+        }
+    }, []);
+
+    useEffect(() => {
+        if (isMounted) {
+            localStorage.setItem("cartItems", JSON.stringify(cartItems));
+        }
+    }, [cartItems, isMounted]);
 
     const addToCart = (item: CartItem) => {
-        // Logic to add or update item in cart
         setCartItems([...cartItems, item]);
-        //console.log("cartItems line 59:", cartItems);
-        //console.log("item line 60:", item);
         localStorage.setItem("cartItems", JSON.stringify(cartItems));
-        //console.log("cartItems line 61:", cartItems);
     };
 
     const removeFromCart = (id: string) => {
@@ -55,13 +71,9 @@ const CartContextProvider: FC<CartContextProviderProps> = ({ children }) => {
     };
 
     const updateCartItem = (id: string, updatedItem: CartItem) => {
-        //console.log("Id to update:", id);
-        ///console.log("updatedItem to update:", updatedItem);
-
         setCartItems(
             cartItems.map((item) => (item.id === id ? updatedItem : item))
         );
-        //console.log("cartItems line 74:", cartItems);
     };
 
     const clearCart = () => {
