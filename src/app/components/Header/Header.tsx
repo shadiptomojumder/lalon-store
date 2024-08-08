@@ -12,18 +12,18 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/hooks/useAuth";
 import { useCart } from "@/hooks/useCart";
-import { CircleUserRound, ShoppingCart } from "lucide-react";
+import { CircleUserRound } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { toast } from "sonner";
 import { MdOutlineShoppingCartCheckout } from "react-icons/md";
+import { toast } from "sonner";
 
 const Header = () => {
     const { user, setUser, userLoading } = useAuth();
-    // console.log("The User is ", user);
-    // console.log("The userLoading is ", userLoading);
+    console.log("The User is ", user);
+    console.log("The userLoading is ", userLoading);
     const { cartItems, addToCart, removeFromCart, updateCartItem, clearCart } =
         useCart();
     const pathname = usePathname();
@@ -75,106 +75,93 @@ const Header = () => {
                 </div>
                 <div className="flex items-center gap-3">
                     <Link href={"/cart"}>
-                    <div className="relative hidden sm:block">
-                        <MdOutlineShoppingCartCheckout
-                            size={35}
-                            className="text-[#040D12]"
-                        />
-                        {cartItems && cartItems.length > 0 && (
-                            <p className="text-primary font-bold absolute -top-1 -right-2 rounded-full h-[20px] w-[20px] bg-slate-200 flex justify-center items-center">
-                                {cartItems.length}
-                            </p>
-                        )}
-                    </div>
+                        <div className="relative hidden sm:block">
+                            <MdOutlineShoppingCartCheckout
+                                size={35}
+                                className="text-[#040D12]"
+                            />
+                            {cartItems && cartItems.length > 0 && (
+                                <p className="text-primary font-bold absolute -top-1 -right-2 rounded-full h-[20px] w-[20px] bg-slate-200 flex justify-center items-center">
+                                    {cartItems.length}
+                                </p>
+                            )}
+                        </div>
                     </Link>
 
-                    {user && userLoading === false ? (
-                        <>
-                            {userLoading ? (
-                                <Skeleton className="w-[60px] h-[60px] rounded-full bg-gray-500" />
-                            ) : (
-                                <DropdownMenu>
-                                    <DropdownMenuTrigger asChild>
-                                        {user && user?.avatar ? (
-                                            <div className="border-2 boxglow border-primary rounded-full cursor-pointer">
-                                                <Image
-                                                    src={user?.avatar as string}
-                                                    alt="Uploades Image"
-                                                    height={50}
-                                                    width={50}
-                                                    className="min-w-[40px] w-[40px] h-[40px] rounded-full object-cover object-center"
-                                                />
-                                            </div>
-                                        ) : (
-                                            <div className="cursor-pointer flex items-center justify-center boxglow border-primary rounded-full">
-                                                {/* <FaUser className="text-2xl text-black" /> */}
-                                                <CircleUserRound
-                                                    size={35}
-                                                    className="text-[#040D12]"
-                                                />
-                                            </div>
-                                        )}
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent
-                                        align="end"
-                                        className="z-[500]"
-                                    >
-                                        <DropdownMenuItem className="py-1 font-semibold">
-                                            {user?.fullname}
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem className="text-xs text-[#040D12] focus:bg-transparent px-2 py-0 pb-1">
-                                            {user?.role}
-                                        </DropdownMenuItem>
-                                        <DropdownMenuSeparator />
-                                        <Link
-                                            href={`/user-dashboard/user-dashboard-profile`}
-                                        >
-                                            <DropdownMenuItem>
-                                                Profile
-                                            </DropdownMenuItem>
-                                        </Link>
-                                        {user &&
-                                            user?.role &&
-                                            (user?.role === "admin" ||
-                                                user?.role ===
-                                                    "super-admin") && (
-                                                <Link href={`/admin-dashboard`}>
-                                                    <DropdownMenuItem>
-                                                        Admin Dashboard
-                                                    </DropdownMenuItem>
-                                                </Link>
-                                            )}
-                                        <Link href="/user-dashboard/user-dashboard-appointments">
-                                            <DropdownMenuItem>
-                                                Appointment
-                                            </DropdownMenuItem>
-                                        </Link>
-
-                                        <DropdownMenuSeparator />
-                                        <DropdownMenuItem
-                                            onClick={() => handleLogout()}
-                                        >
-                                            Logout
-                                        </DropdownMenuItem>
-                                    </DropdownMenuContent>
-                                </DropdownMenu>
-                            )}
-                        </>
-                    ) : (
-                        <>
-                            {userLoading ? (
-                                <Skeleton className="w-[70px] h-[40px] rounded-full bg-gray-500 z-50" />
-                            ) : (
-                                <Link href="/login">
-                                    <Button
-                                        variant="default"
-                                        className="text-lg bg-primary hover:bg-accent-foreground boxglow text-white px-4 py-5 font-semibold rounded-full"
-                                    >
-                                        Login
-                                    </Button>
+                    {userLoading ? (
+                        <Skeleton className="w-[60px] h-[60px] rounded-full bg-gray-500" />
+                    ) : user ? (
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                {user && user?.avatar ? (
+                                    <div className="border-2 boxglow border-primary rounded-full cursor-pointer">
+                                        <Image
+                                            src={user?.avatar as string}
+                                            alt="Uploades Image"
+                                            height={50}
+                                            width={50}
+                                            className="min-w-[40px] w-[40px] h-[40px] rounded-full object-cover object-center"
+                                        />
+                                    </div>
+                                ) : (
+                                    <div className="cursor-pointer flex items-center justify-center boxglow border-primary rounded-full">
+                                        {/* <FaUser className="text-2xl text-black" /> */}
+                                        <CircleUserRound
+                                            size={35}
+                                            className="text-[#040D12]"
+                                        />
+                                    </div>
+                                )}
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent
+                                align="end"
+                                className="z-[500]"
+                            >
+                                <DropdownMenuItem className="py-1 font-semibold">
+                                    {user?.fullname}
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="text-xs text-[#040D12] focus:bg-transparent px-2 py-0 pb-1">
+                                    {user?.role}
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <Link
+                                    href={`/user-dashboard/user-dashboard-profile`}
+                                >
+                                    <DropdownMenuItem>Profile</DropdownMenuItem>
                                 </Link>
-                            )}
-                        </>
+                                {user &&
+                                    user?.role &&
+                                    (user?.role === "admin" ||
+                                        user?.role === "super-admin") && (
+                                        <Link href={`/admin-dashboard`}>
+                                            <DropdownMenuItem>
+                                                Admin Dashboard
+                                            </DropdownMenuItem>
+                                        </Link>
+                                    )}
+                                <Link href="/user-dashboard/user-dashboard-appointments">
+                                    <DropdownMenuItem>
+                                        Appointment
+                                    </DropdownMenuItem>
+                                </Link>
+
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem
+                                    onClick={() => handleLogout()}
+                                >
+                                    Logout
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    ) : (
+                        <Link href="/login">
+                            <Button
+                                variant="default"
+                                className="text-lg bg-primary hover:bg-accent-foreground boxglow text-white px-4 py-5 font-semibold rounded-full"
+                            >
+                                Login
+                            </Button>
+                        </Link>
                     )}
 
                     {/* <DropdownMenu>

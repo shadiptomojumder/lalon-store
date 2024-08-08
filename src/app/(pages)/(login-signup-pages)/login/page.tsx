@@ -51,10 +51,10 @@ const LoginPage = () => {
             if (response.statusCode === 200) {
                 toast.success("User successfully Login");
 
-                localStorage.setItem(
-                    "userData",
-                    JSON.stringify(response.data.loggedInUser)
-                );
+                // localStorage.setItem(
+                //     "userData",
+                //     JSON.stringify(response.data.loggedInUser)
+                // );
                 localStorage.setItem(
                     "accessToken",
                     JSON.stringify(response?.data?.accessToken)
@@ -68,7 +68,7 @@ const LoginPage = () => {
                 const expires = new Date();
                 expires.setTime(expires.getTime() + 7 * 24 * 60 * 60 * 1000); // Cookie expires in 7 days
 
-                document.cookie = `accessTokenByF=${accessToken}; expires=${expires.toUTCString()}; path=/; secure; samesite=strict`;
+                //document.cookie = `accessTokenByF=${accessToken}; expires=${expires.toUTCString()}; path=/; secure; samesite=strict`;
                 setUser(response.data.loggedInUser);
                 router.push("/");
                 router.refresh()
@@ -100,7 +100,7 @@ const LoginPage = () => {
         // HandleGoogleAuth()
         // const response = axios.get("http://localhost:5000/api/auth/google");
         // console.log("The response is:",response);
-        window.location.href = "http://localhost:5000/api/auth/google";
+        window.location.href = "https://lalon-store-backend-production.up.railway.app/api/auth/google";
         
     }
     

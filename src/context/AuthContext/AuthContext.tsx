@@ -1,5 +1,7 @@
 "use client";
+import CurrentUser from "@/api/user/currentUser";
 import Logout from "@/api/user/logout";
+import { useQuery } from "@tanstack/react-query";
 import { differenceInMilliseconds, formatDistanceToNow } from "date-fns";
 import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/navigation";
@@ -35,7 +37,11 @@ interface User {
     email: string;
     role?: string;
     avatar?: string;
+    googleId?: string;
     refreshToken?: string;
+    createdAt?: string;
+    updatedAt?: string;
+    __v?: number;
 }
 
 interface UserContextType {
@@ -58,7 +64,12 @@ interface AuthContextProviderProps {
 const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
     const [userLoading, setUserLoading] = useState(true);
-    //console.log("The state User:", user);
+    console.log("The state User:", user);
+
+    const { isLoading, data: loggedInUser } = useQuery({
+        queryKey: [],
+        queryFn: CurrentUser,
+    });
 
     // Load user data from localStorage on component mount
     useEffect(() => {
@@ -66,10 +77,12 @@ const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) => {
         //console.log("The storedUser is:", storedUser);
 
         if (storedUser) {
+            console.log("Come here line 76");
             try {
                 const parsedUser = JSON.parse(storedUser);
                 setUserLoading(false);
                 setUser(parsedUser);
+                console.log("The state User line 85:", user);
             } catch (error) {
                 console.error("Error parsing stored user data:", error);
                 // Handle the error appropriately (clear the invalid data from localStorage)
@@ -79,6 +92,29 @@ const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) => {
             setUserLoading(false);
         }
     }, []);
+
+
+
+    console.log("loggedInUser is:", loggedInUser);
+
+    useEffect(() => {
+        if (loggedInUser) {
+            try {
+                if(isLoading){
+                    setUserLoading(true);
+                }else {
+                    setUser(loggedInUser);
+                    setUserLoading(false);
+                }
+                console.log("The state User line 108:", user);
+            } catch (error) {
+                console.error("Error parsing stored user data:", error);
+                localStorage.removeItem("userData");
+            }
+        } else {
+            setUserLoading(false);
+        }
+    }, [loggedInUser])
 
     const HandleTokenExpiration = async () => {
         const router = useRouter();

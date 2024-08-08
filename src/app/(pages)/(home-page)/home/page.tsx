@@ -10,20 +10,20 @@ import { useAuth } from "@/hooks/useAuth";
 const HomePage = () => {
     const { user, setUser, userLoading } = useAuth();
     const router = useRouter();
-    useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const userParam = urlParams.get('user');
-        if (userParam) {
-            const user = JSON.parse(decodeURIComponent(userParam));
-            console.log("USER by params:",user);
-            
-            
-            // Optionally, you can store the user in localStorage or context for persistent state
-            localStorage.setItem("userData", JSON.stringify(user));
-            setUser(user)
-            router.push("https://lalon-store.vercel.app/");
-        }
-    }, [router]);
+
+    // useEffect(() => {
+    //     const urlParams = new URLSearchParams(window.location.search);
+    //     const userParam = urlParams.get('user');
+    //     if (userParam) {
+    //         const user = JSON.parse(decodeURIComponent(userParam));
+    //         console.log("USER by params:",user);
+    
+    //         localStorage.setItem("userData", JSON.stringify(user));
+    //         setUser(user)
+    //         router.push("/");
+    //     }
+    // }, [router]);
+
     return (
         <main className="bg-white">
             <section className="container">

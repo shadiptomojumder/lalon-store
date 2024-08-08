@@ -6,7 +6,7 @@ const CurrentUser = async () => {
         const response = await api.get(`/users/current-user`,{});
         console.log("The CurrentUser api returned:",response);
         
-        return response.data
+        return response.data.data
     } catch (error) {
         console.log("The Error in CurrentUser api is:",error);
         
