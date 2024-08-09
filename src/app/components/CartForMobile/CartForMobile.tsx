@@ -23,7 +23,7 @@ const CartForMobile = () => {
 
             <Link href={"/cart"}>
                 <div
-                    className={`h-[50px] w-[50px] shadow-[0px_0px_8px_5px_rgba(0,0,0,0.3)] bg-primary rounded-full flex items-center justify-center fixed bottom-5 right-5 transition-all duration-200 ${pathname == "/cart" ? " scale-0" : " scale-100"}`}
+                    className={`h-[50px] w-[50px] shadow-[0px_0px_4px_4px_rgba(0,0,0,0.2)] bg-primary rounded-full flex items-center justify-center fixed bottom-5 right-5 transition-all duration-200 ${pathname == "/cart" ? " scale-0" : " scale-100"}`}
                 >
                     <ShoppingBasket size={40} className="text-gray-900" />
                     {cartItems && cartItems.length > 0 && (

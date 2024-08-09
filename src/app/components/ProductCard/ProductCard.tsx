@@ -75,7 +75,6 @@ const ProductCard = ({ productData }: { productData: ProductData }) => {
                 />
 
                 {/* ADD TO CART BUTTON FOR MOBILE DEVICES */}
-
                 {!isProductInCart ? (
                     <div
                         onClick={handleAddToCart}
@@ -84,7 +83,7 @@ const ProductCard = ({ productData }: { productData: ProductData }) => {
                         <Plus />
                     </div>
                 ) : (
-                    <div className="text-white min-[424px]:hidden absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center justify-around shadow-lg gap-1 rounded-full w-[90%] bg-yellow-500 scale-75">
+                    <div className="text-white min-[424px]:hidden absolute bottom-0 left-1/2 -translate-x-1/2 flex items-center justify-around shadow-lg gap-1 rounded-full w-[90%] bg-yellow-500 scale-90">
                         <button
                             onClick={handleDecrement}
                             className="p-[1px] text-gray-800"
@@ -108,9 +107,9 @@ const ProductCard = ({ productData }: { productData: ProductData }) => {
                     </div>
                 )}
             </div>
-            <section className="flex flex-col justify-between h-full min-[424px]:mt-1 mt-3">
+            <section className="flex flex-col justify-between gap-1 h-full min-[424px]:mt-1 mt-3">
                 <Link href="#">
-                    <h2 className="text-[#1A1A1A] text-center capitalize md:text-sm text-xs line-clamp-2 font-medium hover:underline transition-all duration-300 text-ellipsis">
+                    <h2 className="text-[#1A1A1A] text-center capitalize text-sm line-clamp-2 font-medium hover:underline transition-all duration-300 text-ellipsis">
                         {productName}
                     </h2>
                 </Link>
@@ -159,6 +158,7 @@ const ProductCard = ({ productData }: { productData: ProductData }) => {
                     )}
                 </div>
             </section>
+
             {productData?.productStock === 0 ? (
                 <div
                     className={`w-full h-full bg-white bg-opacity-[0.6] absolute left-0 top-0 rounded-md`}
