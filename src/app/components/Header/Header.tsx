@@ -139,9 +139,9 @@ const Header = () => {
                                             </DropdownMenuItem>
                                         </Link>
                                     )}
-                                <Link href="/user-dashboard/user-dashboard-appointments">
+                                <Link href="/admin-dashboard">
                                     <DropdownMenuItem>
-                                        Appointment
+                                        Admin Dashboard
                                     </DropdownMenuItem>
                                 </Link>
 

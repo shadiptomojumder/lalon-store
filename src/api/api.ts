@@ -11,14 +11,28 @@ export const api = axios.create({
     withCredentials: true,
 });
 
-
 // https://lalon-store-backend-production.up.railway.app
 // http://localhost:5000
 // https://lalon-store-backend-production.up.railway.app
 
+function getCookie(name: any) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) {
+        const cookieValue = parts.pop();
+        if (cookieValue) {
+            return cookieValue.split(";").shift();
+        }
+    }
+}
+
 // Add a request interceptor
 api.interceptors.request.use(
     (request) => {
+        const accessTokenCookie = getCookie("accessToken");
+        const refreshTokenCookie = getCookie("refreshToken");
+        console.log("accessTokenCookie in cookie is:", accessTokenCookie);
+
         const accessToken = localStorage.getItem("accessToken");
         if (accessToken) {
             request.headers["Authorization"] = `Bearer ${accessToken}`;
@@ -45,7 +59,7 @@ api.interceptors.response.use(
     async (error) => {
         //console.log("The error line 40 is:", error);
         const originalRequest = error.config;
-        if (error.response.status === 401 && !originalRequest._retry) {
+        if (error.response.status === 420 && !originalRequest._retry) {
             originalRequest._retry = true; // Mark the request as retried to avoid infinite loops.
             try {
                 const refreshToken = localStorage.getItem("refreshToken"); // Get the refresh token as a string

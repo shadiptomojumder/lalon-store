@@ -96,11 +96,11 @@ const LoginPage = () => {
     };
 
     const handleGoogleLogin = async () => {
-        // window.open("http://localhost:5000/api/auth/google","_self")
+        window.open("https://lalon-store-backend-production.up.railway.app/api/auth/google","_self")
         // HandleGoogleAuth()
         // const response = axios.get("http://localhost:5000/api/auth/google");
         // console.log("The response is:",response);
-        window.location.href = "https://lalon-store-backend-production.up.railway.app/api/auth/google";
+        //window.location.href = "https://lalon-store-backend-production.up.railway.app/api/auth/google";
         
     }
     
