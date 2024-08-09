@@ -1,4 +1,5 @@
 "use client";
+import { BaseURL } from "@/api/api";
 import Login from "@/api/user/login";
 import Spinner from "@/app/components/Spinner/Spinner";
 import { Button } from "@/components/ui/button";
@@ -17,9 +18,9 @@ import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { FcGoogle } from "react-icons/fc";
 import { toast } from "sonner";
 import { z } from "zod";
-import { FcGoogle } from "react-icons/fc";
 
 const formSchema = z.object({
     email: z.string().email({
@@ -51,10 +52,10 @@ const LoginPage = () => {
             if (response.statusCode === 200) {
                 toast.success("User successfully Login");
 
-                // localStorage.setItem(
-                //     "userData",
-                //     JSON.stringify(response.data.loggedInUser)
-                // );
+                localStorage.setItem(
+                    "userData",
+                    JSON.stringify(response.data.loggedInUser)
+                );
                 localStorage.setItem(
                     "accessToken",
                     JSON.stringify(response?.data?.accessToken)
@@ -71,7 +72,7 @@ const LoginPage = () => {
                 //document.cookie = `accessTokenByF=${accessToken}; expires=${expires.toUTCString()}; path=/; secure; samesite=strict`;
                 setUser(response.data.loggedInUser);
                 router.push("/");
-                router.refresh()
+                router.refresh();
             }
         },
         onError: (error: any) => {
@@ -96,14 +97,12 @@ const LoginPage = () => {
     };
 
     const handleGoogleLogin = async () => {
-        window.open("https://lalon-store-backend-production.up.railway.app/api/auth/google","_self")
+        window.open(`${BaseURL}/auth/google`, "_self");
         // HandleGoogleAuth()
         // const response = axios.get("http://localhost:5000/api/auth/google");
         // console.log("The response is:",response);
         //window.location.href = "https://lalon-store-backend-production.up.railway.app/api/auth/google";
-        
-    }
-    
+    };
 
     return (
         <div className="flex h-screen w-full items-center justify-center bg-gray-100 px-4 dark:bg-gray-950">
@@ -185,14 +184,14 @@ const LoginPage = () => {
                             )}
                         </Button>
 
-                        <div
-                        onClick={handleGoogleLogin}
-                        className="flex items-center justify-center py-2 text-sm font-semibold text-black rounded-md cursor-pointer shadow-xl bg-slate-100 gap-2 w-full"
-                        
-                    >
-                        <FcGoogle className="text-2xl"/>
-                        Login with Google
-                    </div>
+                        {/* <div
+                            onClick={handleGoogleLogin}
+                            className="flex items-center justify-center py-2 text-sm font-semibold text-black rounded-md cursor-pointer shadow-xl bg-slate-100 gap-2 w-full"
+                        >
+                            <FcGoogle className="text-2xl" />
+                            Login with Google
+                        </div> */}
+
                         <div className="flex items-center justify-center">
                             <div className="text-sm text-gray-500 dark:text-white">
                                 Don&apos;t have an account?

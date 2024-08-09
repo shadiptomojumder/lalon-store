@@ -1,7 +1,6 @@
 "use client";
 import { NavigationMenuLink } from "@/components/ui/navigation-menu";
-import { ChevronDown } from "lucide-react";
-import Link from "next/link";
+import { AlignLeft, ChevronDown } from "lucide-react";
 
 const CategoryList = [
     {
@@ -170,16 +169,16 @@ const handleHover = (event: any) => {
 
 const Navbar = () => {
     return (
-        <nav className="bg-[#3da641] py-2">
-            <main className="container">
-                <section className="flex items-center gap-5 justify-center">
+        <nav className="bg-[#34ad38] py-2">
+            <main className="container flex items-center justify-between">
+                <section className="flex items-center gap-2">
+                    <AlignLeft size={30} className="text-white"/>
+                    <p className="text-base font-semibold text-white capitalize">Shop by category</p>
+                </section>
+                {/* <section className="flex items-center gap-5 justify-center">
                     {CategoryList.map((category) => {
                         return (
-                            <div
-                                key={category.id}
-                                
-                                className="group relative"
-                            >
+                            <div key={category.id} className="group relative">
                                 <div className="flex items-center gap-1">
                                     <h2 className="text-lg font-semibold text-[#040D12] text-nowrap">
                                         {category.categoryName}
@@ -192,7 +191,7 @@ const Navbar = () => {
                             </div>
                         );
                     })}
-                </section>
+                </section> */}
             </main>
         </nav>
     );

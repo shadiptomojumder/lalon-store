@@ -93,10 +93,7 @@ const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) => {
         }
     }, []);
 
-
-
     console.log("loggedInUser is:", loggedInUser);
-
     useEffect(() => {
         if (loggedInUser) {
             try {

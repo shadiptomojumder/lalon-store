@@ -1,5 +1,5 @@
 import axios from "axios";
-const BaseURL = "https://lalon-store-backend-production.up.railway.app/api";
+export const BaseURL = "http://localhost:5000/api";
 
 export const api = axios.create({
     baseURL: BaseURL,
@@ -13,26 +13,11 @@ export const api = axios.create({
 
 // https://lalon-store-backend-production.up.railway.app
 // http://localhost:5000
-// https://lalon-store-backend-production.up.railway.app
 
-function getCookie(name: any) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) {
-        const cookieValue = parts.pop();
-        if (cookieValue) {
-            return cookieValue.split(";").shift();
-        }
-    }
-}
 
 // Add a request interceptor
 api.interceptors.request.use(
     (request) => {
-        const accessTokenCookie = getCookie("accessToken");
-        const refreshTokenCookie = getCookie("refreshToken");
-        console.log("accessTokenCookie in cookie is:", accessTokenCookie);
-
         const accessToken = localStorage.getItem("accessToken");
         if (accessToken) {
             request.headers["Authorization"] = `Bearer ${accessToken}`;

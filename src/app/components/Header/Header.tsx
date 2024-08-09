@@ -38,7 +38,7 @@ const Header = () => {
 
             if (response.statusCode === 200) {
                 toast.success("User successfully Logout");
-                localStorage.removeItem("userData");
+                localStorage.clear()
                 setUser(null);
                 document.cookie = "";
                 router.push("/");
