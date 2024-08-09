@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const ProductCardLoading = () => {
     return (
-        <section className="bg-white p-3 w-full lg:min-w-[220px] flex flex-col justify-between group border shadow  rounded-md cursor-pointer transition-all duration-300">
+        <section className="bg-white p-3 w-full lg:min-w-[220px] flex flex-col justify-between border shadow  rounded-md">
             <Skeleton className="sm:w-[150px] w-full sm:h-[150px] h-[70px] mx-auto bg-gray-300 md:mb-4 mb-2" />
 
             <Skeleton className="w-full md:h-[25px] h-[15px] mx-auto bg-gray-300 md:mb-2 mb-1" />

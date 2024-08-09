@@ -59,7 +59,7 @@ const PopularCategorieSection = () => {
                             {Array.from({ length: 10 }, (_, index) => (
                                 <CarouselItem
                                     key={index}
-                                    className="2xl:basis-1/6 xl:basis-1/5 lg:basis-1/4 md:basis-1/3 sm:basis-1/2 basis-1/1 w-full"
+                                    className="2xl:basis-1/6 xl:basis-1/5 lg:basis-1/4 md:basis-1/3 sm:basis-1/2 basis-1/2 w-full"
                                 >
                                     <ProductCardLoading></ProductCardLoading>
                                 </CarouselItem>

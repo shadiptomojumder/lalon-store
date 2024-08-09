@@ -7,6 +7,8 @@ interface CartContextProviderProps {
 
 interface CartItem {
     id: string;
+    name: string;
+    image: string;
     quantity: number;
     price?: number;
 }
@@ -17,6 +19,7 @@ interface CartContextType {
     removeFromCart: (id: string) => void;
     updateCartItem: (id: string, updatedItem: CartItem) => void;
     clearCart: () => void;
+    isLoading: boolean;
 }
 
 const CartContext = createContext<CartContextType>({
@@ -25,6 +28,7 @@ const CartContext = createContext<CartContextType>({
     removeFromCart: () => {},
     updateCartItem: () => {},
     clearCart: () => {},
+    isLoading: true,
 });
 
 const CartContextProvider: FC<CartContextProviderProps> = ({ children }) => {
@@ -44,6 +48,7 @@ const CartContextProvider: FC<CartContextProviderProps> = ({ children }) => {
 
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
     const [isMounted, setIsMounted] = useState(false);
+    const [isLoading,setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
         setIsMounted(true);
@@ -51,6 +56,7 @@ const CartContextProvider: FC<CartContextProviderProps> = ({ children }) => {
             const storedCart = localStorage.getItem('cartItems');
             if (storedCart) {
                 setCartItems(JSON.parse(storedCart));
+                setIsLoading(false)
             }
         }
     }, []);
@@ -62,7 +68,7 @@ const CartContextProvider: FC<CartContextProviderProps> = ({ children }) => {
     }, [cartItems, isMounted]);
 
     const addToCart = (item: CartItem) => {
-        setCartItems([...cartItems, { ...item, price: item.price }]);
+        setCartItems([...cartItems, { ...item}]);
         localStorage.setItem("cartItems", JSON.stringify(cartItems));
     };
 
@@ -96,6 +102,7 @@ const CartContextProvider: FC<CartContextProviderProps> = ({ children }) => {
                 removeFromCart,
                 updateCartItem,
                 clearCart,
+                isLoading
             }}
         >
             {children}

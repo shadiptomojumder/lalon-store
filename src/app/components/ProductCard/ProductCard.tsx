@@ -35,7 +35,8 @@ const ProductCard = ({ productData }: { productData: ProductData }) => {
     const handleAddToCart = () => {
         addToCart({
             id: productData?._id,
-            // Other product details
+            name: productData?.productName,
+            image: productData?.productImage,
             quantity: 1,
             price: productData?.productPrice,
         });
@@ -71,7 +72,7 @@ const ProductCard = ({ productData }: { productData: ProductData }) => {
                     alt="product"
                     width={150}
                     height={150}
-                    className="md:w-[150px] md:h-[150px] w-[100px] h-[100px] mx-auto object-cover object-center"
+                    className="md:w-[150px] md:h-[150px] w-[120px] h-[100px] mx-auto object-cover object-center"
                 />
 
                 {/* ADD TO CART BUTTON FOR MOBILE DEVICES */}
@@ -83,10 +84,10 @@ const ProductCard = ({ productData }: { productData: ProductData }) => {
                         <Plus />
                     </div>
                 ) : (
-                    <div className="text-white min-[424px]:hidden absolute bottom-0 left-1/2 -translate-x-1/2 flex items-center justify-around shadow-lg gap-1 rounded-full w-[90%] bg-yellow-500 scale-90">
+                    <div className="text-white min-[424px]:hidden absolute bottom-0 left-1/2 -translate-x-1/2 flex items-center justify-between shadow-lg gap-1 rounded-full w-[90%] bg-yellow-500">
                         <button
                             onClick={handleDecrement}
-                            className="p-[1px] text-gray-800"
+                            className="p-[1px] text-gray-800 w-fit px-3"
                         >
                             <Minus />
                         </button>
@@ -99,7 +100,7 @@ const ProductCard = ({ productData }: { productData: ProductData }) => {
                         </p>
                         <button
                             onClick={handleIncrement}
-                            className="p-[1px] text-gray-800"
+                            className="p-[1px] text-gray-800 w-fit px-3"
                         >
                             <Plus />
                             {/* <CirclePlus/> */}

@@ -1,16 +1,17 @@
 "use client";
-import GetSingleProduct from "@/api/product/getSingleProduct";
-import { useQuery } from "@tanstack/react-query";
 import { Minus, Plus } from "lucide-react";
 import Image from "next/image";
 
 interface CartItem {
     id: string;
+    name: string;
+    image: string;
     quantity: number;
     price?: number;
 }
 
 interface ProductCartCardProps {
+    productData: CartItem;
     cartItem: CartItem;
     cartItems: CartItem[];
     addToCart: (item: CartItem) => void;
@@ -20,26 +21,18 @@ interface ProductCartCardProps {
 }
 
 const ProductCartCard: React.FC<ProductCartCardProps> = ({
+    productData,
+    addToCart,
     cartItem,
     cartItems,
-    addToCart,
     removeFromCart,
     updateCartItem,
     clearCart,
 }) => {
-    const { id: productId, quantity } = cartItem;
-
-    const { data: product } = useQuery({
-        queryKey: ["product", productId],
-        queryFn: GetSingleProduct,
-    });
-    console.log("the product is:", product);
-    console.log("the product is:", cartItem);
-
     const handleIncrement = () => {
-        const cartItem = cartItems.find((item) => item.id === product?._id);
+        const cartItem = cartItems.find((item) => item.id === productData?.id);
         if (cartItem) {
-            updateCartItem(product._id, {
+            updateCartItem(productData.id, {
                 ...cartItem,
                 quantity: cartItem.quantity + 1,
             });
@@ -47,43 +40,47 @@ const ProductCartCard: React.FC<ProductCartCardProps> = ({
     };
 
     const handleDecrement = () => {
-        const cartItem = cartItems.find((item) => item.id === product._id);
+        const cartItem = cartItems.find((item) => item.id === productData.id);
         if (cartItem && cartItem.quantity > 1) {
-            updateCartItem(product._id, {
+            updateCartItem(productData.id, {
                 ...cartItem,
                 quantity: cartItem.quantity - 1,
             });
         } else if (cartItem && cartItem.quantity === 1) {
-            removeFromCart(product._id);
+            removeFromCart(productData.id);
         }
     };
 
     return (
         <div className="bg-white flex items-start border-b-2 border-slate-400 first:border-b-2 last:border-0 py-2">
             <Image
-                src={product?.productImage}
+                src={productData?.image}
                 width={70}
                 height={70}
                 alt="product image"
             />
             <section className="w-full flex flex-col gap-1">
                 <h2 className="text-sm font-medium capitalize">
-                    {product?.productName}
+                    {productData?.name}
                 </h2>
                 <div className="flex flex-col min-[375px]:flex-row items-start justify-between sm:gap-5 gap-2 w-full">
                     <div className="flex items-center gap-2">
                         <p className="text-sm font-bold text-nowrap">
                             ৳
-                            {cartItem &&
-                                cartItem.price &&
-                                cartItem?.price * cartItem.quantity}
+                            {productData &&
+                                productData.price &&
+                                productData?.price * productData.quantity}
                         </p>
                         <div className="flex items-center gap-[2px]">
                             <p className="text-sm font-medium text-slate-500">
-                                ৳{product?.productPrice}
+                                ৳{productData?.price}
                             </p>
-                            <p className="text-xs font-medium text-slate-400">|</p>
-                            <p className="text-sm font-medium text-slate-500">piece</p>
+                            <p className="text-xs font-medium text-slate-400">
+                                |
+                            </p>
+                            <p className="text-sm font-medium text-slate-500">
+                                piece
+                            </p>
                         </div>
                     </div>
                     <div className="text-white bg-slate-100 rounded-full flex items-center justify-around shadow-lg gap-1 border-2 border-gray-600 w-fit">
@@ -94,7 +91,7 @@ const ProductCartCard: React.FC<ProductCartCardProps> = ({
                             <Minus />
                         </button>
                         <p className="text-base text-gray-900 font-semibold w-7 flex items-center justify-center">
-                            {quantity}
+                            {productData?.quantity}
                         </p>
                         <button
                             onClick={handleIncrement}
