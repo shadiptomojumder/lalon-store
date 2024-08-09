@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/hooks/useAuth";
 import { useCart } from "@/hooks/useCart";
-import { CircleUserRound } from "lucide-react";
+import { AlignLeft, CircleUserRound, Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -38,7 +38,7 @@ const Header = () => {
 
             if (response.statusCode === 200) {
                 toast.success("User successfully Logout");
-                localStorage.clear()
+                localStorage.clear();
                 setUser(null);
                 document.cookie = "";
                 router.push("/");
@@ -58,22 +58,42 @@ const Header = () => {
     };
 
     return (
-        <header className="bg-white py-2">
+        <header className="bg-white py-2 shadow-md">
             <section className="container flex items-center justify-between">
-                <Link href={"/"}>
+                <Link href={"/"} className="hidden md:block">
                     <h2 className="md:text-2xl sm:text-xl text-lg font-extrabold dark:text-primary text-nowrap">
                         Lalon Store
                     </h2>
                 </Link>
-                <div className="w-[40%]">
+                <div className="flex items-center gap-[2px] md:hidden">
+                    <AlignLeft size={28} className="text-black" />
+                    <Link href={"/"}>
+                        <h2 className="md:text-2xl uppercase italic sm:text-xl text-lg font-extrabold dark:text-primary text-nowrap">
+                            Store
+                        </h2>
+                    </Link>
+                </div>
+
+                {/* <div className="w-[50%] hidden">
                     <Input
                         type="text"
                         placeholder="Search your products"
-                        className="p-2 focus-visible:ring-primary h-10"
+                        className="p-2 focus-visible:ring-primary sm:h-10 h-fit text-xs"
                         onChange={(e) => handleSearch(e.target.value)}
                     />
+                </div> */}
+                <div className="w-[50%] flex items-center border border-primary rounded-full sm:rounded-lg overflow-hidden">
+                    <Input
+                        type="text"
+                        placeholder="Search your products"
+                        className="p-2 focus-visible:ring-0 border-none sm:h-10 h-fit text-xs sm:text-sm"
+                        onChange={(e) => handleSearch(e.target.value)}
+                    />
+                    <div className="bg-primary text-white px-1 sm:px-2 py-1 sm:py-2 cursor-pointer">
+                        <Search />
+                    </div>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center sm:gap-3">
                     <Link href={"/cart"}>
                         <div className="relative hidden sm:block">
                             <MdOutlineShoppingCartCheckout
@@ -157,7 +177,7 @@ const Header = () => {
                         <Link href="/login">
                             <Button
                                 variant="default"
-                                className="text-lg bg-primary hover:bg-accent-foreground boxglow text-white px-4 py-5 font-semibold rounded-full"
+                                className="sm:text-lg text-base bg-primary hover:bg-accent-foreground boxglow text-white px-3 sm:px-4 sm:py-5 py-3 font-semibold rounded-full"
                             >
                                 Login
                             </Button>

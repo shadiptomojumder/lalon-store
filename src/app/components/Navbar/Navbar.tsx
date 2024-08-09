@@ -169,7 +169,7 @@ const handleHover = (event: any) => {
 
 const Navbar = () => {
     return (
-        <nav className="bg-[#34ad38] py-2">
+        <nav className="bg-[#34ad38] py-2 hidden md:block">
             <main className="container flex items-center justify-between">
                 <section className="flex items-center gap-2">
                     <AlignLeft size={30} className="text-white"/>

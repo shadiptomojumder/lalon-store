@@ -9,6 +9,7 @@ import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import "./globals.css";
 import { CartContextProvider } from "@/context/CartContext/CartContext";
+import CartForMobile from "./components/CartForMobile/CartForMobile";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -39,6 +40,7 @@ export default function RootLayout({
                             {children}
                         </Suspense>
                         <Footer />
+                        <CartForMobile></CartForMobile>
                         <Toaster richColors />
                         </CartContextProvider>
                     </AuthContextProvider>

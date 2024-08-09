@@ -111,7 +111,7 @@ const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) => {
         } else {
             setUserLoading(false);
         }
-    }, [loggedInUser])
+    }, [])
 
     const HandleTokenExpiration = async () => {
         const router = useRouter();
