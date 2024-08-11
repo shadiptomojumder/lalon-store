@@ -96,7 +96,7 @@ const Navbar = () => {
 
                 <section
                     ref={menuItemRef}
-                    className={`bg-slate-100 w-[310px] p-2 shadow-lg rounded-sm absolute transition-all top-[130%] left-0 ${isOpen ? "scale-100" : "scale-75 opacity-0"}`}
+                    className={`bg-slate-100 w-[310px] p-2 shadow-lg rounded-sm absolute transition-all top-[130%] left-0 ${isOpen ? "scale-100" : "scale-0"}`}
                 >
                     {categoryList.map((category) => (
                         <Link
