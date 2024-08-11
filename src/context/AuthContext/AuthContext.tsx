@@ -64,12 +64,12 @@ interface AuthContextProviderProps {
 const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
     const [userLoading, setUserLoading] = useState(true);
-    console.log("The state User:", user);
+    //console.log("The state User:", user);
 
-    const { isLoading, data: loggedInUser } = useQuery({
-        queryKey: [],
-        queryFn: CurrentUser,
-    });
+    // const { isLoading, data: loggedInUser } = useQuery({
+    //     queryKey: [],
+    //     queryFn: CurrentUser,
+    // });
 
     // Load user data from localStorage on component mount
     useEffect(() => {
@@ -93,25 +93,25 @@ const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) => {
         }
     }, []);
 
-    console.log("loggedInUser is:", loggedInUser);
-    useEffect(() => {
-        if (loggedInUser) {
-            try {
-                if(isLoading){
-                    setUserLoading(true);
-                }else {
-                    setUser(loggedInUser);
-                    setUserLoading(false);
-                }
-                console.log("The state User line 108:", user);
-            } catch (error) {
-                console.error("Error parsing stored user data:", error);
-                localStorage.removeItem("userData");
-            }
-        } else {
-            setUserLoading(false);
-        }
-    }, [])
+    // console.log("loggedInUser is:", loggedInUser);
+    // useEffect(() => {
+    //     if (loggedInUser) {
+    //         try {
+    //             if(isLoading){
+    //                 setUserLoading(true);
+    //             }else {
+    //                 setUser(loggedInUser);
+    //                 setUserLoading(false);
+    //             }
+    //             console.log("The state User line 108:", user);
+    //         } catch (error) {
+    //             console.error("Error parsing stored user data:", error);
+    //             localStorage.removeItem("userData");
+    //         }
+    //     } else {
+    //         setUserLoading(false);
+    //     }
+    // }, [])
 
     const HandleTokenExpiration = async () => {
         const router = useRouter();

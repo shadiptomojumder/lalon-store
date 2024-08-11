@@ -1,174 +1,52 @@
 "use client";
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from "@/components/ui/accordion";
 import { AlignLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import BabyCareIcon from "../../../../public/icons/babyCare.webp";
-import BeautyHelthIcon from "../../../../public/icons/beautyHealth.webp";
-import FoodIcon from "../../../../public/icons/food.webp";
 
-const CategoryList = [
+const categoryList = [
     {
         id: 1,
-        categoryName: "Popular",
-        link: "/",
+        categoryName: "spices",
+        categoryTitle: "Spices",
+        link: "spices",
     },
     {
         id: 2,
-        categoryName: "Food",
-        link: "/food",
-        subCategoryList: [
-            {
-                id: 1,
-                subCategoryName: "Breakfast",
-                link: "/food",
-                subCategoryList: [
-                    {
-                        id: 1,
-                        subCategoryName: "Cereal",
-                        link: "/food",
-                    },
-                    {
-                        id: 2,
-                        subCategoryName: "Bread",
-                        link: "/food",
-                    },
-                    {
-                        id: 3,
-                        subCategoryName: "Milk",
-                        link: "/food",
-                    },
-                    {
-                        id: 4,
-                        subCategoryName: "Eggs",
-                        link: "/food",
-                    },
-                    {
-                        id: 5,
-                        subCategoryName: "Yogurt",
-                        link: "/food",
-                    },
-                    {
-                        id: 6,
-                        subCategoryName: "Nuts",
-                        link: "/food",
-                    },
-                    {
-                        id: 7,
-                        subCategoryName: "Chocolate",
-                        link: "/food",
-                    },
-                    {
-                        id: 8,
-                        subCategoryName: "Bakery",
-                        link: "/food",
-                    },
-                ],
-            },
-            {
-                id: 2,
-                subCategoryName: "Lunch",
-                link: "/food",
-            },
-            {
-                id: 3,
-                subCategoryName: "Dinner",
-                link: "/food",
-            },
-            {
-                id: 4,
-                subCategoryName: "Dessert",
-                link: "/food",
-            },
-            {
-                id: 5,
-                subCategoryName: "Drinks",
-                link: "/food",
-            },
-            {
-                id: 6,
-                subCategoryName: "Snacks",
-                link: "/food",
-            },
-        ],
+        categoryName: "salt_sugar",
+        categoryTitle: "Salt & Sugar",
+        link: "salt-sugar",
     },
     {
         id: 3,
-        categoryName: "Personal Care",
-        link: "/personal-care",
-        subCategoryList: [
-            {
-                id: 1,
-                subCategoryName: "Shampoo",
-                link: "/personal-care",
-            },
-            {
-                id: 2,
-                subCategoryName: "Conditioner",
-                link: "/personal-care",
-            },
-            {
-                id: 3,
-                subCategoryName: "Deodorant",
-                link: "/personal-care",
-            },
-            {
-                id: 4,
-                subCategoryName: "Body Wash",
-                link: "/personal-care",
-            },
-            {
-                id: 5,
-                subCategoryName: "Face Wash",
-                link: "/personal-care",
-            },
-            {
-                id: 6,
-                subCategoryName: "Toothpaste",
-                link: "/personal-care",
-            },
-        ],
+        categoryName: "rice",
+        categoryTitle: "Rice",
+        link: "rice",
     },
     {
         id: 4,
-        categoryName: "Stationery & Office",
-        link: "/stationery-office",
-        subCategoryList: [
-            {
-                id: 1,
-                subCategoryName: "Pens",
-                link: "/stationery-office",
-            },
-            {
-                id: 2,
-                subCategoryName: "Notebooks",
-                link: "/stationery-office",
-            },
-            {
-                id: 3,
-                subCategoryName: "Staplers",
-                link: "/stationery-office",
-            },
-            {
-                id: 4,
-                subCategoryName: "Pencils",
-                link: "/stationery-office",
-            },
-            {
-                id: 5,
-                subCategoryName: "Markers",
-                link: "/stationery-office",
-            },
-            {
-                id: 6,
-                subCategoryName: "Staples",
-                link: "/stationery-office",
-            },
-        ],
+        categoryName: "dal",
+        categoryTitle: "Dal",
+        link: "dal",
+    },
+    {
+        id: 5,
+        categoryName: "readymix",
+        categoryTitle: "Ready Mix",
+        link: "ready-mix",
+    },
+    {
+        id: 6,
+        categoryName: "shemai_suji",
+        categoryTitle: "Shemai & Suji",
+        link: "shemai-suji",
+    },
+    {
+        id: 7,
+        categoryName: "oil",
+        categoryTitle: "Oil",
+        link: "oil",
     },
 ];
 
@@ -177,71 +55,65 @@ const handleHover = (event: any) => {
 };
 
 const Navbar = () => {
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    console.log("menu is open", isOpen);
+
+    const menuItemRef = useRef<HTMLDivElement>(null);
+
+    const handleClickOutside = (event: any) => {
+        if (
+            menuItemRef.current &&
+            !menuItemRef.current.contains(event.target)
+        ) {
+            setIsOpen(false);
+        }
+    };
+    useEffect(() => {
+        if (isOpen) {
+            document.addEventListener("click", handleClickOutside);
+        } else {
+            document.removeEventListener("click", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("click", handleClickOutside);
+        };
+    }, [isOpen]);
+
     return (
         <nav className="bg-[#34ad38] py-2 hidden md:block">
             <main className="container flex items-center justify-between relative">
-                <section className="flex items-center gap-2">
-                    <AlignLeft size={30} className="text-white" />
+                <section ref={menuItemRef} className="flex items-center gap-2">
+                    <AlignLeft
+                        size={30}
+                        className="text-white cursor-pointer"
+                        onClick={(e) => setIsOpen((prev) => !prev)}
+                    />
                     <p className="text-base font-semibold text-white capitalize">
                         Shop by category
                     </p>
                 </section>
 
-                <section className="bg-slate-400 p-2 rounded-sm absolute top-[100%] left-0 space-y-2 w-[310px]">
-                    {/* {
-                        CategoryList.map((category,index) => {
-                            return (
-                                <NavigationMenu key={index} categoryData={category}/>
-                            )
-                        })
-                    } */}
-
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1">
-                            <Image
-                                src={FoodIcon}
-                                alt="FoodIcon"
-                                width={25}
-                                height={25}
-                                placeholder="blur"
-                            />
-                            <p className="text-base font-semibold capitalize">
-                                Foood
-                            </p>
-                        </div>
-                        <ChevronRight />
-                    </div>
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1">
-                            <Image
-                                src={BabyCareIcon}
-                                alt="BabyCareIcon"
-                                width={25}
-                                height={25}
-                                placeholder="blur"
-                            />
-                            <p className="text-base font-semibold capitalize">
-                                Baby Care
-                            </p>
-                        </div>
-                        <ChevronRight />
-                    </div>
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1">
-                            <Image
-                                src={BeautyHelthIcon}
-                                alt="BeautyHelthIcon"
-                                width={25}
-                                height={25}
-                                placeholder="blur"
-                            />
-                            <p className="text-base font-semibold capitalize">
-                                Beauty & Health
-                            </p>
-                        </div>
-                        <ChevronRight />
-                    </div>
-                    
+                <section
+                    ref={menuItemRef}
+                    className={`bg-slate-100 w-[310px] p-2 shadow-lg rounded-sm absolute transition-all top-[130%] left-0 ${isOpen ? "scale-100" : "scale-75 opacity-0"}`}
+                >
+                    {categoryList.map((category) => (
+                        <Link
+                            href={`/${category?.link}`}
+                            key={category.id}
+                            onClick={() => setIsOpen(false)}
+                        >
+                            <div className="flex items-center justify-between py-1">
+                                <div className="flex items-center gap-1">
+                                    <p className="text-base font-semibold capitalize">
+                                        {category?.categoryTitle}
+                                    </p>
+                                </div>
+                                <ChevronRight />
+                            </div>
+                        </Link>
+                    ))}
                 </section>
             </main>
         </nav>

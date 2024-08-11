@@ -32,7 +32,7 @@ const SpicesPage = () => {
         queryKey: ["productlist", "", sortBy],
         queryFn: GetAllProducts,
     });
-    console.log("productList:", productList);
+    // console.log("productList:", productList);
 
     return (
         <>

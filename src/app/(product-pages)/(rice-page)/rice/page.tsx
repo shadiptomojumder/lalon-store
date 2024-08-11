@@ -26,12 +26,12 @@ const RicePage = () => {
         isLoading,
         data: productList,
         error,
-        isError
+        isError,
     } = useQuery({
         queryKey: ["productlist", "", sortBy],
         queryFn: GetAllProducts,
     });
-    console.log("productList:", productList);
+    // console.log("productList:", productList);
     // console.log("productList error:", error);
     // console.log("productList isError:", isError);
 

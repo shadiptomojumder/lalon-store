@@ -9,7 +9,7 @@ const CartForMobile = () => {
         useCart();
 
     const pathname = usePathname();
-    console.log("The pathname is: ", pathname);
+    //console.log("The pathname is: ", pathname);
 
     return (
         <>

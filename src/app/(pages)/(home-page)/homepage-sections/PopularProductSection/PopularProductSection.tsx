@@ -114,7 +114,7 @@ const PopularProductSection = () => {
         queryKey: ["productlist", "", ""],
         queryFn: GetAllProducts,
     });
-    console.log("productList:", productList);
+    // console.log("productList:", productList);
 
     return (
         <main className="mt-20 mb-10">

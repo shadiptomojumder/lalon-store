@@ -27,7 +27,7 @@ const ProductCard = ({ productData }: { productData: ProductData }) => {
     const { cartItems, addToCart, removeFromCart, updateCartItem, clearCart } =
         useCart();
 
-    console.log("cartItems is:", cartItems);
+    //console.log("cartItems is:", cartItems);
     const isProductInCart = cartItems.some(
         (item) => item.id === productData._id
     );

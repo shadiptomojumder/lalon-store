@@ -2,7 +2,6 @@
 import GetAllProducts from "@/api/product/getAllProducts";
 import ProductCard from "@/app/components/ProductCard/ProductCard";
 import ProductCardLoading from "@/app/components/ProductCardLoading/ProductCardLoading";
-import { Input } from "@/components/ui/input";
 import { useQuery } from "@tanstack/react-query";
 
 import { useParams, useRouter, useSearchParams } from "next/navigation";
@@ -27,7 +26,7 @@ const SearchPage = () => {
         queryKey: ["productlist", (searchText ?? "") || (search ?? ""), ""],
         queryFn: GetAllProducts,
     });
-    console.log("productList:", productList);
+    // console.log("productList:", productList);
 
     const handleSearch = (searchValue: string) => {
         setSearchText(searchValue);
