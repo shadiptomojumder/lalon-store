@@ -265,7 +265,7 @@ const Header = () => {
                 {/* Mobile device menuitem */}
                 <section
                     ref={menuItemRef}
-                    className={`bg-slate-100 w-[55dvw] h-[100dvh] z-[150] p-2 shadow-lg rounded-sm absolute transition-all top-[100%]  ${isOpen ? "left-0" : "-left-[300px]"}`}
+                    className={`bg-slate-100 w-[55dvw] h-[100dvh] z-[150] md:hidden p-2 shadow-lg rounded-sm absolute transition-all top-[100%]  ${isOpen ? "left-0" : "-left-[150%]"}`}
                 >
                     {categoryList.map((category) => (
                         <Link
@@ -285,7 +285,7 @@ const Header = () => {
                     ))}
                 </section>
                 <div
-                    className={`w-dvw h-dvh lg:hidden transition-all z-[100] backdrop-blur-sm bg-black bg-opacity-5 absolute left-0 top-[100%] ${
+                    className={`w-dvw h-dvh md:hidden transition-all z-[100] backdrop-blur-sm bg-black bg-opacity-5 absolute left-0 top-[100%] ${
                         isOpen ? "opacity-100" : "opacity-0"
                     }`}
                 ></div>
