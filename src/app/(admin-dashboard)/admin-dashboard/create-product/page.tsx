@@ -237,8 +237,8 @@ const CreateProductPage = () => {
     return (
         <main>
             <div className="p-5">
-                <h2 className="text-lg font-semibold">Create Product</h2>
-                <p>
+                <h2 className="text-lg font-semibold sm:text-left text-center">Create Product</h2>
+                <p className="text-sm sm:text-left text-center">
                     Select your image and suitable name for product and click
                     create button.
                 </p>

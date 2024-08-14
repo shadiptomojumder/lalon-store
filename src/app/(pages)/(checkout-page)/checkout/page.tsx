@@ -1,4 +1,5 @@
 "use client";
+import PaymentInit from "@/api/payment/paymentinit";
 import AddNewAddressModal from "@/app/components/AddNewAddressModal/AddNewAddressModal";
 import LoginModal from "@/app/components/LoginModal/LoginModal";
 import ProductCartCard from "@/app/components/ProductCartCard/ProductCartCard";
@@ -7,8 +8,11 @@ import { Label } from "@/components/ui/label";
 import { User } from "@/context/AuthContext/AuthContext";
 import { useAuth } from "@/hooks/useAuth";
 import { useCart } from "@/hooks/useCart";
+import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { PiEmptyBold } from "react-icons/pi";
+import { toast } from "sonner";
 
 const Checkout = () => {
     const {
@@ -20,13 +24,17 @@ const Checkout = () => {
         isLoading,
     } = useCart();
     const router = useRouter();
-
     const { user, setUser, userLoading } = useAuth();
-    // if (!user) {
-    //     router.push("/login");
-    // }
-
     console.log("cartItems is:", cartItems);
+    const [productList,setProductList] = useState<string[]>([]);
+    const [orderData,setOrderData] = useState()
+
+    useEffect(() => {
+        setProductList(cartItems.map((item) => item.id));
+    },[cartItems])
+
+    console.log("productList is:",productList);
+    
 
     const calculateTotal = () => {
         const total = cartItems.reduce((accumulator, item) => {
@@ -34,6 +42,51 @@ const Checkout = () => {
             return accumulator + itemTotal;
         }, 0);
         return total;
+    };
+
+    // payment-success
+    // payment-cancel
+    // payment-fail
+    
+    const { mutate, isPending } = useMutation({
+        mutationKey: [],
+        mutationFn: PaymentInit,
+        onSuccess: (response) => {
+            console.log("payment success", response);
+
+            if (response.statusCode === 200) {
+                toast.success("Status successfully Update");
+                window.location.replace(
+                    `${response.data.paymentGetwaydata.GatewayPageURL}`
+                );
+            }
+        },
+        onError: (error: any) => {
+            console.log("The payment error is:", error);
+            if (error?.response?.status == 409) {
+                toast.warning(
+                    "There is already an appointment with this name and date."
+                );
+            } else if (error?.response?.status == 500) {
+                toast.error("Something went wrong during an appointment");
+            } else if (error.request) {
+                toast.error("No response received from the server!!");
+            } else {
+                console.error(
+                    "Error while sending the request:",
+                    error.message
+                );
+            }
+        },
+    });
+
+    const handlePayNow = async () => {
+        const totalAmmount = calculateTotal();
+        const productData = {userId:`${user?._id}`, username: `${user?.fullname}`, deliveryAddress: `${user?.address}`,phoneNumber: `${user?.phone}`,productIds:productList,totalAmmount:`${totalAmmount}` };
+
+console.log("productData is:",productData);
+
+        await mutate(productData);
     };
 
     console.log("User is:", user);
@@ -182,7 +235,10 @@ const Checkout = () => {
                                     ৳{calculateTotal()}
                                 </p>
                             </div>
-                            <button className="text-white text-sm font-semibold py-2 flex items-center justify-center shadow-lg rounded-full w-full bg-primary">
+                            <button
+                                onClick={handlePayNow}
+                                className="text-white text-sm font-semibold py-2 flex items-center justify-center shadow-lg rounded-full w-full bg-primary"
+                            >
                                 Confirm Order
                             </button>
                         </div>

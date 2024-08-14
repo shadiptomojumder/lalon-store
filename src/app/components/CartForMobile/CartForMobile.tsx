@@ -2,14 +2,30 @@
 import { useCart } from "@/hooks/useCart";
 import { ShoppingBasket } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const CartForMobile = () => {
     const { cartItems, addToCart, removeFromCart, updateCartItem, clearCart } =
         useCart();
 
+        const [isMatched,setIsMatched] = useState<boolean>(false)
     const pathname = usePathname();
-    //console.log("The pathname is: ", pathname);
+    console.log("The pathname is: ", pathname);
+
+    useEffect(() => {
+        if (
+            pathname.startsWith("/checkout") ||
+            pathname.startsWith("/admin-dashboard") ||
+            pathname.startsWith("/dashboard") ||
+            pathname.startsWith("/user-dashboard")
+        ) {
+            setIsMatched(true);
+        } else {
+            setIsMatched(false);
+        }
+    }, [pathname]);
+   
 
     return (
         <>
@@ -23,7 +39,7 @@ const CartForMobile = () => {
 
             <Link href={"/checkout"} className="sm:hidden">
                 <div
-                    className={`h-[50px] w-[50px] shadow-[0px_0px_4px_4px_rgba(0,0,0,0.2)] bg-primary rounded-full flex items-center justify-center fixed bottom-5 right-5 transition-all duration-200 ${pathname == "/checkout" ? " scale-0" : " scale-100"}`}
+                    className={`h-[50px] w-[50px] shadow-[0px_0px_4px_4px_rgba(0,0,0,0.2)] bg-primary rounded-full flex items-center justify-center fixed bottom-5 right-5 transition-all duration-200 ${isMatched ? " scale-0" : " scale-100"}`}
                 >
                     <ShoppingBasket size={40} className="text-gray-900" />
                     {cartItems && cartItems.length > 0 && (
