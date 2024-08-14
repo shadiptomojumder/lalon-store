@@ -52,12 +52,13 @@ const ProductCartCard: React.FC<ProductCartCardProps> = ({
     };
 
     return (
-        <div className="bg-white flex items-start border-b-2 border-slate-400 first:border-b-2 last:border-0 py-2">
+        <div className="bg-white flex items-start border-b border-slate-400  last:border-0 py-1">
             <Image
                 src={productData?.image}
                 width={70}
                 height={70}
                 alt="product image"
+                className="sm:w-[70px] sm:h-[70px] w-[60px] h-[60px]"
             />
             <section className="w-full flex flex-col gap-1">
                 <h2 className="text-sm font-medium capitalize">

@@ -77,6 +77,7 @@ const Header = () => {
 
     // Logout Function
     const handleLogout = async () => {
+        router.push("/");
         try {
             const response = await Logout({ userId });
             console.log("The Logout Response is", response);
@@ -86,7 +87,6 @@ const Header = () => {
                 localStorage.clear();
                 setUser(null);
                 document.cookie = "";
-                router.push("/");
                 router.refresh();
             }
         } catch (error) {
@@ -171,7 +171,7 @@ const Header = () => {
                     </div>
                 </div>
                 <div className="flex items-center sm:gap-3">
-                    <Link href={"/cart"}>
+                    <Link href={"/checkout"}>
                         <div className="relative hidden sm:block">
                             <MdOutlineShoppingCartCheckout
                                 size={35}
@@ -286,7 +286,7 @@ const Header = () => {
                 </section>
                 <div
                     className={`w-dvw h-dvh md:hidden transition-all z-[100] backdrop-blur-sm bg-black bg-opacity-5 absolute left-0 top-[100%] ${
-                        isOpen ? "opacity-100" : "opacity-0"
+                        isOpen ? "opacity-100" : "hidden"
                     }`}
                 ></div>
             </section>

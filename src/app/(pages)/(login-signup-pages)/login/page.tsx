@@ -105,7 +105,7 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="flex h-screen w-full items-center justify-center bg-gray-100 px-4 dark:bg-gray-950">
+        <div className="flex h-[80dvh] w-full items-center justify-center bg-gray-100 px-4 dark:bg-gray-950">
             <Card className="w-full max-w-md dark:bg-black">
                 <CardHeader className="space-y-1 py-6 px-3 sm:px-6">
                     <CardTitle className="text-2xl font-bold text-center">

@@ -31,10 +31,12 @@ const DecodeToken = (token: string): DecodedToken | null => {
 };
 
 // Define the shape of the user object and the context value
-interface User {
+export interface User {
     _id: string;
     fullname: string;
     email: string;
+    phone?: string;
+    address?: string;
     role?: string;
     avatar?: string;
     googleId?: string;
