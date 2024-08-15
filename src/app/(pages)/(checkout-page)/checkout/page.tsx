@@ -55,7 +55,7 @@ const Checkout = () => {
             console.log("payment success", response);
 
             if (response.statusCode === 200) {
-                toast.success("Status successfully Update");
+                // toast.success("Status successfully Update");
                 window.location.replace(
                     `${response.data.paymentGetwaydata.GatewayPageURL}`
                 );
