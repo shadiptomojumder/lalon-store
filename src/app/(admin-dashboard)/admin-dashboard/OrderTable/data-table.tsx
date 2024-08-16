@@ -26,7 +26,6 @@ import {
 import { useState } from "react";
 import { DataTablePagination } from "./data-table-pagination";
 import { DataTableToolbar } from "./data-table-toolbar";
-import { getCommonPinningStyles } from "./getCommonPinningStyles";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -91,10 +90,10 @@ export function DataTable<TData, TValue>({
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(
-                                                        header.column.columnDef
-                                                            .header,
-                                                        header.getContext()
-                                                    )}
+                                                      header.column.columnDef
+                                                          .header,
+                                                      header.getContext()
+                                                  )}
                                         </TableHead>
                                     );
                                 })}
@@ -111,7 +110,10 @@ export function DataTable<TData, TValue>({
                                     }
                                 >
                                     {row.getVisibleCells().map((cell) => (
-                                        <TableCell key={cell.id} className="last:backdrop-blur-sm last:bg-white last:bg-opacity-[0.01] last:sticky right-0">
+                                        <TableCell
+                                            key={cell.id}
+                                            className="last:backdrop-blur-sm last:bg-white last:bg-opacity-[0.01] last:sticky right-0"
+                                        >
                                             {flexRender(
                                                 cell.column.columnDef.cell,
                                                 cell.getContext()

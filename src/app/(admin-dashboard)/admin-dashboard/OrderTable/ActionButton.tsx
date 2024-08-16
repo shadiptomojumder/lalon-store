@@ -89,14 +89,11 @@ const ActionButton = ({ order }: { order: OrderDataType }) => {
           setStatus={setStatus}  order={order}/></DropdownMenuItem> */}
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                        {/* <ViewCustomerModal  onModalClose={handleModalClose} orderData={order} /> */}
                         <ViewOrderModal
                             onModalClose={handleModalClose}
                             orderData={order}
                         />
                     </DropdownMenuItem>
-                    <DropdownMenuItem>Edit order details</DropdownMenuItem>
-                    <DropdownMenuItem>Add order stock</DropdownMenuItem>
                     <DropdownMenuItem
                         onClick={handleDelete}
                         onSelect={(e) => e.preventDefault()}

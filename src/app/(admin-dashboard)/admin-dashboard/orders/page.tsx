@@ -1,20 +1,13 @@
 "use client";
-import GetAllProducts from "@/api/product/getAllProducts";
-import { useQuery } from "@tanstack/react-query";
-import { DataTable } from "../OrderTable/data-table";
-import { columns } from "../OrderTable/columns";
-import { ProductTableLoading } from "../../DashboardComponents/ProductTableLoading/ProductTableLoading";
 import GetAllOrder from "@/api/orders/getAllOrder";
+import { useQuery } from "@tanstack/react-query";
+import { ProductTableLoading } from "../../DashboardComponents/ProductTableLoading/ProductTableLoading";
+import { columns } from "../OrderTable/columns";
+import { DataTable } from "../OrderTable/data-table";
 
 const DashboardOrdersPage = () => {
-
-
-    const { isLoading, data: productlist } = useQuery({
-        queryKey: ["productlist", "","newest"],
-        queryFn: GetAllProducts,
-    });
-    const { data: ordertlist } = useQuery({
-        queryKey: [],
+    const { isLoading, data: ordertlist } = useQuery({
+        queryKey: ["ordertlist"],
         queryFn: GetAllOrder,
     });
 

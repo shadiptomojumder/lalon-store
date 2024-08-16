@@ -166,17 +166,20 @@ export const columns: ColumnDef<OrderDataType>[] = [
                         </Badge>
                     )}
                     {status === "inprogress" && (
-                        <Badge variant="default" className="hover:bg-primary">
-                            {row.getValue("status")}
-                        </Badge>
+                        <Badge
+                        variant="default"
+                        className="bg-yellow-600 hover:bg-yellow-600 cursor-pointer uppercase"
+                    >
+                        inprogress
+                    </Badge>
                     )}
                     {status === "done" && (
                         <Badge
-                            variant="default"
-                            className="bg-[#297c0b] hover:bg-[#297c0b] text-gray-200"
-                        >
-                            {row.getValue("status")}
-                        </Badge>
+                        variant="default"
+                        className="bg-[#a6d296] hover:bg-[#a6d296] cursor-pointer uppercase"
+                    >
+                        done
+                    </Badge>
                     )}
                     {status === "failed" && (
                         <Badge variant="destructive">

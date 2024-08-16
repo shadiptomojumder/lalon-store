@@ -1,5 +1,5 @@
 "use client";
-import UpdateProduct from "@/api/product/updateProduct";
+import UpdateOrder from "@/api/orders/updateOrder";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,6 +18,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { toast } from "sonner";
 import { OrderDataType } from "./columns";
+import DeliveryStatusChangeOption from "./DeliveryStatusChangeOption";
 
 const ViewOrderModal = ({
     orderData,
@@ -30,28 +31,23 @@ const ViewOrderModal = ({
     const handleClose = () => {
         onModalClose();
     };
+    const [deliveryStatus, setDeliveryStatus] = useState<string>("");
     const [isTouched, setIsTouched] = useState<boolean>(false);
-    // const [stock, setStock] = useState<number>(orderData?.productStock);
-    // console.log("changeedStatus", stock);
 
     const { mutate, isPending } = useMutation({
         mutationKey: [],
-        mutationFn: UpdateProduct,
+        mutationFn: UpdateOrder,
         onSuccess: (response) => {
             if (response.statusCode === 200) {
-                toast.success("Stock Updateed");
-                queryClient.invalidateQueries({ queryKey: ["productlist"] });
+                toast.success("Delivery Status Updateed");
+                queryClient.invalidateQueries({ queryKey: ["ordertlist"] });
                 onModalClose();
             }
         },
         onError: (error: any) => {
-            console.log("The Error Appointment is:", error);
-            if (error?.response?.status == 409) {
-                toast.warning(
-                    "There is already an appointment with this name and date."
-                );
-            } else if (error?.response?.status == 500) {
-                toast.error("Something went wrong during an appointment");
+            console.log("The Error UpdateOrder is:", error);
+            if (error?.response?.status == 500) {
+                toast.error("Something went wrong during an UpdateOrder");
             } else if (error) {
                 toast.error("No response received from the server!!");
             } else {
@@ -65,9 +61,11 @@ const ViewOrderModal = ({
 
     console.log("orderData is:", orderData);
 
-    // useEffect(()=>{
-    //   setStatus(appointmentData?.status);
-    // },[])
+    const handleChanges = async () => {
+        const orderId = orderData?._id;
+
+        await mutate({ data: { deliveryStatus: deliveryStatus }, orderId });
+    };
 
     return (
         <Dialog>
@@ -116,19 +114,7 @@ const ViewOrderModal = ({
                             );
                         })}
                 </section>
-                <>
-                    {/* {orderData?.productImage && (
-                        <div className="mx-auto">
-                            <Image
-                                src={orderData?.productImage}
-                                width={100}
-                                height={100}
-                                className="min-w-[100px] w-[100px] h-[100px] rounded-md object-cover object-center mx-auto"
-                                alt="Product Image"
-                            />
-                        </div>
-                    )} */}
-                </>
+
                 <section className="grid grid-cols-10 gap-2 sm:items-center items-start my-2">
                     <Label className="text-sm font-semibold sm:col-span-4 col-span-6 flex items-center justify-between">
                         Username<span>:</span>
@@ -147,25 +133,13 @@ const ViewOrderModal = ({
                     <Label className="text-sm font-semibold sm:col-span-4 col-span-6 flex items-center justify-between">
                         Delivery Status<span>:</span>
                     </Label>
-                    <h2 className="sm:col-span-6 col-span-4 text-gray-900 font-medium text-sm text-start">
-                        {/* {orderData?.deliveryStatus} */}
-                        {orderData?.deliveryStatus === "pending" && (
-                            <Badge
-                                variant="default"
-                                className="bg-[#FFE569] hover:bg-[#FFE569] uppercase"
-                            >
-                                Pending
-                            </Badge>
-                        )}
-                        {orderData?.deliveryStatus === "inprogress" && (
-                            <Badge
-                                variant="default"
-                                className="hover:bg-primary uppercase"
-                            >
-                                inprogress
-                            </Badge>
-                        )}
-                    </h2>
+                    <div className="sm:col-span-6 col-span-4 text-gray-900 font-medium text-sm text-start">
+                        <DeliveryStatusChangeOption
+                            order={orderData}
+                            setDeliveryStatus={setDeliveryStatus}
+                            deliveryStatus={deliveryStatus}
+                        />
+                    </div>
 
                     <Label className="text-sm font-semibold sm:col-span-4 col-span-6 flex items-center justify-between">
                         Payment Status<span>:</span>
@@ -174,7 +148,7 @@ const ViewOrderModal = ({
                         {orderData?.paymentStatus ? (
                             <Badge
                                 variant="default"
-                                className="bg-[#a6d296] hover:bg-[#297c0b] uppercase"
+                                className="bg-[#a6d296] hover:bg-[#a6d296] uppercase"
                             >
                                 paid
                             </Badge>
@@ -206,6 +180,14 @@ const ViewOrderModal = ({
                             Close
                         </Button>
                     </DialogClose>
+                    <Button
+                        type="submit"
+                        onClick={handleChanges}
+                        disabled={orderData?.deliveryStatus === deliveryStatus}
+                        className="hover:bg-primary"
+                    >
+                        Save changes
+                    </Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

@@ -2,73 +2,56 @@ import {
     ArrowDownIcon,
     ArrowRightIcon,
     ArrowUpIcon,
-    CheckCircledIcon,
-    CircleIcon,
-    CrossCircledIcon,
-    QuestionMarkCircledIcon,
-    StopwatchIcon,
-  } from "@radix-ui/react-icons"
-  
-  export const labels = [
+} from "@radix-ui/react-icons";
+
+export const labels = [
     {
-      value: "bug",
-      label: "Bug",
+        value: "bug",
+        label: "Bug",
     },
     {
-      value: "feature",
-      label: "Feature",
+        value: "feature",
+        label: "Feature",
     },
     {
-      value: "documentation",
-      label: "Documentation",
+        value: "documentation",
+        label: "Documentation",
     },
-  ]
-  
-  export const statuses = [
+];
+
+export const statuses = [
     {
-      value: "spices",
-      label: "Spices",
-    },
-    {
-      value: "salt_sugar",
-      label: "Salt & Sugar",
+        value: "pending",
+        label: "Pending",
     },
     {
-      value: "oil",
-      label: "Oil",
+        value: "inprogress",
+        label: "In Progress",
     },
     {
-      value: "rice",
-      label: "Rice",
+        value: "done",
+        label: "Done",
     },
     {
-      value: "dal",
-      label: "Dal",
+        value: "failed",
+        label: "Failed",
+    },
+];
+
+export const priorities = [
+    {
+        label: "Low",
+        value: "low",
+        icon: ArrowDownIcon,
     },
     {
-      value: "readymix",
-      label: "Readymix",
+        label: "Medium",
+        value: "medium",
+        icon: ArrowRightIcon,
     },
     {
-      value: "shemai_suji",
-      label: "Shemai & Suji",
+        label: "High",
+        value: "high",
+        icon: ArrowUpIcon,
     },
-  ]
-  
-  export const priorities = [
-    {
-      label: "Low",
-      value: "low",
-      icon: ArrowDownIcon,
-    },
-    {
-      label: "Medium",
-      value: "medium",
-      icon: ArrowRightIcon,
-    },
-    {
-      label: "High",
-      value: "high",
-      icon: ArrowUpIcon,
-    },
-  ]
+];
