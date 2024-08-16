@@ -19,7 +19,7 @@ const CartPage = () => {
 
     const calculateTotal = () => {
         const total = cartItems.reduce((accumulator, item) => {
-            const itemTotal = item.quantity * (item?.price ?? 0);
+            const itemTotal = item.count * (item?.price ?? 0);
             return accumulator + itemTotal;
         }, 0);
         return total;
