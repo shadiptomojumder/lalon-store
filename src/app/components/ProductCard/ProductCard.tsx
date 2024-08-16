@@ -37,7 +37,8 @@ const ProductCard = ({ productData }: { productData: ProductData }) => {
             id: productData?._id,
             name: productData?.productName,
             image: productData?.productImage,
-            quantity: 1,
+            quantity: productData?.productQuantity,
+            count:1,
             price: productData?.productPrice,
         });
     };
@@ -47,19 +48,19 @@ const ProductCard = ({ productData }: { productData: ProductData }) => {
         if (cartItem) {
             updateCartItem(productData._id, {
                 ...cartItem,
-                quantity: cartItem.quantity + 1,
+                count: cartItem.count + 1,
             });
         }
     };
 
     const handleDecrement = () => {
         const cartItem = cartItems.find((item) => item.id === productData._id);
-        if (cartItem && cartItem.quantity > 1) {
+        if (cartItem && cartItem.count > 1) {
             updateCartItem(productData._id, {
                 ...cartItem,
-                quantity: cartItem.quantity - 1,
+                count: cartItem.count - 1,
             });
-        } else if (cartItem && cartItem.quantity === 1) {
+        } else if (cartItem && cartItem.count === 1) {
             removeFromCart(productData._id);
         }
     };
@@ -95,7 +96,7 @@ const ProductCard = ({ productData }: { productData: ProductData }) => {
                             {
                                 cartItems.find(
                                     (item) => item.id === productData._id
-                                )?.quantity
+                                )?.count
                             }
                         </p>
                         <button
@@ -145,7 +146,7 @@ const ProductCard = ({ productData }: { productData: ProductData }) => {
                                 {
                                     cartItems.find(
                                         (item) => item.id === productData._id
-                                    )?.quantity
+                                    )?.count
                                 }{" "}
                                 in Bag
                             </p>

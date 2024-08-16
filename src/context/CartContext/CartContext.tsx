@@ -5,11 +5,12 @@ interface CartContextProviderProps {
     children: ReactNode;
 }
 
-interface CartItem {
+export interface CartItem {
     id: string;
     name: string;
     image: string;
-    quantity: number;
+    quantity: string;
+    count: number;
     price?: number;
 }
 

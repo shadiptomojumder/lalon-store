@@ -26,19 +26,27 @@ const Checkout = () => {
     const router = useRouter();
     const { user, setUser, userLoading } = useAuth();
     console.log("cartItems is:", cartItems);
-    const [productList,setProductList] = useState<string[]>([]);
-    const [orderData,setOrderData] = useState()
+    const [productList, setProductList] = useState<object[]>([]);
+    const [orderData, setOrderData] = useState();
 
     useEffect(() => {
-        setProductList(cartItems.map((item) => item.id));
-    },[cartItems])
+        const updatedProductList = cartItems.map((item) => ({
+            productId: item.id,
+            productName: item.name,
+            productPrice: item.price,
+            productQuantity: item.quantity,
+            productImage: item.image,
+            productCount: item.count,
+        }));
 
-    console.log("productList is:",productList);
-    
+        setProductList(updatedProductList);
+    }, [cartItems]);
+
+    console.log("productList is:", productList);
 
     const calculateTotal = () => {
         const total = cartItems.reduce((accumulator, item) => {
-            const itemTotal = item.quantity * (item?.price ?? 0);
+            const itemTotal = item.count * (item?.price ?? 0);
             return accumulator + itemTotal;
         }, 0);
         return total;
@@ -47,7 +55,7 @@ const Checkout = () => {
     // payment-success
     // payment-cancel
     // payment-fail
-    
+
     const { mutate, isPending } = useMutation({
         mutationKey: [],
         mutationFn: PaymentInit,
@@ -65,10 +73,10 @@ const Checkout = () => {
             console.log("The payment error is:", error);
             if (error?.response?.status == 409) {
                 toast.warning(
-                    "There is already an appointment with this name and date."
+                    "Something went wrong"
                 );
             } else if (error?.response?.status == 500) {
-                toast.error("Something went wrong during an appointment");
+                toast.error("Something went wrong");
             } else if (error.request) {
                 toast.error("No response received from the server!!");
             } else {
@@ -82,9 +90,16 @@ const Checkout = () => {
 
     const handlePayNow = async () => {
         const totalAmmount = calculateTotal();
-        const productData = {userId:`${user?._id}`, username: `${user?.fullname}`, deliveryAddress: `${user?.address}`,phoneNumber: `${user?.phone}`,productIds:productList,totalAmmount:`${totalAmmount}` };
+        const productData = {
+            userId: `${user?._id}`,
+            username: `${user?.fullname}`,
+            deliveryAddress: `${user?.address}`,
+            phoneNumber: `${user?.phone}`,
+            productList,
+            totalAmmount: `${totalAmmount}`,
+        };
 
-console.log("productData is:",productData);
+        console.log("productData is:", productData);
 
         await mutate(productData);
     };

@@ -1,8 +1,8 @@
 "use client";
 import GetAllProducts from "@/api/product/getAllProducts";
 import { useQuery } from "@tanstack/react-query";
-import { DataTable } from "../ProductTable/data-table";
-import { columns } from "../ProductTable/columns";
+import { DataTable } from "../OrderTable/data-table";
+import { columns } from "../OrderTable/columns";
 import { ProductTableLoading } from "../../DashboardComponents/ProductTableLoading/ProductTableLoading";
 import GetAllOrder from "@/api/orders/getAllOrder";
 
@@ -27,7 +27,7 @@ const DashboardOrdersPage = () => {
                 {isLoading ? (
                     <ProductTableLoading />
                 ) : (
-                    <DataTable columns={columns} data={productlist || []} />
+                    <DataTable columns={columns} data={ordertlist || []} />
                 )}
             </section>
         </>

@@ -13,12 +13,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import ViewCustomerModal from "./ViewProductModal";
 import { useState } from "react";
-import { ProductDataType } from "./columns"
-import DeleteProducts from "@/api/product/deleteProducts";
+import { OrderDataType, ProductDataType } from "./columns"
+// import DeleteProducts from "@/api/order/deleteProducts";
 import { useRouter } from "next/navigation";
 import StatusChangeOption from "./StatusChangeOption";
+import ViewOrderModal from "./ViewOrderModal";
 
-const ActionButton = ({ product }: { product: ProductDataType }) => {
+const ActionButton = ({ order }: { order: OrderDataType }) => {
   const queryClient = useQueryClient();
   const [menuOpen,setMenuOpen] = useState<boolean>(false);
   const router = useRouter();
@@ -28,54 +29,46 @@ const ActionButton = ({ product }: { product: ProductDataType }) => {
     setMenuOpen(false);
   };
 
-  const { mutate, isPending } = useMutation({
-    mutationKey: [],
-    mutationFn: DeleteProducts,
-    onSuccess: (response) => {
-      console.log("the res is ", response);
+  // const { mutate, isPending } = useMutation({
+  //   mutationKey: [],
+  //   mutationFn: DeleteProducts,
+  //   onSuccess: (response) => {
+  //     console.log("the res is ", response);
 
-      if (response.statusCode === 200) {
-        toast.success("Product deleted successfully");
-        queryClient.invalidateQueries({ queryKey: ["productlist"] });
-      }
-    },
-    onError: (error: any) => {
-      if (error?.response?.status == 400) {
-        toast.warning(
-          "Missing product Id"
-        );
-      } else if (error?.response?.status == 500) {
-        toast.error("Something went wrong during an appointment");
-      } else if (error.request) {
-        toast.error("No response received from the server!!");
-      } else {
-        console.error("Error while sending the request:", error.message);
-      }
-    },
-  });
+  //     if (response.statusCode === 200) {
+  //       toast.success("Product deleted successfully");
+  //       queryClient.invalidateQueries({ queryKey: ["productlist"] });
+  //     }
+  //   },
+  //   onError: (error: any) => {
+  //     if (error?.response?.status == 400) {
+  //       toast.warning(
+  //         "Missing order Id"
+  //       );
+  //     } else if (error?.response?.status == 500) {
+  //       toast.error("Something went wrong during an appointment");
+  //     } else if (error.request) {
+  //       toast.error("No response received from the server!!");
+  //     } else {
+  //       console.error("Error while sending the request:", error.message);
+  //     }
+  //   },
+  // });
 
   const handleDelete = async () => {
-    console.log("Delete Appointments", product);
+    console.log("Delete Appointments", order);
     console.log("Delete button clicked");
-    const productIds = [`${product._id}`];
-    await mutate({ productIds });
+    const productIds = [`${order._id}`];
+    // await mutate({ productIds });
   };
 
-  const handleEditProduct = () => {
-    console.log("Edit Product clicked", product?.productName);
-    router.push(`/admin-dashboard/update-product/${product?._id}`)
-    
-  } 
-  const handleAddProductStock = () => {
-    console.log("Edit Product clicked", product?.productName);
-    router.push(`/admin-dashboard/add-product-stock/${product?._id}`)
-    
-  } 
+console.log("order is:",order);
+
 
   return (
     <>
       <DropdownMenu  onOpenChange={setMenuOpen} open={menuOpen}>
-        <DropdownMenuTrigger asChild onClick={()=>setMenuOpen(!menuOpen)}>
+        <DropdownMenuTrigger asChild onClick={()=>setMenuOpen(!menuOpen)} className="bg-slate-100">
           <Button
             variant="ghost"
             className="h-8 w-8 p-0 border-none focus-visible:ring-0"
@@ -87,18 +80,19 @@ const ActionButton = ({ product }: { product: ProductDataType }) => {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem
-            onClick={() => navigator.clipboard.writeText(product._id)}
+            onClick={() => navigator.clipboard.writeText(order?._id)}
           >
-            Copy product ID
+            Copy Transaction ID
           </DropdownMenuItem>
           {/* <DropdownMenuItem onSelect={(e) => e.preventDefault()}><StatusChangeOption status={status} 
-          setStatus={setStatus}  product={product}/></DropdownMenuItem> */}
+          setStatus={setStatus}  order={order}/></DropdownMenuItem> */}
           <DropdownMenuSeparator />
           <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-            <ViewCustomerModal  onModalClose={handleModalClose} productData={product} />
+            {/* <ViewCustomerModal  onModalClose={handleModalClose} orderData={order} /> */}
+            <ViewOrderModal onModalClose={handleModalClose} orderData={order}/>
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={handleEditProduct}>Edit product details</DropdownMenuItem>
-          {/* <DropdownMenuItem onClick={handleAddProductStock}>Add product stock</DropdownMenuItem> */}
+          <DropdownMenuItem >Edit order details</DropdownMenuItem>
+          <DropdownMenuItem >Add order stock</DropdownMenuItem>
           <DropdownMenuItem
             onClick={handleDelete}
             onSelect={(e) => e.preventDefault()}

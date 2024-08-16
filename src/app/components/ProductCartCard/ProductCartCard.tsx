@@ -1,14 +1,9 @@
 "use client";
+import { CartItem } from "@/context/CartContext/CartContext";
 import { Minus, Plus } from "lucide-react";
 import Image from "next/image";
 
-interface CartItem {
-    id: string;
-    name: string;
-    image: string;
-    quantity: number;
-    price?: number;
-}
+
 
 interface ProductCartCardProps {
     productData: CartItem;
@@ -34,19 +29,19 @@ const ProductCartCard: React.FC<ProductCartCardProps> = ({
         if (cartItem) {
             updateCartItem(productData.id, {
                 ...cartItem,
-                quantity: cartItem.quantity + 1,
+                count: cartItem.count + 1,
             });
         }
     };
 
     const handleDecrement = () => {
         const cartItem = cartItems.find((item) => item.id === productData.id);
-        if (cartItem && cartItem.quantity > 1) {
+        if (cartItem && cartItem.count > 1) {
             updateCartItem(productData.id, {
                 ...cartItem,
-                quantity: cartItem.quantity - 1,
+                count: cartItem.count - 1,
             });
-        } else if (cartItem && cartItem.quantity === 1) {
+        } else if (cartItem && cartItem.count === 1) {
             removeFromCart(productData.id);
         }
     };
@@ -70,7 +65,7 @@ const ProductCartCard: React.FC<ProductCartCardProps> = ({
                             ৳
                             {productData &&
                                 productData.price &&
-                                productData?.price * productData.quantity}
+                                productData?.price * productData.count}
                         </p>
                         <div className="flex items-center gap-[2px]">
                             <p className="text-sm font-medium text-slate-500">
@@ -92,7 +87,7 @@ const ProductCartCard: React.FC<ProductCartCardProps> = ({
                             <Minus />
                         </button>
                         <p className="text-base text-gray-900 font-semibold w-7 flex items-center justify-center">
-                            {productData?.quantity}
+                            {productData?.count}
                         </p>
                         <button
                             onClick={handleIncrement}
