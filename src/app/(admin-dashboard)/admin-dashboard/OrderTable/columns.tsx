@@ -157,37 +157,32 @@ export const columns: ColumnDef<OrderDataType>[] = [
             const status = row.getValue("deliveryStatus");
             return (
                 <>
-                    <>
-                        {status === "pending" && (
-                            <Badge
-                                variant="default"
-                                className="bg-[#FFE569] hover:bg-[#FFE569] uppercase"
-                            >
-                                Pending
-                            </Badge>
-                        )}
-                        {status === "booked" && (
-                            <Badge
-                                variant="default"
-                                className="hover:bg-primary"
-                            >
-                                {row.getValue("status")}
-                            </Badge>
-                        )}
-                        {status === "done" && (
-                            <Badge
-                                variant="default"
-                                className="bg-[#297c0b] hover:bg-[#297c0b] text-gray-200"
-                            >
-                                {row.getValue("status")}
-                            </Badge>
-                        )}
-                        {status === "failed" && (
-                            <Badge variant="destructive">
-                                {row.getValue("status")}
-                            </Badge>
-                        )}
-                    </>
+                    {status === "pending" && (
+                        <Badge
+                            variant="default"
+                            className="bg-[#FFE569] hover:bg-[#FFE569] uppercase"
+                        >
+                            Pending
+                        </Badge>
+                    )}
+                    {status === "inprogress" && (
+                        <Badge variant="default" className="hover:bg-primary">
+                            {row.getValue("status")}
+                        </Badge>
+                    )}
+                    {status === "done" && (
+                        <Badge
+                            variant="default"
+                            className="bg-[#297c0b] hover:bg-[#297c0b] text-gray-200"
+                        >
+                            {row.getValue("status")}
+                        </Badge>
+                    )}
+                    {status === "failed" && (
+                        <Badge variant="destructive">
+                            {row.getValue("status")}
+                        </Badge>
+                    )}
                 </>
             );
         },

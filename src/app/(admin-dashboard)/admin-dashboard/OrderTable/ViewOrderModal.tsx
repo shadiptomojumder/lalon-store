@@ -1,6 +1,6 @@
 "use client";
-import GetSingleProduct from "@/api/product/getSingleProduct";
 import UpdateProduct from "@/api/product/updateProduct";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
@@ -14,11 +14,10 @@ import {
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
-import { OrderDataType, ProductDataType } from "./columns";
 import Image from "next/image";
-
+import { useState } from "react";
+import { toast } from "sonner";
+import { OrderDataType } from "./columns";
 
 const ViewOrderModal = ({
     orderData,
@@ -81,14 +80,17 @@ const ViewOrderModal = ({
                 </DialogHeader>
                 <Separator className="bg-primary" />
 
-                <section className="flex items-center gap-2">
+                <section className="grid md:grid-cols-4 min-[425px]:grid-cols-3 grid-cols-2 gap-2">
                     {orderData.productList &&
                         orderData.productList.length > 0 &&
                         orderData.productList.map((product, index) => {
-                            console.log("product is:",product);
-                            
+                            console.log("product is:", product);
+
                             return (
-                                <div key={index} className="px-1 pb-1 bg-white shadow-md rounded-md">
+                                <div
+                                    key={index}
+                                    className="px-1 pb-1 bg-white shadow-md rounded-md"
+                                >
                                     <div className="mx-auto">
                                         <Image
                                             src={product?.productImage}
@@ -98,10 +100,17 @@ const ViewOrderModal = ({
                                             alt="Product Image"
                                         />
                                     </div>
-                                    <h2 className="text-sm max-w-[140px] text-center line-clamp-1 mt-1 capitalize">{product?.productName}</h2>
+                                    <h2 className="text-sm md:max-w-[140px] text-center line-clamp-1 mt-1 capitalize">
+                                        {product?.productName}
+                                    </h2>
                                     <div className="flex items-center gap-1 justify-center">
-                                    <p className="text-sm text-center">{product?.productQuantity}</p>
-                                    <p className="text-sm text-center">{product?.productCount} piece</p>
+                                        <p className="text-sm text-center">
+                                            {product?.productQuantity}
+                                        </p>
+                                        -
+                                        <p className="text-sm text-center font-semibold">
+                                            {product?.productCount} piece
+                                        </p>
                                     </div>
                                 </div>
                             );
@@ -121,25 +130,62 @@ const ViewOrderModal = ({
                     )} */}
                 </>
                 <section className="grid grid-cols-10 gap-2 sm:items-center items-start my-2">
-                    <Label className="text-base font-semibold sm:col-span-4 col-span-6 flex items-center justify-between">
+                    <Label className="text-sm font-semibold sm:col-span-4 col-span-6 flex items-center justify-between">
                         Username<span>:</span>
                     </Label>
-                    <h2 className="sm:col-span-6 col-span-4 text-gray-900 capitalize font-medium text-base text-start">
+                    <h2 className="sm:col-span-6 col-span-4 text-gray-900 capitalize font-medium text-sm text-start">
                         {orderData?.username}
                     </h2>
 
-                    <Label className="text-base font-semibold sm:col-span-4 col-span-6 flex items-center justify-between">
+                    <Label className="text-sm font-semibold sm:col-span-4 col-span-6 flex items-center justify-between">
                         Order Ammount<span>:</span>
                     </Label>
-                    <h2 className="sm:col-span-6 col-span-4 text-gray-900 font-medium text-base text-start">
+                    <h2 className="sm:col-span-6 col-span-4 text-gray-900 font-medium text-sm text-start">
                         {orderData?.totalAmmount} Tk
                     </h2>
 
-                    <Label className="text-base font-semibold sm:col-span-4 col-span-6 flex items-center justify-between">
+                    <Label className="text-sm font-semibold sm:col-span-4 col-span-6 flex items-center justify-between">
                         Delivery Status<span>:</span>
                     </Label>
-                    <h2 className="sm:col-span-6 col-span-4 text-gray-900 font-medium text-base text-start">
-                        {orderData?.deliveryStatus}
+                    <h2 className="sm:col-span-6 col-span-4 text-gray-900 font-medium text-sm text-start">
+                        {/* {orderData?.deliveryStatus} */}
+                        {orderData?.deliveryStatus === "pending" && (
+                            <Badge
+                                variant="default"
+                                className="bg-[#FFE569] hover:bg-[#FFE569] uppercase"
+                            >
+                                Pending
+                            </Badge>
+                        )}
+                        {orderData?.deliveryStatus === "inprogress" && (
+                            <Badge
+                                variant="default"
+                                className="hover:bg-primary uppercase"
+                            >
+                                inprogress
+                            </Badge>
+                        )}
+                    </h2>
+
+                    <Label className="text-sm font-semibold sm:col-span-4 col-span-6 flex items-center justify-between">
+                        Payment Status<span>:</span>
+                    </Label>
+                    <h2 className="sm:col-span-6 col-span-4 text-gray-900 font-medium text-sm text-start">
+                        {orderData?.paymentStatus ? (
+                            <Badge
+                                variant="default"
+                                className="bg-[#a6d296] hover:bg-[#297c0b] uppercase"
+                            >
+                                paid
+                            </Badge>
+                        ) : (
+                            <Badge
+                                variant="default"
+                                className="bg-[#FFE569] hover:bg-[#FFE569] uppercase"
+                            >
+                                cod
+                            </Badge>
+                        )}
                     </h2>
 
                     {/* <Label className="text-base font-semibold sm:col-span-4 col-span-6 flex items-center justify-between">
