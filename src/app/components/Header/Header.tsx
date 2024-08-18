@@ -98,12 +98,12 @@ const Header = () => {
 
     const handleSearch = (searchValue: string) => {
         setSearchText(searchValue);
-        console.log("Search Text is:", searchText);
+        //console.log("Search Text is:", searchText);
         router.push(`/search?q=${searchText}`);
     };
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    console.log("menu is open", isOpen);
+    //console.log("menu is open", isOpen);
 
     const menuItemRef = useRef<HTMLDivElement>(null);
 
@@ -222,7 +222,7 @@ const Header = () => {
                                 </DropdownMenuItem>
                                 <DropdownMenuSeparator />
                                 <Link
-                                    href={`/user-dashboard/user-dashboard-profile`}
+                                    href={`/user-dashboard/profile`}
                                 >
                                     <DropdownMenuItem>Profile</DropdownMenuItem>
                                 </Link>

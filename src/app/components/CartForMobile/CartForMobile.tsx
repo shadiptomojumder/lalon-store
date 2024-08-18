@@ -11,7 +11,7 @@ const CartForMobile = () => {
 
         const [isMatched,setIsMatched] = useState<boolean>(false)
     const pathname = usePathname();
-    console.log("The pathname is: ", pathname);
+    //console.log("The pathname is: ", pathname);
 
     useEffect(() => {
         if (

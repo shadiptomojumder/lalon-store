@@ -1,5 +1,4 @@
 "use client";
-import CreateCategory from "@/api/category/createCategory";
 import CreateProduct from "@/api/product/createProduct";
 import Spinner from "@/app/components/Spinner/Spinner";
 import { Button } from "@/components/ui/button";
@@ -8,7 +7,6 @@ import { Label } from "@/components/ui/label";
 import {
     Select,
     SelectContent,
-    SelectGroup,
     SelectItem,
     SelectTrigger,
     SelectValue,
@@ -29,8 +27,6 @@ import {
 } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import CategorySelection from "../../DashboardComponents/CategorySelection/CategorySelection";
-import CustomSelection from "../../DashboardComponents/CustomSelection/CustomSelection";
 
 const formSchema = z.object({
     productName: z.string().min(2, {
@@ -169,10 +165,9 @@ const CreateProductPage = () => {
                 toast.warning("Product already created!!");
             } else if (error?.response?.status == 400) {
                 toast.warning("Please fill all the required fields!");
-            }else if (error.request) {
+            } else if (error.request) {
                 toast.error("No response received from the server!!");
-            }
-             else {
+            } else {
                 console.error(
                     "Error while sending the request:",
                     error.message
@@ -231,13 +226,15 @@ const CreateProductPage = () => {
 
         console.log("The new data is:", newData);
 
-         await mutate(newData);
+        await mutate(newData);
     };
 
     return (
         <main>
             <div className="p-5">
-                <h2 className="text-lg font-semibold sm:text-left text-center">Create Product</h2>
+                <h2 className="text-lg font-semibold sm:text-left text-center">
+                    Create Product
+                </h2>
                 <p className="text-sm sm:text-left text-center">
                     Select your image and suitable name for product and click
                     create button.
@@ -496,7 +493,9 @@ const CreateProductPage = () => {
                                 <span className="text-red-600">*</span>
                             </Label>
                             <Input
-                                {...register("productPrice", { valueAsNumber: true })}
+                                {...register("productPrice", {
+                                    valueAsNumber: true,
+                                })}
                                 id="productPrice"
                                 name="productPrice"
                                 type="number"
