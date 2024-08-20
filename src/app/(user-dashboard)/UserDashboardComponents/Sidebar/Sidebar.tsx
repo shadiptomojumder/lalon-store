@@ -1,16 +1,25 @@
 "use client";
 
+import UpdateUser from "@/api/user/updateUser";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/hooks/useAuth";
-import { ArrowLeftToLine, LayoutList, UserCog } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import {
+    ArrowLeftToLine,
+    LayoutList,
+    Pencil,
+    UserCog,
+    UserRound,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { BiArrowToRight } from "react-icons/bi";
+import { toast } from "sonner";
 
 const QuickLinks = [
     {
@@ -33,12 +42,69 @@ const Sidebar = () => {
     // console.log("showSideBar",showSideBar);
     const { user, setUser, userLoading } = useAuth();
 
+    const [previewImage, setPreviewImage] = useState<string | null>(null);
+    console.log("previewImage", previewImage);
+
+    const { mutate, isPending } = useMutation({
+        mutationFn: UpdateUser,
+        onSuccess: (response) => {
+            console.log("response is", response);
+
+            if (response.statusCode === 200) {
+                toast.success("User avatar successfully updated");
+                setPreviewImage(response.data.avatar);
+                localStorage.setItem("userData", JSON.stringify(response.data));
+                setUser(response.data);
+            }
+        },
+        onError: (error: any) => {
+            if (error?.response?.status == 409) {
+                toast.warning("Username or Email already registered !!");
+            } else if (error.request) {
+                toast.error("No response received from the server!!");
+            } else {
+                console.error(
+                    "Error while sending the request:",
+                    error.message
+                );
+            }
+        },
+    });
+
+    const [avatarBase64, setAvatarBase64] = useState("");
+
+    // Function to handle logo change
+    const handleAvatarImageChange = (event: any) => {
+        console.log("Here 51");
+
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onloadend = (e) => {
+            if (e.target) {
+                setAvatarBase64(reader.result as string);
+                setPreviewImage(e.target.result as string);
+                updatedAvatar(reader.result as string);
+            }
+        };
+        reader.readAsDataURL(file);
+    };
+
+    const updatedAvatar = (avatarBase64: string) => {
+        console.log("previewImage", previewImage);
+        console.log("avatarBase64", avatarBase64);
+
+        if (avatarBase64) {
+            mutate({
+                data: { avatar: avatarBase64 },
+                userId: user?._id?.toString() ?? "",
+            });
+        }
+    };
+
     const sideBarRef = useRef<HTMLDivElement>(null);
 
     const handleClickOutside = (event: any) => {
         if (sideBarRef.current && !sideBarRef.current.contains(event.target)) {
-            // Do something when clicking outside of authDropdownRef
-            // console.log("Clicked outside!");
             setShowSideBar(false);
         }
     };
@@ -67,91 +133,33 @@ const Sidebar = () => {
             {/* This is for big screens */}
             <main className="bg-white min-w-[288px] h-[80dvh] rounded-lg hidden lg:block border">
                 <div className="pt-5 pb-3 mx-auto text-center flex justify-center">
-                    <Label
-                        htmlFor="avataro"
-                        className="flex justify-center sm:justify-start w-fit border border-primary p-1 rounded-full bg-white shadow-lg"
-                    >
+                    <div className="flex justify-center items-center p-[2px] relative w-fit border border-primary rounded-full bg-white shadow-lg">
                         {user && user?.avatar ? (
                             <Image
-                                src={user?.avatar}
+                                src={previewImage || user?.avatar}
                                 alt="Uploades Image"
                                 height={120}
                                 width={120}
                                 className="min-w-[120px] h-[120px] rounded-full object-cover object-center"
                             />
                         ) : (
-                            <>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width={120}
-                                    height={120}
-                                    viewBox="0 0 24 24"
-                                >
-                                    <g
-                                        fill="none"
-                                        stroke="#00b306"
-                                        strokeLinecap="round"
-                                        strokeWidth={2}
-                                    >
-                                        <path
-                                            strokeDasharray="2 4"
-                                            strokeDashoffset={6}
-                                            d="M12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3"
-                                        >
-                                            <animate
-                                                attributeName="stroke-dashoffset"
-                                                dur="0.6s"
-                                                repeatCount="indefinite"
-                                                values="6;0"
-                                            ></animate>
-                                        </path>
-                                        <path
-                                            strokeDasharray={30}
-                                            strokeDashoffset={30}
-                                            d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21"
-                                        >
-                                            <animate
-                                                fill="freeze"
-                                                attributeName="stroke-dashoffset"
-                                                begin="0.1s"
-                                                dur="0.3s"
-                                                values="30;0"
-                                            ></animate>
-                                        </path>
-                                        <path
-                                            strokeDasharray={10}
-                                            strokeDashoffset={10}
-                                            d="M12 16v-7.5"
-                                        >
-                                            <animate
-                                                fill="freeze"
-                                                attributeName="stroke-dashoffset"
-                                                begin="0.5s"
-                                                dur="0.2s"
-                                                values="10;0"
-                                            ></animate>
-                                        </path>
-                                        <path
-                                            strokeDasharray={6}
-                                            strokeDashoffset={6}
-                                            d="M12 8.5l3.5 3.5M12 8.5l-3.5 3.5"
-                                        >
-                                            <animate
-                                                fill="freeze"
-                                                attributeName="stroke-dashoffset"
-                                                begin="0.7s"
-                                                dur="0.2s"
-                                                values="6;0"
-                                            ></animate>
-                                        </path>
-                                    </g>
-                                </svg>
-                            </>
+                            <div className="p-3">
+                                <UserRound size={110} />
+                            </div>
                         )}
-                    </Label>
+                        <Label
+                            htmlFor="avataro"
+                            className="p-[5px] absolute top-3 cursor-pointer right-1 h-[28px] w-[28px] bg-slate-200 rounded-full flex items-center justify-center"
+                        >
+                            <Pencil />
+                        </Label>
+                    </div>
                     <Input
                         id="avataro"
                         type="file"
+                        onChange={(e) => {
+                            handleAvatarImageChange(e);
+                        }}
                         className="appearance-none hidden"
                     />
                 </div>
@@ -208,28 +216,6 @@ const Sidebar = () => {
                                     </Link>
                                 );
                             })}
-
-                            {/* {user && user?.role && user?.role === "super-admin" && (
-                <Link href={`/dashboard/dashboard-users`} className="block">
-                  <div
-                    className={
-                      pathname === "/dashboard/dashboard-users"
-                        ? "py-2 px-4 cursor-pointer bg-[#092635] border border-primary boxglow rounded-md transition-all ease-in-out duration-300"
-                        : "py-2 px-4 cursor-pointer bg-transparent hover:bg-[#092635] border border-gray-200 rounded-md hover:border-primary hover:text-primary transition-all ease-in-out duration-300"
-                    }
-                  >
-                    <h2
-                      className={
-                        pathname === "/dashboard/dashboard-users"
-                          ? "text-primary font-semibold transition-all ease-in-out duration-300"
-                          : "text-gray-200 font-semibold transition-all ease-in-out duration-300"
-                      }
-                    >
-                      Users
-                    </h2>
-                  </div>
-                </Link>
-              )} */}
                         </section>
                     </>
                 )}
@@ -292,28 +278,6 @@ const Sidebar = () => {
                                     </Link>
                                 );
                             })}
-
-                            {/* {user && user?.role && user?.role === "super-admin" && (
-                <Link href={`/dashboard/dashboard-users`} className="block">
-                  <div
-                    className={
-                      pathname === "/dashboard/dashboard-users"
-                        ? "py-2 px-4 cursor-pointer bg-[#092635] border border-primary boxglow rounded-md transition-all ease-in-out duration-300"
-                        : "py-2 px-4 cursor-pointer bg-transparent hover:bg-[#092635] border border-gray-200 rounded-md hover:border-primary hover:text-primary transition-all ease-in-out duration-300"
-                    }
-                  >
-                    <h2
-                      className={
-                        pathname === "/dashboard/dashboard-users"
-                          ? "text-primary font-semibold transition-all ease-in-out duration-300"
-                          : "text-gray-200 font-semibold transition-all ease-in-out duration-300"
-                      }
-                    >
-                      Users
-                    </h2>
-                  </div>
-                </Link>
-              )} */}
                         </section>
                     </>
                 )}
