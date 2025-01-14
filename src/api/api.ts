@@ -2,7 +2,7 @@ import axios from "axios";
 export const BaseURL = "https://lalon-store-backend-production.up.railway.app/api";
 
 export const api = axios.create({
-    baseURL: BaseURL,
+    baseURL: process.env.BaseURL,
     timeout: 10000,
     headers: {
         "X-Custom-Header": "foobar",
