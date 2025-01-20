@@ -1,8 +1,12 @@
 import axios from "axios";
-export const BaseURL = "https://lalon-store-backend-production.up.railway.app/api";
+import * as dotenv from 'dotenv';
+dotenv.config();
+export const BaseURL = "https://lalon-server-production.up.railway.app/api";
+
+
 
 export const api = axios.create({
-    baseURL: process.env.BaseURL,
+    baseURL: BaseURL,
     timeout: 10000,
     headers: {
         "X-Custom-Header": "foobar",
