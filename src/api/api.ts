@@ -3,8 +3,6 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 export const BaseURL = "https://lalon-server-production.up.railway.app/api";
 
-
-
 export const api = axios.create({
     baseURL: BaseURL,
     timeout: 10000,
